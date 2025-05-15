@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotelShares - Discover Investment Properties</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="discover-styles.css">
+    <link rel="stylesheet" href="discover-styles-fix.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Additional styles to ensure images display properly */
+        .property-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+        
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .modal-gallery .main-image {
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+        
+        .modal-gallery .main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .thumbnail {
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Enhanced property details styles */
+        .property-overview-section {
+            margin-bottom: 30px;
+        }
+        
+        .property-header-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .property-alert {
+            background-color: #f0f7ff;
+            color: #0056b3;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid #0056b3;
+        }
+        
+        .property-alert.important {
+            background-color: #fff8e1;
+            color: #ff9800;
+            border-left-color: #ff9800;
+        }
+        
+        .property-summary-data {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+        }
+        
+        .summary-item {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .summary-value.highlight {
+            color: #b8860b;
+        }
+        
+        .summary-label {
+            font-size: 0.85rem;
+            color: #777;
+            font-weight: 500;
+        }
+        
+        .property-description-text {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .executive-summary {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .summary-points {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .summary-points li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .summary-points li:last-child {
+            border-bottom: none;
+        }
+        
+        .investment-highlights {
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .investment-highlights li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 5px;
+        }
+        
+        .property-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .detail-value {
+            color: #333;
+        }
+        
+        /* Location details styling */
+        .location-details-section {
+            margin-bottom: 30px;
+        }
+        
+        .location-highlights {
+            margin-bottom: 20px;
+        }
+        
+        .location-highlight-item {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .location-highlight-item h4 {
+            color: #0056b3;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .location-data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .location-data-item {
+            display: flex;
+            align-items: flex-start;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            gap: 15px;
+        }
+        
+        .location-data-item i {
+            color: #b8860b;
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        
+        .location-data-content {
+            flex: 1;
+        }
+        
+        .location-data-content h5 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        
+        .location-data-content p {
+            margin: 0;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        .market-overview {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .market-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .market-stat-item {
+            flex: 1;
+            min-width: 120px;
+            background-color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .market-stat-item .stat-value {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #b8860b;
+            margin-bottom: 5px;
+        }
+        
+        .market-stat-item .stat-label {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        .market-driver {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        .market-driver h5 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .market-driver ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        
+        .market-driver li {
+            margin-bottom: 8px;
+        }
+        
+        /* Management company styling */
+        .management-company-section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .management-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+            gap: 20px;
+        }
+        
+        .management-logo {
+            width: 150px;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .management-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .management-title h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        
+        .management-subtitle {
+            margin: 0;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .management-content {
+            padding: 20px;
+        }
+        
+        .management-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .management-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-group {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .management-features {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .management-features li {
+            margin-bottom: 10px;
+        }
+        
+        .management-contact {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .management-contact h5 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .management-contact p {
+            margin: 5px 0;
+        }
+        
+        /* Amenities styling */
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .amenity-item {
+            display: flex;
+            align-items: flex-start;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            gap: 15px;
+        }
+        
+        .amenity-item i {
+            color: #b8860b;
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        
+        .amenity-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .amenity-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .amenity-description {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .property-summary-data,
+            .property-details-grid,
+            .location-data-grid,
+            .market-stats,
+            .amenities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .management-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .detail-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .stat {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+        
+        /* Enhanced investment calculator styles */
+        .additional-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .investment-projection {
+            margin-top: 25px;
+            margin-bottom: 30px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .investment-projection h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        
+        .projection-chart-container {
+            height: 250px;
+            margin-top: 15px;
+        }
+        
+        .info-section {
+            margin-bottom: 25px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .info-section h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        
+        .info-section h4 i {
+            color: #b8860b;
+        }
+        
+        .strategy-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .strategy-item {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .strategy-item h5 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #b8860b;
+        }
+        
+        .strategy-item p {
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .strategy-metrics {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .strategy-metric {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #f5f5f5;
+            padding: 8px 10px;
+            border-radius: 5px;
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 2px;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .exit-options {
+            padding-left: 20px;
+            margin: 0;
+        }
+        
+        .exit-options li {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .risk-items {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .risk-items li {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .disclaimer {
+            background-color: #f5f5f5;
+            padding: 12px;
+            border-radius: 5px;
+            border-left: 4px solid #6c757d;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        
+        .disclaimer p {
+            margin: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .additional-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .strategy-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .filters-section {
+            padding: 1.5rem 0;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .filters-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 150px;
+            margin-bottom: 0;
+        }
+        
+        .filter-group.property-type {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .filter-group.sort-by {
+            flex: 0 0 auto;
+            width: auto;
+            min-width: 120px;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+        }
+        
+        .tag-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        
+        .tag-filter {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .tag-filter:hover, .tag-filter.active {
+            background-color: var(--primary-dark);
+            color: #fff;
+            border-color: var(--primary-dark);
+        }
+        
+        .location-filter, .sort-options {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            background-color: #fff;
+        }
+        
+        .range-slider-container {
+            padding: 0 0.5rem;
+        }
+        
+        .price-slider {
+            width: 100%;
+            margin: 0.5rem 0;
+            height: 5px;
+        }
+        
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .filters-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .filter-group.property-type,
+            .filter-group.sort-by {
+                width: 100%;
+            }
+        }
+    </style>
+    <script src="enhanced-calculator.js"></script>
+    <script src="enhanced-property-details.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-text">Hotel<span class="gold">Shares</span></span>
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="index.html#how-it-works">HOW IT WORKS</a></li>
+                    <li><a href="index.html#stakeholders">STAKEHOLDERS</a></li>
+                    <li><a href="#" class="active">DISCOVER</a></li>
+                    <li><a href="index.html#about">ABOUT US</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-transparent">LOGIN</a>
+                <a href="signup.html" class="btn btn-primary">SIGN UP</a>
+            </div>
+            <div class="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <section class="discover-hero">
+        <div class="container">
+            <h1 class="section-title">Discover Investment Properties</h1>
+            <div class="section-description">
+                <p>Browse our collection of premium hotel properties available for fractional investment. Each property has been carefully vetted and structured to provide optimal returns with minimal hassle.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-row compact">
+                <div class="filter-group property-type">
+                    <label>Property Type</label>
+                    <div class="tag-filters">
+                        <button class="tag-filter active">All</button>
+                        <button class="tag-filter">Resort</button>
+                        <button class="tag-filter">Boutique</button>
+                        <button class="tag-filter">Business</button>
+                        <button class="tag-filter">All-Inclusive</button>
+                    </div>
+                </div>
+                
+                <div class="filter-group location">
+                    <label>Location</label>
+                    <select class="location-filter">
+                        <option value="">All Locations</option>
+                        <option value="beach">Beach Destinations</option>
+                        <option value="city">Major Cities</option>
+                        <option value="mountain">Mountain Retreats</option>
+                        <option value="international">International</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group price-range">
+                    <label>Share Price Range</label>
+                    <div class="range-slider-container">
+                        <input type="range" min="10000" max="50000" value="10000" class="price-slider" id="priceRange">
+                        <div class="range-values">
+                            <span>$10,000</span>
+                            <span id="priceValue">$10,000</span>
+                            <span>$50,000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group sort-by">
+                    <label>Sort</label>
+                    <select class="sort-options">
+                        <option value="trending">Trending</option>
+                        <option value="returns">Highest Returns</option>
+                        <option value="newest">Newest</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trending-section">
+        <div class="container">
+            <h2 class="section-title">Trending Properties</h2>
+            <div class="trending-container">
+                <!-- Trending properties will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section class="properties">
+        <div class="container">
+            <h2 class="section-title">All Properties</h2>
+            <div class="properties-grid">
+                <!-- Properties will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Property Detail Modal -->
+    <div class="modal-overlay" id="propertyModal" onclick="if(event.target === this) closePropertyModal()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalPropertyName">Property Name</h2>
+                <p id="modalPropertyLocation">Location</p>
+                <button class="close-modal" title="Close" onclick="closePropertyModal()"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="modal-gallery">
+                <div class="main-image">
+                    <img id="modalMainImage" src="https://placehold.co/800x400/gold/black?text=Property+Image" alt="Property">
+                </div>
+                <div class="thumbnail-container">
+                    <!-- Thumbnails will be inserted here by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="modal-tabs">
+                <button class="tab-btn active" data-tab="overview" onclick="switchTab(this, 'overview')">Overview</button>
+                <button class="tab-btn" data-tab="financials" onclick="switchTab(this, 'financials')">Financials</button>
+                <button class="tab-btn" data-tab="details" onclick="switchTab(this, 'details')">Property Details</button>
+                <button class="tab-btn" data-tab="investment" onclick="switchTab(this, 'investment')">Investment</button>
+            </div>
+            
+            <div class="modal-tab-content">
+                <!-- Overview Tab -->
+                <div class="tab-pane active" id="overview">
+                    <div class="overview-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Property Type</span>
+                            <span class="stat-value" id="propertyType">Resort</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Value</span>
+                            <span class="stat-value" id="propertyValue">$25,000,000</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Available Shares</span>
+                            <span class="stat-value" id="availableShares">250</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Share Price</span>
+                            <span class="stat-value" id="sharePrice">$25,000</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Minimum Investment</span>
+                            <span class="stat-value" id="minInvestment">$25,000 (1 share)</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Annual Return</span>
+                            <span class="stat-value return-positive" id="annualReturn">12.5%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="charts-section">
+                        <div class="chart-header">
+                            <h3>Performance Review</h3>
+                            <div class="time-period-toggle">
+                                <button class="period-btn" data-period="1M">1M</button>
+                                <button class="period-btn" data-period="3M">3M</button>
+                                <button class="period-btn active" data-period="6M">6M</button>
+                                <button class="period-btn" data-period="1Y">1Y</button>
+                                <button class="period-btn" data-period="ALL">All</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Performance Summary -->
+                        <div class="performance-summary">
+                            <div class="performance-metrics">
+                                <div class="metric-item">
+                                    <span class="metric-value positive">+3.8%</span>
+                                    <span class="metric-label">Monthly Return</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-value positive">+12.2%</span>
+                                    <span class="metric-label">YTD Return</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-value">92.4%</span>
+                                    <span class="metric-label">Occupancy Rate</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-value">$248.50</span>
+                                    <span class="metric-label">RevPAR</span>
+                                </div>
+                            </div>
+                            
+                            <div class="performance-highlights">
+                                <h4>Quarterly Performance Highlights</h4>
+                                <ul class="highlight-list">
+                                    <li><i class="fas fa-arrow-up text-success"></i> Occupancy rate increased by 4.2% compared to previous quarter</li>
+                                    <li><i class="fas fa-arrow-up text-success"></i> Revenue per available room (RevPAR) up 5.8% year-over-year</li>
+                                    <li><i class="fas fa-check text-success"></i> Property achieved 107% of projected quarterly income</li>
+                                    <li><i class="fas fa-info-circle text-info"></i> Renovation of lobby completed, expected to boost guest ratings</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="charts-container">
+                            <div class="chart">
+                                <h4>Monthly Returns (%)</h4>
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                            <div class="chart-grid">
+                                <div class="chart">
+                                    <h4>Occupancy Rate (%)</h4>
+                                    <canvas id="occupancyChart"></canvas>
+                                </div>
+                                <div class="chart">
+                                    <h4>Revenue Distribution</h4>
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Key Performance Indicators -->
+                        <div class="performance-kpi">
+                            <h4>Key Performance Indicators</h4>
+                            <div class="kpi-grid">
+                                <div class="kpi-item">
+                                    <div class="kpi-header">
+                                        <span class="kpi-title">Average Daily Rate</span>
+                                        <span class="kpi-value">$275.40</span>
+                                    </div>
+                                    <div class="kpi-progress">
+                                        <div class="progress-bar" style="width: 85%"></div>
+                                    </div>
+                                    <div class="kpi-footer">
+                                        <span class="kpi-change positive">+$15.80 vs. last quarter</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="kpi-item">
+                                    <div class="kpi-header">
+                                        <span class="kpi-title">Guest Satisfaction</span>
+                                        <span class="kpi-value">4.8/5.0</span>
+                                    </div>
+                                    <div class="kpi-progress">
+                                        <div class="progress-bar" style="width: 96%"></div>
+                                    </div>
+                                    <div class="kpi-footer">
+                                        <span class="kpi-change positive">+0.2 vs. last quarter</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="kpi-item">
+                                    <div class="kpi-header">
+                                        <span class="kpi-title">Operating Margin</span>
+                                        <span class="kpi-value">38.6%</span>
+                                    </div>
+                                    <div class="kpi-progress">
+                                        <div class="progress-bar" style="width: 78%"></div>
+                                    </div>
+                                    <div class="kpi-footer">
+                                        <span class="kpi-change positive">+1.4% vs. last quarter</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="kpi-item">
+                                    <div class="kpi-header">
+                                        <span class="kpi-title">Revenue Growth</span>
+                                        <span class="kpi-value">7.2%</span>
+                                    </div>
+                                    <div class="kpi-progress">
+                                        <div class="progress-bar" style="width: 72%"></div>
+                                    </div>
+                                    <div class="kpi-footer">
+                                        <span class="kpi-change neutral">-0.3% vs. last quarter</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Market Comparison -->
+                        <div class="market-comparison">
+                            <h4>Market Comparison</h4>
+                            <div class="comparison-grid">
+                                <div class="comparison-item">
+                                    <div class="comparison-header">Occupancy Rate</div>
+                                    <div class="comparison-bars">
+                                        <div class="comparison-bar">
+                                            <span class="bar-label">This Property</span>
+                                            <div class="bar-container">
+                                                <div class="bar-fill" style="width: 92%"></div>
+                                                <span class="bar-value">92.4%</span>
+                                            </div>
+                                        </div>
+                                        <div class="comparison-bar">
+                                            <span class="bar-label">Market Average</span>
+                                            <div class="bar-container">
+                                                <div class="bar-fill market" style="width: 78%"></div>
+                                                <span class="bar-value">78.1%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="comparison-item">
+                                    <div class="comparison-header">RevPAR</div>
+                                    <div class="comparison-bars">
+                                        <div class="comparison-bar">
+                                            <span class="bar-label">This Property</span>
+                                            <div class="bar-container">
+                                                <div class="bar-fill" style="width: 88%"></div>
+                                                <span class="bar-value">$248.50</span>
+                                            </div>
+                                        </div>
+                                        <div class="comparison-bar">
+                                            <span class="bar-label">Market Average</span>
+                                            <div class="bar-container">
+                                                <div class="bar-fill market" style="width: 75%"></div>
+                                                <span class="bar-value">$216.30</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Financials Tab -->
+                <div class="tab-pane" id="financials">
+                    <div class="financials-container">
+                        <div class="financial-section">
+                            <h3>Revenue Projections</h3>
+                            <table class="financial-table">
+                                <thead>
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Revenue</th>
+                                        <th>Growth</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="revenueProjections">
+                                    <!-- Revenue projections will be inserted here by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="financial-section">
+                            <h3>Expense Breakdown</h3>
+                            <div class="expense-chart-container">
+                                <canvas id="expenseChart"></canvas>
+                            </div>
+                            <div class="expense-legend" id="expenseLegend">
+                                <!-- Expense legend will be inserted here by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="financial-section">
+                            <h3>Cash Flow Analysis</h3>
+                            <table class="financial-table">
+                                <thead>
+                                    <tr>
+                                        <th>Quarter</th>
+                                        <th>Income</th>
+                                        <th>Expenses</th>
+                                        <th>Net Cash Flow</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cashFlowAnalysis">
+                                    <!-- Cash flow analysis will be inserted here by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="financial-section">
+                            <h3>Tax Benefits Summary</h3>
+                            <div class="tax-benefits" id="taxBenefits">
+                                <!-- Tax benefits will be inserted here by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property Details Tab -->
+                <div class="tab-pane" id="details">
+                    <div class="property-description">
+                        <h3>About This Property</h3>
+                        <p id="propertyDescription">Property description will be inserted here by JavaScript.</p>
+                    </div>
+                    
+                    <div class="amenities-section">
+                        <h3>Amenities</h3>
+                        <div class="amenities-grid" id="amenitiesList">
+                            <!-- Amenities will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="location-section">
+                        <h3>Location</h3>
+                        <div class="map-container">
+                            <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69c9ff?auto=format&fit=crop&w=800&q=80" alt="Property Location Map" class="location-map">
+                        </div>
+                        <p id="locationDetails">Location details will be inserted here by JavaScript.</p>
+                    </div>
+                    
+                    <div class="management-section">
+                        <h3>Management Company</h3>
+                        <div class="management-details" id="managementDetails">
+                            <!-- Management details will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Investment Tab -->
+                <div class="tab-pane" id="investment">
+                    <div class="investment-calculator">
+                        <h3>Calculate Your Investment</h3>
+                        <div class="investment-inputs">
+                            <div class="input-group">
+                                <label for="shareQuantity">Number of Shares</label>
+                                <div class="quantity-selector">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <input type="number" id="shareQuantity" min="1" value="1">
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            
+                            <div class="investment-summary">
+                                <div class="summary-item">
+                                    <span class="label">Share Price:</span>
+                                    <span class="value" id="calculatorSharePrice">$25,000</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Total Investment:</span>
+                                    <span class="value" id="totalInvestment">$25,000</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Estimated Annual Return:</span>
+                                    <span class="value return-positive" id="estimatedReturn">$3,125 (12.5%)</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Ownership Percentage:</span>
+                                    <span class="value" id="ownershipPercentage">0.1%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="investment-actions">
+                                <button class="btn btn-primary">Buy Shares</button>
+                                <button class="btn btn-secondary"><i class="far fa-bookmark"></i> Add to Watchlist</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="investment-info">
+                        <h3>Important Information</h3>
+                        <div class="info-item">
+                            <h4><i class="fas fa-info-circle"></i> Minimum Investment Period</h4>
+                            <p>The minimum investment period for this property is 2 years. Early withdrawal may incur penalty fees.</p>
+                        </div>
+                        <div class="info-item">
+                            <h4><i class="fas fa-calendar-alt"></i> Dividend Distribution</h4>
+                            <p>Dividends are distributed quarterly based on the property's performance.</p>
+                        </div>
+                        <div class="info-item">
+                            <h4><i class="fas fa-file-contract"></i> Legal Structure</h4>
+                            <p>This investment is structured as a Real Estate Investment Trust (REIT) with special purpose vehicle ownership.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <span class="logo-text">Hotel<span class="gold">Shares</span></span>
+                    </div>
+                    <p>Democratizing hotel ownership through fractional investment, allowing everyone to own a piece of paradise.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#properties">Properties</a></li>
+                        <li><a href="index.html#how-it-works">How It Works</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Investment Guide</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <div class="newsletter-signup">
+                        <h5>Subscribe to our newsletter</h5>
+                        <p>Get the latest investment opportunities and news</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2023 HotelShares. All rights reserved. | Designed with <i class="fas fa-heart"></i> for hotel investors</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize range sliders
+            const priceRange = document.getElementById('priceRange');
+            const priceValue = document.getElementById('priceValue');
+            
+            priceRange.addEventListener('input', function() {
+                priceValue.textContent = '$' + parseInt(this.value).toLocaleString();
+            });
+            
+            const returnsRange = document.getElementById('returnsRange');
+            const returnsValue = document.getElementById('returnsValue');
+            
+            returnsRange.addEventListener('input', function() {
+                returnsValue.textContent = this.value + '%';
+            });
+
+            // Make sure the modal can be closed with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('propertyModal');
+                    if (modal && modal.classList.contains('active')) {
+                        modal.classList.remove('active');
+                        modal.style.display = 'none';
+                        document.body.style.overflow = '';
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script src="discover-script.js"></script>
+    <script src="discover-script-fix.js"></script>
+</body>
+</html> 
