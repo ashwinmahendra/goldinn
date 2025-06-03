@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Properties | HotelShares</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="hoteshares-fix.css">
+    <link rel="stylesheet" href="app-preview-responsive-fix.css">
+    <link rel="stylesheet" href="layout-fix.css">
+</head>
+<body>
+    <!-- Dashboard Navigation -->
+    <nav class="dashboard-nav">
+        <div class="container">
+            <div class="dashboard-nav-content">
+                <div class="logo">
+                    <h1>HotelShares</h1>
+                </div>
+                <div class="dashboard-links">
+                    <a href="#" class="active"><i class="fas fa-building"></i> Properties</a>
+                    <a href="#"><i class="fas fa-chart-line"></i> Portfolio</a>
+                    <a href="#"><i class="fas fa-wallet"></i> Wallet</a>
+                    <a href="#"><i class="fas fa-file-alt"></i> Documents</a>
+                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                </div>
+                <div class="user-menu">
+                    <span class="user-balance">Balance: $25,000</span>
+                    <div class="user-profile">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
+                        <span>John Doe <i class="fas fa-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Properties Header -->
+    <section class="properties-header">
+        <div class="container">
+            <div class="properties-header-content">
+                <div class="page-title">
+                    <h1>Browse Properties</h1>
+                    <p>Explore our curated selection of premium hotel investment opportunities</p>
+                </div>
+                <div class="filter-controls">
+                    <div class="search-input">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search properties...">
+                    </div>
+                    <div class="filter-dropdown">
+                        <button class="btn btn-outline"><i class="fas fa-filter"></i> Filters</button>
+                    </div>
+                    <div class="sort-dropdown">
+                        <select>
+                            <option>Sort: Recommended</option>
+                            <option>Highest ROI</option>
+                            <option>Lowest Min. Investment</option>
+                            <option>Newest Listings</option>
+                            <option>Alphabetical</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-tags">
+                <div class="filter-tag">
+                    Min. Investment: $10,000 - $50,000
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="filter-tag">
+                    Location: United States
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="filter-tag">
+                    Expected ROI: >15%
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="filter-tag">
+                    Property Type: Boutique
+                    <i class="fas fa-times"></i>
+                </div>
+                <a href="#" class="clear-filters">Clear All</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Grid -->
+    <section class="properties-grid">
+        <div class="container">
+            <div class="properties-list">
+                <!-- Property Card 1 - Featured with link to detail page -->
+                <a href="property-detail.html" class="property-card featured">
+                    <div class="property-card-header">
+                        <div class="property-badge">Featured</div>
+                        <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" alt="Luxury Beach Resort">
+                    </div>
+                    <div class="property-details">
+                        <h3>Oceanfront Luxury Resort</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i> Maui, Hawaii</p>
+                        <div class="property-metrics">
+                            <div class="metric">
+                                <span class="metric-value">$15,000</span>
+                                <span class="metric-label">Min. Investment</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">21%</span>
+                                <span class="metric-label">Target Annual ROI</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">92%</span>
+                                <span class="metric-label">Occupancy Rate</span>
+                            </div>
+                        </div>
+                        <div class="funding-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 75%"></div>
+                            </div>
+                            <div class="funding-details">
+                                <span>$3.75M raised</span>
+                                <span>75% funded</span>
+                            </div>
+                        </div>
+                        <div class="property-footer">
+                            <a href="property-detail.html" class="btn btn-primary">View Details</a>
+                            <div class="time-left">
+                                <i class="far fa-clock"></i> 15 days left
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Property Card 2 -->
+                <a href="#" class="property-card">
+                    <div class="property-card-header">
+                        <div class="property-badge">New</div>
+                        <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" alt="Downtown Boutique Hotel">
+                    </div>
+                    <div class="property-details">
+                        <h3>Downtown Boutique Hotel</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i> New York City, NY</p>
+                        <div class="property-metrics">
+                            <div class="metric">
+                                <span class="metric-value">$25,000</span>
+                                <span class="metric-label">Min. Investment</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">18%</span>
+                                <span class="metric-label">Target Annual ROI</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">88%</span>
+                                <span class="metric-label">Occupancy Rate</span>
+                            </div>
+                        </div>
+                        <div class="funding-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 45%"></div>
+                            </div>
+                            <div class="funding-details">
+                                <span>$2.25M raised</span>
+                                <span>45% funded</span>
+                            </div>
+                        </div>
+                        <div class="property-footer">
+                            <a href="property-detail.html" class="btn btn-primary">View Details</a>
+                            <div class="time-left">
+                                <i class="far fa-clock"></i> 28 days left
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Property Card 3 -->
+                <a href="#" class="property-card">
+                    <div class="property-card-header">
+                        <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" alt="Alpine Ski Lodge">
+                    </div>
+                    <div class="property-details">
+                        <h3>Alpine Ski Lodge</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i> Aspen, Colorado</p>
+                        <div class="property-metrics">
+                            <div class="metric">
+                                <span class="metric-value">$10,000</span>
+                                <span class="metric-label">Min. Investment</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">24%</span>
+                                <span class="metric-label">Target Annual ROI</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">95%</span>
+                                <span class="metric-label">Occupancy Rate</span>
+                            </div>
+                        </div>
+                        <div class="funding-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 90%"></div>
+                            </div>
+                            <div class="funding-details">
+                                <span>$4.5M raised</span>
+                                <span>90% funded</span>
+                            </div>
+                        </div>
+                        <div class="property-footer">
+                            <a href="property-detail.html" class="btn btn-primary">View Details</a>
+                            <div class="time-left">
+                                <i class="far fa-clock"></i> 5 days left
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Property Card 4 -->
+                <a href="#" class="property-card">
+                    <div class="property-card-header">
+                        <button class="favorite-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" alt="Urban Luxury Hotel">
+                    </div>
+                    <div class="property-details">
+                        <h3>Urban Luxury Hotel</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i> Chicago, IL</p>
+                        <div class="property-metrics">
+                            <div class="metric">
+                                <span class="metric-value">$20,000</span>
+                                <span class="metric-label">Min. Investment</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">19%</span>
+                                <span class="metric-label">Target Annual ROI</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">91%</span>
+                                <span class="metric-label">Occupancy Rate</span>
+                            </div>
+                        </div>
+                        <div class="funding-progress">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 60%"></div>
+                            </div>
+                            <div class="funding-details">
+                                <span>$3M raised</span>
+                                <span>60% funded</span>
+                            </div>
+                        </div>
+                        <div class="property-footer">
+                            <a href="property-detail.html" class="btn btn-primary">View Details</a>
+                            <div class="time-left">
+                                <i class="far fa-clock"></i> 18 days left
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- More property cards can be added here -->
+            </div>
+            
+            <div class="pagination">
+                <a href="#" class="page-prev"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="page-number active">1</a>
+                <a href="#" class="page-number">2</a>
+                <a href="#" class="page-number">3</a>
+                <a href="#" class="page-number">4</a>
+                <a href="#" class="page-next"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <script src="dashboard.js"></script>
+</body>
+</html> 

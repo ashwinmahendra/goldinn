@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Properties | HotelShares</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="hoteshares-fix.css">
+    <link rel="stylesheet" href="app-preview-responsive-fix.css">
+    <link rel="stylesheet" href="layout-fix.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">HOTELSHARES</a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="#" class="active">PROPERTIES</a></li>
+                        <li><a href="#">HOW IT WORKS</a></li>
+                        <li><a href="#">FOR HOTEL OWNERS</a></li>
+                        <li><a href="#">ABOUT</a></li>
+                    </ul>
+                </nav>
+                <div class="header-buttons">
+                    <a href="#" class="btn-outline">SIGN IN</a>
+                    <a href="#" class="btn">START INVESTING</a>
+                </div>
+                <button class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Dashboard Header -->
+        <section class="dashboard-header">
+            <div class="container">
+                <div class="dashboard-welcome">
+                    <h1>Investment Properties</h1>
+                    <p>Browse our curated selection of premium hotel investment opportunities.</p>
+                </div>
+                <div class="dashboard-stats">
+                    <div class="dashboard-stat">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Available Properties</span>
+                    </div>
+                    <div class="dashboard-stat">
+                        <span class="stat-number">$437M</span>
+                        <span class="stat-label">Total Value</span>
+                    </div>
+                    <div class="dashboard-stat">
+                        <span class="stat-number">7.9%</span>
+                        <span class="stat-label">Avg. Target Return</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Properties Filters -->
+        <section class="properties-filters">
+            <div class="container">
+                <div class="filters-wrapper">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search properties...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <button class="filter-btn active" data-filter="all">All Properties</button>
+                        <button class="filter-btn" data-filter="new">New Offerings</button>
+                        <button class="filter-btn" data-filter="funded">Fully Funded</button>
+                        <button class="filter-btn" data-filter="closing">Closing Soon</button>
+                    </div>
+                    
+                    <div class="sort-dropdown">
+                        <label for="sort-select">Sort By:</label>
+                        <select id="sort-select">
+                            <option value="return">Highest Return</option>
+                            <option value="newest">Newest First</option>
+                            <option value="min-investment">Lowest Investment</option>
+                            <option value="funding">Most Funded</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Properties Grid -->
+        <section class="properties-grid">
+            <div class="container">
+                <div class="properties-wrapper">
+                    <!-- Property Card 1 -->
+                    <div class="property-card-large">
+                        <div class="property-card-image">
+                            <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Grand Plaza Hotel">
+                            <div class="property-badge">Featured</div>
+                        </div>
+                        <div class="property-details">
+                            <div class="property-info">
+                                <h3>Grand Plaza Hotel</h3>
+                                <p class="property-location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+                                <div class="property-highlights">
+                                    <span><i class="fas fa-building"></i> 240 Rooms</span>
+                                    <span><i class="fas fa-calendar-check"></i> 82% Occupancy</span>
+                                </div>
+                                <p class="property-desc">Luxury 4-star hotel in the heart of San Francisco's financial district with strong cash flow and prime location.</p>
+                            </div>
+                            <div class="property-investment">
+                                <div class="investment-stats">
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$24M</span>
+                                        <span class="inv-label">Property Value</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">8.2%</span>
+                                        <span class="inv-label">Target Return</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$10,000</span>
+                                        <span class="inv-label">Min Investment</span>
+                                    </div>
+                                </div>
+                                <div class="funding-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 64%"></div>
+                                    </div>
+                                    <div class="progress-stats">
+                                        <span>64% Funded</span>
+                                        <span>$15.4M of $24M</span>
+                                    </div>
+                                </div>
+                                <div class="property-actions">
+                                    <a href="property.html" class="btn">View Property</a>
+                                    <button class="btn-icon"><i class="far fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property Card 2 -->
+                    <div class="property-card-large">
+                        <div class="property-card-image">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Marina Bay Resort">
+                            <div class="property-badge new">New</div>
+                        </div>
+                        <div class="property-details">
+                            <div class="property-info">
+                                <h3>Marina Bay Resort</h3>
+                                <p class="property-location"><i class="fas fa-map-marker-alt"></i> Miami, FL</p>
+                                <div class="property-highlights">
+                                    <span><i class="fas fa-building"></i> 180 Rooms</span>
+                                    <span><i class="fas fa-calendar-check"></i> 78% Occupancy</span>
+                                </div>
+                                <p class="property-desc">Beachfront resort in Miami with multiple food & beverage outlets and extensive amenities including a spa and marina.</p>
+                            </div>
+                            <div class="property-investment">
+                                <div class="investment-stats">
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$18M</span>
+                                        <span class="inv-label">Property Value</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">7.8%</span>
+                                        <span class="inv-label">Target Return</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$15,000</span>
+                                        <span class="inv-label">Min Investment</span>
+                                    </div>
+                                </div>
+                                <div class="funding-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 23%"></div>
+                                    </div>
+                                    <div class="progress-stats">
+                                        <span>23% Funded</span>
+                                        <span>$4.1M of $18M</span>
+                                    </div>
+                                </div>
+                                <div class="property-actions">
+                                    <a href="#" class="btn">View Property</a>
+                                    <button class="btn-icon"><i class="far fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property Card 3 -->
+                    <div class="property-card-large">
+                        <div class="property-card-image">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="The Hudson Boutique">
+                            <div class="property-badge">70% Funded</div>
+                        </div>
+                        <div class="property-details">
+                            <div class="property-info">
+                                <h3>The Hudson Boutique</h3>
+                                <p class="property-location"><i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                                <div class="property-highlights">
+                                    <span><i class="fas fa-building"></i> 120 Rooms</span>
+                                    <span><i class="fas fa-calendar-check"></i> 85% Occupancy</span>
+                                </div>
+                                <p class="property-desc">Upscale boutique hotel in Manhattan with high-end design, rooftop bar, and proximity to major tourist attractions.</p>
+                            </div>
+                            <div class="property-investment">
+                                <div class="investment-stats">
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$32M</span>
+                                        <span class="inv-label">Property Value</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">8.5%</span>
+                                        <span class="inv-label">Target Return</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$25,000</span>
+                                        <span class="inv-label">Min Investment</span>
+                                    </div>
+                                </div>
+                                <div class="funding-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 70%"></div>
+                                    </div>
+                                    <div class="progress-stats">
+                                        <span>70% Funded</span>
+                                        <span>$22.4M of $32M</span>
+                                    </div>
+                                </div>
+                                <div class="property-actions">
+                                    <a href="#" class="btn">View Property</a>
+                                    <button class="btn-icon"><i class="far fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property Card 4 -->
+                    <div class="property-card-large">
+                        <div class="property-card-image">
+                            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Westside Corporate Hotel">
+                            <div class="property-badge closing">Closing Soon</div>
+                        </div>
+                        <div class="property-details">
+                            <div class="property-info">
+                                <h3>Westside Corporate Hotel</h3>
+                                <p class="property-location"><i class="fas fa-map-marker-alt"></i> Chicago, IL</p>
+                                <div class="property-highlights">
+                                    <span><i class="fas fa-building"></i> 210 Rooms</span>
+                                    <span><i class="fas fa-calendar-check"></i> 76% Occupancy</span>
+                                </div>
+                                <p class="property-desc">Business-focused hotel near Chicago's business district with extensive meeting facilities and corporate amenities.</p>
+                            </div>
+                            <div class="property-investment">
+                                <div class="investment-stats">
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$22M</span>
+                                        <span class="inv-label">Property Value</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">7.2%</span>
+                                        <span class="inv-label">Target Return</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$20,000</span>
+                                        <span class="inv-label">Min Investment</span>
+                                    </div>
+                                </div>
+                                <div class="funding-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 92%"></div>
+                                    </div>
+                                    <div class="progress-stats">
+                                        <span>92% Funded</span>
+                                        <span>$20.2M of $22M</span>
+                                    </div>
+                                </div>
+                                <div class="property-actions">
+                                    <a href="#" class="btn">View Property</a>
+                                    <button class="btn-icon"><i class="far fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property Card 5 -->
+                    <div class="property-card-large">
+                        <div class="property-card-image">
+                            <img src="https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Alpine Mountain Lodge">
+                            <div class="property-badge new">New</div>
+                        </div>
+                        <div class="property-details">
+                            <div class="property-info">
+                                <h3>Alpine Mountain Lodge</h3>
+                                <p class="property-location"><i class="fas fa-map-marker-alt"></i> Aspen, CO</p>
+                                <div class="property-highlights">
+                                    <span><i class="fas fa-building"></i> 95 Rooms</span>
+                                    <span><i class="fas fa-calendar-check"></i> 92% Peak Season</span>
+                                </div>
+                                <p class="property-desc">Luxury mountain lodge with ski-in/ski-out access, spa facilities, and exceptional seasonal revenue performance.</p>
+                            </div>
+                            <div class="property-investment">
+                                <div class="investment-stats">
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$28M</span>
+                                        <span class="inv-label">Property Value</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">8.7%</span>
+                                        <span class="inv-label">Target Return</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$50,000</span>
+                                        <span class="inv-label">Min Investment</span>
+                                    </div>
+                                </div>
+                                <div class="funding-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 18%"></div>
+                                    </div>
+                                    <div class="progress-stats">
+                                        <span>18% Funded</span>
+                                        <span>$5.0M of $28M</span>
+                                    </div>
+                                </div>
+                                <div class="property-actions">
+                                    <a href="#" class="btn">View Property</a>
+                                    <button class="btn-icon"><i class="far fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property Card 6 -->
+                    <div class="property-card-large">
+                        <div class="property-card-image">
+                            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Oceanview Resort & Spa">
+                            <div class="property-badge funded">Fully Funded</div>
+                        </div>
+                        <div class="property-details">
+                            <div class="property-info">
+                                <h3>Oceanview Resort & Spa</h3>
+                                <p class="property-location"><i class="fas fa-map-marker-alt"></i> Maui, HI</p>
+                                <div class="property-highlights">
+                                    <span><i class="fas fa-building"></i> 150 Rooms</span>
+                                    <span><i class="fas fa-calendar-check"></i> 88% Occupancy</span>
+                                </div>
+                                <p class="property-desc">Premium beachfront resort in Maui with 5-star amenities, multiple restaurants, and comprehensive spa facilities.</p>
+                            </div>
+                            <div class="property-investment">
+                                <div class="investment-stats">
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$45M</span>
+                                        <span class="inv-label">Property Value</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">8.9%</span>
+                                        <span class="inv-label">Target Return</span>
+                                    </div>
+                                    <div class="inv-stat">
+                                        <span class="inv-value">$40,000</span>
+                                        <span class="inv-label">Min Investment</span>
+                                    </div>
+                                </div>
+                                <div class="funding-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 100%"></div>
+                                    </div>
+                                    <div class="progress-stats">
+                                        <span>100% Funded</span>
+                                        <span>$45M of $45M</span>
+                                    </div>
+                                </div>
+                                <div class="property-actions">
+                                    <a href="#" class="btn btn-secondary">Waiting List</a>
+                                    <button class="btn-icon"><i class="far fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <span class="page-separator">...</span>
+                    <button class="page-btn">6</button>
+                    <button class="page-btn next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Investment Guide -->
+        <section class="investment-guide">
+            <div class="container">
+                <div class="guide-wrapper">
+                    <div class="guide-content">
+                        <h2>New to Hotel Investing?</h2>
+                        <p>Learn how to evaluate hotel properties, understand key metrics, and build a diversified portfolio.</p>
+                        <a href="#" class="btn btn-lg">Download Investment Guide</a>
+                    </div>
+                    <div class="guide-image">
+                        <img src="https://images.unsplash.com/photo-1599619585311-afde5d54106d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80" alt="Investment Guide">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col">
+                    <h3>HOTELSHARES</h3>
+                    <p>Democratizing hotel ownership through fractional investment opportunities since 2020.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>EXPLORE</h4>
+                    <ul>
+                        <li><a href="#">Properties</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">For Hotel Owners</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>RESOURCES</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Investment Guide</a></li>
+                        <li><a href="#">Tax Information</a></li>
+                        <li><a href="#">Glossary</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>LEGAL</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Disclaimers</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HotelShares. All rights reserved.</p>
+                <p>Investments involve risk and are not guaranteed. Please read all offering documents before investing.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

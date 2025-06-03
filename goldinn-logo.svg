@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F1C232;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <g>
+    <!-- Building silhouettes -->
+    <path d="M300,100 L180,330 L420,330 Z" fill="#1A1F2C" stroke="url(#goldGradient)" stroke-width="8"/>
+    <path d="M240,200 L140,330 L340,330 Z" fill="#1A1F2C" stroke="url(#goldGradient)" stroke-width="8"/>
+    <path d="M360,200 L260,330 L460,330 Z" fill="#1A1F2C" stroke="url(#goldGradient)" stroke-width="8"/>
+    
+    <!-- Windows -->
+    <rect x="215" y="180" width="20" height="20" fill="url(#goldGradient)"/>
+    <rect x="265" y="180" width="20" height="20" fill="url(#goldGradient)"/>
+    <rect x="315" y="180" width="20" height="20" fill="url(#goldGradient)"/>
+    <rect x="365" y="180" width="20" height="20" fill="url(#goldGradient)"/>
+    
+    <rect x="215" y="220" width="20" height="20" fill="url(#goldGradient)"/>
+    <rect x="265" y="220" width="20" height="20" fill="url(#goldGradient)"/>
+    <rect x="315" y="220" width="20" height="20" fill="url(#goldGradient)"/>
+    <rect x="365" y="220" width="20" height="20" fill="url(#goldGradient)"/>
+    
+    <rect x="215" y="260" width="20" height="20" fill="url(#goldGradient)"/>
+    <rect x="265" y="260" width="20" height="20" fill="url(#goldGradient)"/>
+    <rect x="315" y="260" width="20" height="20" fill="url(#goldGradient)"/>
+    <rect x="365" y="260" width="20" height="20" fill="url(#goldGradient)"/>
+    
+    <!-- Base horizontal line -->
+    <line x1="140" y1="330" x2="460" y2="330" stroke="url(#goldGradient)" stroke-width="10"/>
+    
+    <!-- GOLDINN text -->
+    <text x="300" y="370" font-family="Garamond, serif" font-size="48" font-weight="bold" text-anchor="middle" fill="url(#goldGradient)">GOLDINN</text>
+    
+    <!-- Registered trademark symbol -->
+    <text x="430" y="355" font-family="Garamond, serif" font-size="20" text-anchor="middle" fill="url(#goldGradient)">®</text>
+  </g>
+</svg>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oceanfront Luxury Resort | HotelShares</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="hoteshares-fix.css">
+    <link rel="stylesheet" href="app-preview-responsive-fix.css">
+    <link rel="stylesheet" href="layout-fix.css">
+</head>
+<body>
+    <!-- Dashboard Navigation -->
+    <nav class="dashboard-nav">
+        <div class="container">
+            <div class="dashboard-nav-content">
+                <div class="logo">
+                    <h1>HotelShares</h1>
+                </div>
+                <div class="dashboard-links">
+                    <a href="property-listings.html" class="active"><i class="fas fa-building"></i> Properties</a>
+                    <a href="#"><i class="fas fa-chart-line"></i> Portfolio</a>
+                    <a href="#"><i class="fas fa-wallet"></i> Wallet</a>
+                    <a href="#"><i class="fas fa-file-alt"></i> Documents</a>
+                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                </div>
+                <div class="user-menu">
+                    <span class="user-balance">Balance: $25,000</span>
+                    <div class="user-profile">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Profile">
+                        <span>John Doe <i class="fas fa-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Property Detail Header -->
+    <section class="property-detail-header">
+        <div class="container">
+            <div class="back-button">
+                <a href="property-listings.html"><i class="fas fa-arrow-left"></i> Back to Properties</a>
+            </div>
+            <div class="property-header-content">
+                <div class="property-header-info">
+                    <div class="property-badge">Featured</div>
+                    <h1>Oceanfront Luxury Resort</h1>
+                    <p class="property-location"><i class="fas fa-map-marker-alt"></i> Maui, Hawaii</p>
+                    <div class="property-tags">
+                        <span class="tag">Luxury</span>
+                        <span class="tag">Beachfront</span>
+                        <span class="tag">Resort</span>
+                        <span class="tag">High Yield</span>
+                    </div>
+                </div>
+                <div class="property-header-actions">
+                    <button onclick="toggleFavorite()" class="btn btn-outline"><i class="far fa-heart"></i> Save</button>
+                    <button onclick="shareProperty()" class="btn btn-outline"><i class="fas fa-share-alt"></i> Share</button>
+                    <a href="invest.html" class="btn btn-primary invest-btn">Invest Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Property Gallery -->
+    <section class="property-gallery">
+        <div class="container">
+            <div class="gallery-grid">
+                <div class="gallery-main">
+                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80" alt="Oceanfront Luxury Resort Main">
+                </div>
+                <div class="gallery-thumbs">
+                    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=480&q=80" alt="Resort Pool">
+                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=480&q=80" alt="Resort Room">
+                    <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=480&q=80" alt="Resort Restaurant">
+                    <div class="more-photos">
+                        <div class="more-overlay">
+                            <i class="fas fa-images"></i>
+                            <span>12 more</span>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=480&q=80" alt="More Photos">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Property Overview -->
+    <section class="property-tabs-section">
+        <div class="container">
+            <div class="tabs-navigation">
+                <a href="#overview" class="tab active">Overview</a>
+                <a href="#financials" class="tab">Financials</a>
+                <a href="#documents" class="tab">Documents</a>
+                <a href="#location" class="tab">Location</a>
+                <a href="#management" class="tab">Management</a>
+                <a href="#updates" class="tab">Updates</a>
+            </div>
+            
+            <div class="tab-content" id="overview">
+                <div class="property-overview">
+                    <div class="overview-main">
+                        <div class="overview-card">
+                            <h2>Property Summary</h2>
+                            <p>The Oceanfront Luxury Resort is a premier 5-star property located on the pristine beaches of Maui, Hawaii. Built in 2015 and renovated in 2022, this property offers 120 rooms including 25 luxury suites and 5 beachfront villas. The resort features 3 restaurants, 2 bars, a full-service spa, and extensive conference facilities.</p>
+                            <p>This investment opportunity allows fractional ownership in one of Hawaii's top-performing luxury resorts, with professional management by Elite Hospitality Group providing investors with passive income and potential property appreciation.</p>
+                            
+                            <h3>Key Highlights</h3>
+                            <ul class="key-highlights">
+                                <li><i class="fas fa-check"></i> Prime beachfront location in high-demand tourist destination</li>
+                                <li><i class="fas fa-check"></i> 5-star luxury resort with extensive facilities</li>
+                                <li><i class="fas fa-check"></i> Professional management by Elite Hospitality Group</li>
+                                <li><i class="fas fa-check"></i> Passive income and potential property appreciation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 
