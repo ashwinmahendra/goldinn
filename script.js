@@ -264,6 +264,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    // Initialize the hotel owner benefits scenarios
+    initHotelOwnerBenefitsScenarios();
 });
 
 // Navbar functions
@@ -1640,4 +1643,32 @@ function initializeCharts(property) {
 function updateCharts(period) {
     console.log(`Updating charts for period: ${period}`);
     // In a real application, this would fetch new data based on the selected period
+}
+
+// Function to initialize the hotel owner benefits scenarios tabs
+function initHotelOwnerBenefitsScenarios() {
+    const scenarioTabs = document.querySelectorAll('.scenario-tab');
+    const scenarioPanes = document.querySelectorAll('.scenario-pane');
+    
+    if (!scenarioTabs.length || !scenarioPanes.length) return;
+    
+    scenarioTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs and panes
+            scenarioTabs.forEach(t => t.classList.remove('active'));
+            scenarioPanes.forEach(p => p.classList.remove('active'));
+            
+            // Add active class to current tab
+            tab.classList.add('active');
+            
+            // Get the scenario number from data attribute
+            const scenarioNumber = tab.getAttribute('data-scenario');
+            
+            // Activate the corresponding scenario pane
+            const targetPane = document.getElementById(`scenario-${scenarioNumber}`);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+        });
+    });
 } 

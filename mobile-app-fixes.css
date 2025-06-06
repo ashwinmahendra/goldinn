@@ -596,15 +596,16 @@
 }
 
 .metric-value {
-  font-weight: 600;
+  font-weight: 700;
   margin-right: 0.15rem;
-  color: #FFFFFF;
-  font-size: 0.7rem;
+  color: #D4AF37;
+  font-size: 2rem;
 }
 
 .metric-label {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.55rem;
+  color: #8E9AAF;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 @media (max-width: 320px) {
