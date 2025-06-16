@@ -7918,3 +7918,931 @@ body.dark-mode .app-logo-text {
         font-weight: 700;
     }
 }
+
+/* Enhanced Property Modal Styles */
+
+/* Financial Overview Styling */
+.financial-overview {
+    margin-bottom: 2rem;
+}
+
+.key-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.financial-metric {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.financial-metric:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+}
+
+.financial-metric .metric-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #D4AF37, #B8941F);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.financial-metric .metric-info {
+    flex: 1;
+}
+
+.financial-metric .metric-label {
+    display: block;
+    font-size: 0.875rem;
+    color: #8E9AAF;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.financial-metric .metric-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #D4AF37;
+    margin-bottom: 0.125rem;
+}
+
+.financial-metric .metric-change {
+    display: block;
+    font-size: 0.75rem;
+    color: #8E9AAF;
+}
+
+.financial-metric .metric-change.positive {
+    color: #4CAF50;
+}
+
+/* Investment Projections */
+.investment-projections {
+    margin-bottom: 2rem;
+}
+
+.investment-projections h4 {
+    color: #D4AF37;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.projection-scenarios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.scenario-card {
+    background: rgba(26, 31, 44, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.scenario-card:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    transform: translateY(-2px);
+}
+
+.scenario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scenario-header h5 {
+    color: #D4AF37;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.scenario-probability {
+    background: rgba(212, 175, 55, 0.2);
+    color: #D4AF37;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.scenario-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.scenario-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scenario-item .label {
+    color: #8E9AAF;
+    font-size: 0.875rem;
+}
+
+.scenario-item .value {
+    color: #D4AF37;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* Enhanced Amenities Styling */
+.property-features {
+    margin-top: 2rem;
+}
+
+.feature-section {
+    margin-bottom: 2rem;
+}
+
+.feature-section h4 {
+    color: #D4AF37;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.amenity {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(26, 31, 44, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.amenity:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    transform: translateY(-1px);
+}
+
+.amenity.premium {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.amenity i {
+    font-size: 1.25rem;
+    color: #D4AF37;
+    margin-right: 1rem;
+    width: 24px;
+    text-align: center;
+}
+
+.amenity-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.amenity-name {
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.125rem;
+}
+
+.amenity-desc {
+    font-size: 0.8rem;
+    color: #8E9AAF;
+}
+
+/* Location Advantages */
+.location-advantages {
+    margin-top: 2rem;
+}
+
+.location-advantages h4 {
+    color: #D4AF37;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.location-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.location-point {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(26, 31, 44, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.location-point:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.location-point i {
+    color: #D4AF37;
+    margin-right: 0.75rem;
+    width: 20px;
+    text-align: center;
+}
+
+.location-point span {
+    color: #ffffff;
+    font-size: 0.875rem;
+}
+
+/* Modal enhancements for dark mode */
+body.dark-mode .financial-metric {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.08));
+    border-color: rgba(212, 175, 55, 0.25);
+}
+
+body.dark-mode .scenario-card {
+    background: rgba(26, 31, 44, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .amenity,
+body.dark-mode .location-point {
+    background: rgba(26, 31, 44, 0.6);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Mobile responsiveness for modals */
+@media (max-width: 768px) {
+    .key-metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .projection-scenarios {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .amenities-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .location-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.75rem;
+    }
+    
+    .financial-metric {
+        padding: 1rem;
+    }
+    
+    .financial-metric .metric-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+/* FAQ Section Styles - Optimized for Space Efficiency */
+.faq-section {
+    padding: 80px 0 60px 0;
+    background: linear-gradient(135deg, #0a0f1c 0%, #1a1f2e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.faq-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.faq-header {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 2;
+}
+
+.faq-header .section-subtitle {
+    color: #D4AF37;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-family: 'Manrope', sans-serif;
+}
+
+.faq-header .section-title {
+    font-size: 40px;
+    font-weight: 700;
+    color: #F5F7FA;
+    margin-bottom: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1.2;
+}
+
+.faq-header .section-description {
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.faq-header .section-description p {
+    font-size: 16px;
+    color: #B8BCC5;
+    line-height: 1.5;
+    font-family: 'Manrope', sans-serif;
+    margin: 0;
+}
+
+.faq-tabs {
+    position: relative;
+    z-index: 2;
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 12px 28px;
+    background: rgba(26, 31, 46, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 25px;
+    color: #B8BCC5;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Manrope', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.tab-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.tab-btn:hover::before {
+    left: 100%;
+}
+
+.tab-btn:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+    color: #D4AF37;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #D4AF37, #B8941F);
+    border-color: #D4AF37;
+    color: #0a0f1c;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.tab-content-container {
+    position: relative;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeInUp 0.4s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.faq-intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.faq-intro h3 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #F5F7FA;
+    margin-bottom: 8px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.faq-intro .subtitle {
+    font-size: 16px;
+    color: #D4AF37;
+    font-weight: 500;
+    font-family: 'Manrope', sans-serif;
+    margin: 0;
+}
+
+.faq-list {
+    max-width: 850px;
+    margin: 0 auto;
+    display: grid;
+    gap: 12px;
+}
+
+.faq-item {
+    background: rgba(26, 31, 46, 0.4);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.faq-item:hover {
+    border-color: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.08);
+}
+
+.faq-question {
+    padding: 18px 22px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.faq-question::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.04), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.faq-question:hover::before {
+    opacity: 1;
+}
+
+.faq-question h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #F5F7FA;
+    margin: 0;
+    font-family: 'Manrope', sans-serif;
+    flex: 1;
+    padding-right: 16px;
+    line-height: 1.4;
+}
+
+.toggle-icon {
+    width: 28px;
+    height: 28px;
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.toggle-icon i {
+    color: #D4AF37;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .toggle-icon {
+    background: #D4AF37;
+    transform: rotate(45deg);
+}
+
+.faq-item.active .toggle-icon i {
+    color: #0a0f1c;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    background: rgba(10, 15, 28, 0.3);
+}
+
+.faq-item.active .faq-answer {
+    padding: 0 22px 20px 22px;
+}
+
+.faq-answer p {
+    color: #B8BCC5;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    font-family: 'Manrope', sans-serif;
+}
+
+.faq-answer p:last-child {
+    margin-bottom: 0;
+}
+
+.faq-answer strong {
+    color: #D4AF37;
+    font-weight: 600;
+}
+
+.faq-answer ul {
+    margin: 12px 0;
+    padding-left: 18px;
+}
+
+.faq-answer li {
+    color: #B8BCC5;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 6px;
+    font-family: 'Manrope', sans-serif;
+}
+
+.comparison-table {
+    margin: 16px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(26, 31, 46, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-row.header {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.table-row.header .cell {
+    font-weight: 700;
+    color: #D4AF37;
+}
+
+.cell {
+    padding: 12px 10px;
+    font-size: 13px;
+    color: #B8BCC5;
+    font-family: 'Manrope', sans-serif;
+    text-align: center;
+    border-right: 1px solid rgba(212, 175, 55, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+}
+
+.cell:last-child {
+    border-right: none;
+}
+
+.cell.highlight {
+    color: #D4AF37;
+    font-weight: 600;
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.faq-cta {
+    text-align: center;
+    margin-top: 40px;
+    padding: 30px 25px;
+    background: rgba(26, 31, 46, 0.3);
+    border-radius: 16px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.faq-cta p {
+    font-size: 16px;
+    color: #F5F7FA;
+    margin-bottom: 18px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+}
+
+.faq-trust-section {
+    margin-top: 40px;
+    padding: 30px 25px;
+    background: rgba(26, 31, 46, 0.3);
+    border-radius: 16px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.faq-trust-section h4 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #F5F7FA;
+    text-align: center;
+    margin-bottom: 24px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.trust-items {
+    display: grid;
+    gap: 18px;
+}
+
+.trust-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.trust-item i {
+    color: #D4AF37;
+    font-size: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.trust-item p {
+    color: #B8BCC5;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+    font-family: 'Manrope', sans-serif;
+}
+
+.trust-item strong {
+    color: #D4AF37;
+    font-weight: 600;
+}
+
+/* Responsive Design - Optimized */
+@media (max-width: 1200px) {
+    .faq-section {
+        padding: 70px 0 50px 0;
+    }
+    
+    .faq-header .section-title {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .faq-section {
+        padding: 60px 0 40px 0;
+    }
+    
+    .faq-header {
+        margin-bottom: 35px;
+    }
+    
+    .faq-header .section-title {
+        font-size: 32px;
+    }
+    
+    .faq-header .section-description p {
+        font-size: 15px;
+    }
+    
+    .tab-buttons {
+        gap: 12px;
+        margin-bottom: 30px;
+    }
+    
+    .tab-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+    
+    .faq-intro {
+        margin-bottom: 25px;
+    }
+    
+    .faq-intro h3 {
+        font-size: 24px;
+    }
+    
+    .faq-intro .subtitle {
+        font-size: 15px;
+    }
+    
+    .faq-question {
+        padding: 16px 18px;
+    }
+    
+    .faq-question h4 {
+        font-size: 15px;
+        padding-right: 12px;
+    }
+    
+    .faq-item.active .faq-answer {
+        padding: 0 18px 16px 18px;
+    }
+    
+    .comparison-table {
+        font-size: 11px;
+    }
+    
+    .table-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .cell {
+        padding: 10px;
+        border-right: none;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        text-align: left;
+        min-height: auto;
+    }
+    
+    .table-row:not(.header) .cell:first-child {
+        font-weight: 600;
+        color: #D4AF37;
+        background: rgba(212, 175, 55, 0.05);
+    }
+    
+    .faq-cta {
+        margin-top: 30px;
+        padding: 25px 20px;
+    }
+    
+    .faq-cta p {
+        font-size: 15px;
+        margin-bottom: 16px;
+    }
+    
+    .faq-trust-section {
+        margin-top: 30px;
+        padding: 25px 20px;
+    }
+    
+    .faq-trust-section h4 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    
+    .trust-items {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-section {
+        padding: 50px 0 35px 0;
+    }
+    
+    .faq-header .section-title {
+        font-size: 28px;
+    }
+    
+    .tab-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .tab-btn {
+        width: 100%;
+        max-width: 260px;
+        padding: 10px 16px;
+    }
+    
+    .faq-question {
+        padding: 14px 16px;
+    }
+    
+    .faq-question h4 {
+        font-size: 14px;
+        padding-right: 10px;
+    }
+    
+    .toggle-icon {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .toggle-icon i {
+        font-size: 10px;
+    }
+    
+    .faq-item.active .faq-answer {
+        padding: 0 16px 14px 16px;
+    }
+    
+    .faq-answer p,
+    .faq-answer li {
+        font-size: 13px;
+    }
+    
+    .comparison-table {
+        font-size: 10px;
+    }
+    
+    .cell {
+        padding: 8px;
+    }
+    
+    .faq-cta {
+        padding: 20px 16px;
+    }
+    
+    .faq-trust-section {
+        padding: 20px 16px;
+    }
+}
+
+/* Dark mode compatibility - Simplified */
+.dark-mode .faq-section {
+    background: linear-gradient(135deg, #000000 0%, #111111 100%);
+}
+
+.dark-mode .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(212, 175, 55, 0.1);
+}
+
+.dark-mode .faq-item:hover {
+    border-color: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.08);
+}
+
+.dark-mode .tab-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+.dark-mode .tab-btn:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+}
+
+.dark-mode .comparison-table {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+.dark-mode .faq-cta,
+.dark-mode .faq-trust-section {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(212, 175, 55, 0.1);
+}
