@@ -175,10 +175,10 @@
 }
 
 .returns-value {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #FFFFFF;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.3rem;
 }
 
 .returns-progress-bar {
@@ -223,25 +223,25 @@
 
 /* Risk disclaimer */
 .risk-disclaimer {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   color: rgba(255, 255, 255, 0.45);
   text-align: center;
-  margin: 0 0.6rem 0.5rem;
-  padding: 0.3rem 0.5rem;
+  margin: 0.3rem 0.6rem 0.4rem;
+  padding: 0.25rem 0.4rem;
   line-height: 1.2;
-  border-radius: 8px;
+  border-radius: 6px;
   background-color: rgba(0, 0, 0, 0.15);
   z-index: 10;
 }
 
 /* Property View */
 .property-hero {
-  margin: -0.4rem -0.4rem 0.5rem;
+  margin: -0.4rem -0.4rem 0.3rem;
   position: relative;
 }
 
 .property-cover-img {
-  height: 175px;
+  height: 140px;
   overflow: hidden;
   position: relative;
 }
@@ -254,44 +254,44 @@
 
 .property-header {
   background-color: #121212;
-  padding: 0.6rem 0.6rem 0.4rem;
-  margin-top: -1.2rem;
+  padding: 0.5rem 0.6rem 0.3rem;
+  margin-top: -1rem;
   border-radius: 1rem 1rem 0 0;
   position: relative;
   z-index: 1;
 }
 
 .property-header h3 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #FFFFFF;
-  margin: 0 0 0.2rem;
+  margin: 0 0 0.15rem;
 }
 
 .property-location {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: #AAAAAA;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.3rem;
   display: flex;
   align-items: center;
 }
 
 .property-location i {
-  margin-right: 0.25rem;
+  margin-right: 0.2rem;
   color: #D4AF37;
 }
 
 .property-tags {
   display: flex;
-  gap: 0.25rem;
-  margin-bottom: 0.4rem;
+  gap: 0.2rem;
+  margin-bottom: 0.3rem;
 }
 
 .property-tag {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: 500;
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.75rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.6rem;
   background-color: #232834;
   color: #CCCCCC;
 }
@@ -326,41 +326,62 @@
 
 /* Funding Status */
 .funding-status {
-  margin: 0.5rem 0;
+  margin: 0.3rem 0.4rem;
+  padding: 0.4rem;
+  background-color: #1A1F2C;
+  border-radius: 8px;
+}
+
+.funding-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  font-size: 0.7rem;
+  color: #CCCCCC;
 }
 
 .funding-progress {
-  height: 4px;
+  height: 3px;
   background-color: rgba(255, 255, 255, 0.08);
   border-radius: 2px;
   overflow: hidden;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
 .funding-stats {
   display: flex;
   justify-content: space-between;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   color: #AAAAAA;
+}
+
+.raised-amount {
+  color: #4CD964;
+  font-weight: 600;
 }
 
 .time-left {
   color: #FF5252;
   display: flex;
   align-items: center;
-  gap: 0.15rem;
+  gap: 0.1rem;
 }
 
 /* CTA Button */
+.investment-cta {
+  margin: 0.3rem 0.4rem;
+}
+
 .btn-invest {
   width: 100%;
   background-color: #D4AF37;
   color: #121212;
   border: none;
-  border-radius: 10px;
-  font-size: 0.8rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 0.6rem;
+  padding: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -370,17 +391,13 @@
   transform: translateY(-2px);
 }
 
-.investment-cta {
-  margin-top: 0.5rem;
-}
-
 /* Navigation Bar */
 .app-nav-bar {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 48px;
+  height: 44px;
   background-color: #1A1F2C;
   display: flex;
   justify-content: space-around;
@@ -400,12 +417,12 @@
 }
 
 .nav-item i {
-  font-size: 0.95rem;
-  margin-bottom: 0.1rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.05rem;
 }
 
 .nav-item span {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
 }
 
 .nav-item.active {
@@ -462,37 +479,37 @@
 .stat-cards {
   display: flex;
   justify-content: space-between;
-  padding: 0 6px;
-  margin-bottom: 8px;
+  padding: 0 0.4rem;
+  margin-bottom: 0.4rem;
 }
 
 .stat-card {
   background-color: #1A1F2C;
-  border-radius: 8px;
-  padding: 6px 4px;
+  border-radius: 6px;
+  padding: 0.4rem 0.3rem;
   text-align: center;
   flex: 1;
-  margin: 0 2px;
+  margin: 0 0.15rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .stat-value {
-  font-size: 13px;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #FFFFFF;
-  margin-bottom: 1px;
+  margin-bottom: 0.1rem;
 }
 
 .stat-label {
-  font-size: 8px;
+  font-size: 0.6rem;
   color: rgba(255, 255, 255, 0.6);
 }
 
 /* Circular Progress */
 .stat-circular-progress {
-  width: 1.6rem;
-  height: 1.6rem;
-  margin: 0 auto 0.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0.1rem auto 0.15rem;
 }
 
 .circle-bg {
@@ -505,106 +522,135 @@
 
 /* Progress bar in stat card */
 .stat-progress-bar {
-  height: 3px;
-  margin: 0.4rem auto;
-  width: 80%;
+  height: 2px;
+  margin: 0.2rem auto;
+  width: 70%;
 }
 
 /* Performance chart */
 .performance-card {
-  margin: 0 0.5rem 0.5rem;
-  padding: 0.6rem;
+  margin: 0 0.4rem 0.3rem;
+  padding: 0.5rem;
 }
 
 .performance-label {
-  font-size: 0.65rem;
-  margin-bottom: 0.1rem;
+  font-size: 0.6rem;
+  margin-bottom: 0.05rem;
 }
 
 .performance-chart {
-  height: 6rem;
-  margin-top: 0.5rem;
+  height: 4rem;
+  margin-top: 0.3rem;
 }
 
 .chart-bars {
-  height: 4.5rem;
-  padding-bottom: 0.3rem;
+  height: 3rem;
+  padding-bottom: 0.2rem;
 }
 
 .chart-bar {
-  border-radius: 0.15rem 0.15rem 0 0;
+  border-radius: 0.1rem 0.1rem 0 0;
 }
 
 .chart-label {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
 }
 
 .bar-tooltip {
-  font-size: 0.6rem;
-  padding: 0.1rem 0.25rem;
-  top: -1.1rem;
+  font-size: 0.55rem;
+  padding: 0.05rem 0.2rem;
+  top: -0.9rem;
 }
 
 /* Investment breakdown */
 .investment-breakdown {
-  margin: 0 0.5rem 0.5rem;
-  padding: 0.6rem;
-  border-radius: 0.6rem;
+  margin: 0 0.4rem 0.3rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: #1A1F2C;
 }
 
 .breakdown-header {
-  font-size: 0.75rem;
-  margin-bottom: 0.4rem;
+  font-size: 0.7rem;
+  margin-bottom: 0.3rem;
+  color: #CCCCCC;
 }
 
 .breakdown-items {
-  gap: 0.3rem;
+  gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 0;
 }
 
 .item-label {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
+  color: #AAAAAA;
 }
 
 .item-value {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.item-bar {
+  flex: 1;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 1px;
+  margin: 0 0.4rem;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background-color: #D4AF37;
+  border-radius: 1px;
 }
 
 /* Minimalist property metrics */
 .property-metrics {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.25rem;
-  margin: 0 0.4rem 0.4rem;
+  gap: 0.2rem;
+  margin: 0 0.4rem 0.3rem;
 }
 
 .metric-item {
   background-color: #1A1F2C;
   border-radius: 6px;
-  padding: 0.25rem 0.3rem;
+  padding: 0.2rem 0.25rem;
   display: flex;
   align-items: center;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  min-height: 32px;
+  min-height: 28px;
 }
 
 .metric-icon {
   color: #D4AF37;
-  margin-right: 0.25rem;
-  font-size: 0.75rem;
-  width: 0.9rem;
+  margin-right: 0.2rem;
+  font-size: 0.65rem;
+  width: 0.8rem;
   text-align: center;
 }
 
 .metric-value {
   font-weight: 700;
-  margin-right: 0.15rem;
+  margin-right: 0.1rem;
   color: #D4AF37;
-  font-size: 2rem;
+  font-size: 0.75rem;
 }
 
 .metric-label {
   color: #8E9AAF;
-  font-size: 0.9rem;
+  font-size: 0.65rem;
   font-weight: 500;
 }
 
@@ -633,6 +679,8 @@
   border-radius: 12px;
   padding: 0.6rem;
   margin: 0 0.5rem 0.5rem;
+  max-height: 140px;
+  overflow: hidden;
 }
 
 .activity-header {
@@ -656,13 +704,15 @@
 .activity-items {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  max-height: 90px;
+  overflow: hidden;
 }
 
 .activity-item {
   display: flex;
   align-items: center;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -672,8 +722,8 @@
 }
 
 .activity-icon {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.6rem;
+  height: 1.6rem;
   border-radius: 50%;
   background-color: rgba(212, 175, 55, 0.15);
   display: flex;
@@ -681,11 +731,13 @@
   justify-content: center;
   margin-right: 0.5rem;
   color: #D4AF37;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  flex-shrink: 0;
 }
 
 .activity-content {
   flex: 1;
+  min-width: 0;
 }
 
 .activity-title {
@@ -693,6 +745,9 @@
   font-weight: 500;
   color: #FFFFFF;
   margin-bottom: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .activity-details {
@@ -700,4 +755,220 @@
   color: rgba(255, 255, 255, 0.6);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.activity-details span:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 0.5rem;
+}
+
+.activity-details span:last-child {
+  color: #D4AF37;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Dividends Container */
+.dividends-container {
+  background-color: #1A1F2C;
+  border-radius: 12px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.dividends-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.dividends-header span {
+  font-size: 0.8rem;
+  color: #CCCCCC;
+  font-weight: 500;
+}
+
+.dividend-period {
+  background-color: rgba(76, 217, 100, 0.2);
+  color: #4CD964;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.8rem;
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+.dividends-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 0.6rem;
+}
+
+.dividend-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.dividend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dividend-item:last-child {
+  border-bottom: none;
+}
+
+.dividend-property {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.property-icon {
+  font-size: 0.9rem;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(212, 175, 55, 0.1);
+  border-radius: 6px;
+}
+
+.dividend-property span {
+  font-size: 0.75rem;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.dividend-amount {
+  font-size: 0.8rem;
+  color: #4CD964;
+  font-weight: 600;
+}
+
+/* Property Appreciation Container */
+.appreciation-container {
+  background-color: #1A1F2C;
+  border-radius: 12px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.appreciation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.appreciation-header span {
+  font-size: 0.8rem;
+  color: #CCCCCC;
+  font-weight: 500;
+}
+
+.appreciation-period {
+  background-color: rgba(212, 175, 55, 0.2);
+  color: #D4AF37;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.8rem;
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+.appreciation-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.appreciation-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.appreciation-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #4CD964;
+}
+
+.appreciation-percentage {
+  font-size: 0.8rem;
+  color: #4CD964;
+  font-weight: 600;
+}
+
+.appreciation-chart {
+  flex-shrink: 0;
+}
+
+.mini-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 32px;
+}
+
+.chart-point {
+  width: 4px;
+  background-color: rgba(212, 175, 55, 0.4);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.chart-point.active {
+  background-color: #D4AF37;
+}
+
+.top-performers {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 0.6rem;
+}
+
+.performer-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.performer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.performer-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.performer-name {
+  font-size: 0.75rem;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.performer-gain {
+  font-size: 0.75rem;
+  color: #4CD964;
+  font-weight: 600;
+}
+
+/* Ensure content doesn't overlap with nav */
+.app-screen.property-detail {
+  padding-bottom: 50px;
 }

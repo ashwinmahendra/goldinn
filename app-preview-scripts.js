@@ -78,35 +78,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 1. Update portfolio value to be consistent with returns calculation
                 // 2. Make sure the return percentage makes sense with the actual numbers
 
-                // Using consistent values:
-                // - Initial investment: $300,000
-                // - Current portfolio value: $390,000 (30% total return)
-                // - Annual return: 7.5% (for better realism)
-                // - Annual value increase: ~$22,500 (which is 7.5% annual return on $300,000 initial investment)
+                // Update portfolio values to match user's requirements
+                // - Portfolio value: $52,500 (updated from $390,000)
+                // - Annual value increase: ~$3,938 (which is 7.5% annual return on $52,500)
                 
                 // Animate dashboard values
                 const portfolioValue = document.querySelector('.dashboard-view .amount');
                 if (portfolioValue) {
-                    animateCounter(portfolioValue, 0, 390000, 2000, '', '', 0);
+                    animateCounter(portfolioValue, 0, 52500, 2000, '', '', 0);
                 }
                 
                 // Update the annual growth percentage display
                 const portfolioGrowth = document.querySelector('.portfolio-growth span');
                 if (portfolioGrowth) {
-                    portfolioGrowth.textContent = '+$22,500 (7.5%)';
+                    portfolioGrowth.textContent = '+$3,938';
                 }
                 
                 // Animate returns value
                 const returnsValue = document.querySelector('.returns-value');
                 if (returnsValue) {
-                    // Update to show consistent returns ($90,000 which is 30% of $300,000)
-                    animateCounter(returnsValue, 0, 90000, 1800, '$', '', 0);
+                    // Update to show consistent returns ($9,000 which is about 17% of $52,500)
+                    animateCounter(returnsValue, 0, 9000, 1800, '$', '', 0);
                 }
                 
                 // Update return percentage badge
                 const returnBadge = document.querySelector('.return-badge');
                 if (returnBadge) {
-                    returnBadge.textContent = '30.0%';
+                    returnBadge.textContent = '17.1%';
                 }
 
                 // Add risk disclaimer if it doesn't exist
@@ -131,16 +129,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         portfolioInfo.innerHTML = `
                             <div class="portfolio-info-item">
-                                <div class="info-label">Initial</div>
-                                <div class="info-value">$300,000</div>
+                                <div class="info-label">Capital</div>
+                                <div class="info-value">$43,500</div>
                             </div>
                             <div class="portfolio-info-item">
                                 <div class="info-label">Properties</div>
-                                <div class="info-value">23</div>
+                                <div class="info-value">9</div>
                             </div>
                             <div class="portfolio-info-item">
                                 <div class="info-label">ROI</div>
-                                <div class="info-value">7.5%</div>
+                                <div class="info-value">17.1%</div>
                             </div>
                         `;
                         
