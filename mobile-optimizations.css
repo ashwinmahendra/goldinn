@@ -210,27 +210,25 @@ body.mobile-menu-open {
     font-size: 1rem;
   }
   
-  /* App previews mobile optimization */
-  .app-previews {
-    order: 1;
-    margin-bottom: 2rem;
-    overflow: hidden;
-  }
-  
+  /* App previews: show device mockups side by side with horizontal scroll */
   .preview-devices {
-    justify-content: center;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start;
+    align-items: stretch;
     gap: 1rem;
-    flex-wrap: wrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
   }
-  
   .device-mockup {
-    transform: scale(0.8);
-    margin: 0.5rem;
-  }
-  
-  .device-mockup.device-left,
-  .device-mockup.device-right {
-    transform: scale(0.7);
+    min-width: 220px;
+    max-width: 80vw;
+    flex: 0 0 auto;
+    transform: scale(1);
+    margin: 0;
   }
   
   /* Section spacing for mobile */
@@ -530,7 +528,8 @@ body.mobile-menu-open {
   }
   
   .device-mockup {
-    transform: scale(0.5);
+    min-width: 170px;
+    max-width: 90vw;
   }
   
   .device-mockup.device-left,
