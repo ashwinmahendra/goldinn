@@ -1,14 +1,18 @@
 /* NUCLEAR OVERRIDE - MOBILE PREVIEW SWIPE FUNCTIONALITY */
 /* CRITICAL: Use maximum CSS specificity to override ALL conflicting styles */
+/* ULTRA HIGH SPECIFICITY TO OVERRIDE app-preview-styles.css */
 
 /* FORCE SINGLE DEVICE VIEW ON MOBILE - NUCLEAR APPROACH */
 @media screen and (max-width: 768px) {
   
-  /* NUCLEAR OVERRIDE: Force app-previews container to full height */
+  /* NUCLEAR OVERRIDE: Force app-previews container to full height with HIDDEN OVERFLOW */
+  html body main .hero .hero-container .app-previews,
   html body .hero .hero-container .app-previews,
   html body .app-previews,
+  body main .hero .hero-container .app-previews,
   body .hero .hero-container .app-previews,
   body .app-previews,
+  main .hero .hero-container .app-previews,
   .hero .hero-container .app-previews,
   .hero .app-previews,
   .app-previews,
@@ -19,7 +23,7 @@
     min-height: 100vh !important;
     padding: 0 !important;
     margin: 0 !important;
-    overflow: hidden !important;
+    overflow: hidden !important; /* CRITICAL: Hide overflow to show only one device */
     position: relative !important;
     display: flex !important;
     align-items: center !important;
@@ -30,20 +34,23 @@
     flex-direction: column !important;
   }
   
-  /* NUCLEAR OVERRIDE: Force preview-devices to be horizontal slider */
+  /* ULTRA HIGH SPECIFICITY: Force preview-devices to be HORIZONTAL ROW (not column) */
+  html body main .hero .hero-container .app-previews .preview-devices,
   html body .hero .hero-container .app-previews .preview-devices,
   html body .app-previews .preview-devices,
+  body main .hero .hero-container .app-previews .preview-devices,
   body .hero .hero-container .app-previews .preview-devices,
   body .app-previews .preview-devices,
+  main .hero .hero-container .app-previews .preview-devices,
   .hero .hero-container .app-previews .preview-devices,
   .hero .app-previews .preview-devices,
   .app-previews .preview-devices,
   .preview-devices,
   div.preview-devices {
     display: flex !important;
-    flex-direction: row !important;
+    flex-direction: row !important; /* CRITICAL: ROW not column - this overrides app-preview-styles.css */
     gap: 0 !important;
-    width: 200% !important;
+    width: 200% !important; /* Container is 200% wide to hold both devices */
     height: 100% !important;
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
     padding: 0 !important;
@@ -51,7 +58,7 @@
     align-items: center !important;
     justify-content: flex-start !important;
     overflow: visible !important;
-    transform: translateX(0%) !important;
+    transform: translateX(0%) !important; /* Start at first device */
     position: relative !important;
     left: 0 !important;
     top: 0 !important;
@@ -59,11 +66,55 @@
     bottom: auto !important;
   }
   
-  /* NUCLEAR OVERRIDE: Force each device to 50% width (only one visible) */
+  /* CRITICAL: Override app-preview-styles.css mobile media query that interferes with swipe */
+  @media screen and (max-width: 768px) {
+    html body main .hero .hero-container .app-previews .preview-devices,
+    html body .hero .hero-container .app-previews .preview-devices,
+    html body .app-previews .preview-devices,
+    body main .hero .hero-container .app-previews .preview-devices,
+    body .hero .hero-container .app-previews .preview-devices,
+    body .app-previews .preview-devices,
+    main .hero .hero-container .app-previews .preview-devices,
+    .hero .hero-container .app-previews .preview-devices,
+    .hero .app-previews .preview-devices,
+    .app-previews .preview-devices,
+    .preview-devices,
+    div.preview-devices {
+      flex-direction: row !important; /* OVERRIDE: Force horizontal layout even on mobile */
+      gap: 0 !important; /* OVERRIDE: Remove gap that breaks swipe */
+      width: 200% !important;
+      display: flex !important;
+    }
+    
+    /* OVERRIDE: Prevent device scaling that interferes with swipe layout */
+    html body main .hero .hero-container .app-previews .preview-devices .device-mockup,
+    html body .hero .hero-container .app-previews .preview-devices .device-mockup,
+    html body .app-previews .preview-devices .device-mockup,
+    body main .hero .hero-container .app-previews .preview-devices .device-mockup,
+    body .hero .hero-container .app-previews .preview-devices .device-mockup,
+    body .app-previews .preview-devices .device-mockup,
+    main .hero .hero-container .app-previews .preview-devices .device-mockup,
+    .hero .hero-container .app-previews .preview-devices .device-mockup,
+    .hero .app-previews .preview-devices .device-mockup,
+    .app-previews .preview-devices .device-mockup,
+    .preview-devices .device-mockup,
+    .device-mockup,
+    div.device-mockup,
+    .device-mockup.device-left,
+    .device-mockup.device-right {
+      transform: none !important; /* OVERRIDE: Remove scaling that breaks layout */
+      scale: 1 !important; /* ENSURE: Full size devices */
+    }
+  }
+  
+  /* ULTRA HIGH SPECIFICITY: Force each device to exactly 50% of container width (which equals 100% of viewport) */
+  html body main .hero .hero-container .app-previews .preview-devices .device-mockup,
   html body .hero .hero-container .app-previews .preview-devices .device-mockup,
   html body .app-previews .preview-devices .device-mockup,
+  body main .hero .hero-container .app-previews .preview-devices .device-mockup,
   body .hero .hero-container .app-previews .preview-devices .device-mockup,
   body .app-previews .preview-devices .device-mockup,
+  main .hero .hero-container .app-previews .preview-devices .device-mockup,
   .hero .hero-container .app-previews .preview-devices .device-mockup,
   .hero .app-previews .preview-devices .device-mockup,
   .app-previews .preview-devices .device-mockup,
@@ -72,13 +123,14 @@
   div.device-mockup,
   .device-mockup.device-left,
   .device-mockup.device-right {
-    width: 50% !important;
+    width: 50% !important; /* Each device takes exactly 50% of the 200% container (= 100% of viewport) */
     max-width: none !important;
     min-width: 50% !important;
     height: calc(100vh - 2rem) !important;
     flex-shrink: 0 !important;
-    transform: none !important;
-    scale: 1 !important;
+    flex-grow: 0 !important;
+    transform: none !important; /* Override any scale transforms */
+    scale: 1 !important; /* Override any scale transforms */
     opacity: 1 !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
     display: flex !important;

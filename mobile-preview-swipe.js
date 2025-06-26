@@ -6,7 +6,10 @@ class MobilePreviewSwipe {
     this.isAnimating = false;
     this.startX = 0;
     this.currentX = 0;
+    this.startY = 0;
+    this.currentY = 0;
     this.isDragging = false;
+    this.isHorizontalSwipe = false;
     this.threshold = 50; // Minimum distance for swipe
     
     console.log('MobilePreviewSwipe constructor called');
@@ -111,35 +114,65 @@ class MobilePreviewSwipe {
   handleTouchStart(e) {
     console.log('Touch start');
     this.startX = e.touches[0].clientX;
+    this.startY = e.touches[0].clientY; // Track Y position too
     this.currentX = this.startX;
-    this.isDragging = true;
-    this.previewDevices.classList.add('dragging');
+    this.currentY = this.startY;
+    this.isDragging = false; // Don't set to true immediately
+    this.isHorizontalSwipe = false; // Track if this is a horizontal swipe
     
     // Mark as interacted to hide swipe hint
     this.previewsContainer.classList.add('interacted');
   }
   
   handleTouchMove(e) {
-    if (!this.isDragging) return;
+    if (!this.startX || !this.startY) return;
     
-    console.log('Touch move');
-    e.preventDefault(); // Prevent scrolling
     this.currentX = e.touches[0].clientX;
-    const deltaX = this.currentX - this.startX;
+    this.currentY = e.touches[0].clientY;
     
-    // Apply drag effect
-    const currentTransform = -this.currentIndex * 100;
-    const dragTransform = (deltaX / window.innerWidth) * 100;
-    const newTransform = currentTransform + dragTransform;
+    const deltaX = Math.abs(this.currentX - this.startX);
+    const deltaY = Math.abs(this.currentY - this.startY);
     
-    this.previewDevices.style.transform = `translateX(${newTransform}%)`;
+    // Determine if this is a horizontal or vertical swipe
+    if (!this.isDragging && !this.isHorizontalSwipe) {
+      if (deltaX > 10 || deltaY > 10) {
+        this.isHorizontalSwipe = deltaX > deltaY;
+        if (this.isHorizontalSwipe) {
+          this.isDragging = true;
+          this.previewDevices.classList.add('dragging');
+        }
+      }
+    }
+    
+    // Only prevent default and handle swipe if it's horizontal
+    if (this.isDragging && this.isHorizontalSwipe) {
+      console.log('Touch move - horizontal swipe');
+      e.preventDefault(); // Only prevent scrolling for horizontal swipes
+      
+      const deltaX = this.currentX - this.startX;
+      
+      // Apply drag effect
+      const currentTransform = -this.currentIndex * 100;
+      const dragTransform = (deltaX / window.innerWidth) * 100;
+      const newTransform = currentTransform + dragTransform;
+      
+      this.previewDevices.style.transform = `translateX(${newTransform}%)`;
+    }
+    // If it's vertical, let the browser handle normal scrolling
   }
   
   handleTouchEnd(e) {
-    if (!this.isDragging) return;
+    if (!this.isDragging || !this.isHorizontalSwipe) {
+      // Reset state for non-horizontal swipes
+      this.isDragging = false;
+      this.isHorizontalSwipe = false;
+      this.previewDevices.classList.remove('dragging');
+      return;
+    }
     
     console.log('Touch end');
     this.isDragging = false;
+    this.isHorizontalSwipe = false;
     this.previewDevices.classList.remove('dragging');
     
     const deltaX = this.currentX - this.startX;
@@ -165,7 +198,9 @@ class MobilePreviewSwipe {
     console.log('Mouse down');
     
     this.startX = e.clientX;
+    this.startY = e.clientY;
     this.currentX = this.startX;
+    this.currentY = this.startY;
     this.isDragging = true;
     this.previewDevices.classList.add('dragging');
     this.previewsContainer.classList.add('interacted');
@@ -177,7 +212,10 @@ class MobilePreviewSwipe {
     if (!this.isDragging) return;
     
     this.currentX = e.clientX;
+    this.currentY = e.clientY;
+    
     const deltaX = this.currentX - this.startX;
+    const deltaY = this.currentY - this.startY;
     
     const currentTransform = -this.currentIndex * 100;
     const dragTransform = (deltaX / window.innerWidth) * 100;

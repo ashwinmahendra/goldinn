@@ -7,16 +7,18 @@
     <meta name="description" content="GoldInn - The premium real estate investment platform that allows you to invest in high-quality hospitality properties with as little as $1,000. Build wealth through fractional ownership.">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="app-preview-styles.css">
+    <link rel="stylesheet" href="mobile-enhancements.css">
     <link rel="stylesheet" href="mobile-app-fixes.css">
     <link rel="stylesheet" href="enhanced-faq-styles.css">
     <link rel="stylesheet" href="mobile-responsive.css">
     <link rel="stylesheet" href="mobile-enhancements.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- CRITICAL: Load this CSS last to ensure maximum priority -->
+    
+    <!-- CRITICAL: Load mobile-preview-swipe.css LAST to override ALL other styles -->
     <link rel="stylesheet" href="mobile-preview-swipe.css">
 </head>
 <body>
@@ -934,7 +936,6 @@
                                             <div class="bar-fill" style="width: 7%;"></div>
                         </div>
                                         <div class="breakdown-value">7%</div>
-                    </div>
                 </div>
                                 
                                 <div class="funding-progress">
