@@ -903,11 +903,14 @@ body.dark-mode .hero-stats-bar {
   background-color: #121212;
   color: #FFFFFF;
   height: 100%;
-  overflow-y: auto;
+  overflow: hidden; /* STATIC: Remove scrolling, make content fit within screen */
   position: relative;
   padding: 1.25rem 1.25rem 5rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-overflow-scrolling: touch;
+  display: flex; /* DISTRIBUTE: Use flexbox for better content distribution */
+  flex-direction: column; /* DISTRIBUTE: Stack content vertically */
+  justify-content: space-between; /* DISTRIBUTE: Space content evenly within available height */
 }
 
 body.dark-mode .app-screen {

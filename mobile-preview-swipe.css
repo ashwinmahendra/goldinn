@@ -252,11 +252,49 @@
     font-size: 0.7rem !important;
     padding: 0.75rem !important;
     height: 100% !important;
-    overflow-y: auto !important;
+    overflow: hidden !important; /* STATIC: Remove scrolling, make content fit within screen */
     position: relative !important;
     background: linear-gradient(135deg, #1e293b 0%, #2d3748 100%) !important; /* COMPATIBLE: Dark background that works with hero blue */
     color: #fff !important;
     line-height: 1.3 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important; /* DISTRIBUTE: Space content evenly */
+  }
+  
+  /* ENSURE: All content sections are properly sized to fit without scrolling */
+  .app-screen > * {
+    flex-shrink: 0 !important; /* PREVENT: Content from shrinking too much */
+  }
+  
+  .app-screen .portfolio-value-card,
+  .app-screen .portfolio-info,
+  .app-screen .action-buttons,
+  .app-screen .returns-container,
+  .app-screen .stat-cards,
+  .app-screen .property-hero,
+  .app-screen .funding-status {
+    margin-bottom: 0.5rem !important; /* COMPACT: Reduce spacing between sections */
+  }
+  
+  /* COMPACT: Reduce padding and margins for better space utilization */
+  .app-screen .portfolio-value-card {
+    padding: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .app-screen .property-cover-img {
+    height: 100px !important; /* COMPACT: Reduce image height */
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .app-screen .stat-cards {
+    gap: 0.4rem !important; /* COMPACT: Reduce gap between stat cards */
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .app-screen .stat-card {
+    padding: 0.5rem 0.25rem !important; /* COMPACT: Reduce padding */
   }
   
   /* App screen header */
