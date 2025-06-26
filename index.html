@@ -9,12 +9,15 @@
     <link rel="stylesheet" href="app-preview-styles.css">
     <link rel="stylesheet" href="mobile-app-fixes.css">
     <link rel="stylesheet" href="enhanced-faq-styles.css">
-    <link rel="stylesheet" href="mobile-optimizations.css">
+    <link rel="stylesheet" href="mobile-responsive.css">
+    <link rel="stylesheet" href="mobile-enhancements.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- CRITICAL: Load this CSS last to ensure maximum priority -->
+    <link rel="stylesheet" href="mobile-preview-swipe.css">
 </head>
 <body>
     <header class="navbar">
@@ -22,7 +25,7 @@
             <div class="logo">
                 <a href="index.html">
                     <img src="goldinn-logo.svg" alt="GoldInn Logo" class="logo-image navbar-logo" width="200">
-                    <span class="navbar-logo-text">GOLDINN</span>
+                    <span class="navbar-logo-text">GoldInn</span>
                 </a>
             </div>
             <nav>
@@ -34,26 +37,13 @@
                     <li><a href="#faqs">FAQs</a></li>
                 </ul>
             </nav>
-            <div class="mobile-menu-btn" aria-label="Toggle menu">
+            <div class="mobile-menu-toggle" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
     </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay">
-        <div class="mobile-menu-content">
-            <ul class="mobile-nav-menu">
-                <li><a href="#" class="active">HOME</a></li>
-                <li><a href="#properties">PROPERTIES</a></li>
-                <li><a href="#how-it-works">HOW IT WORKS</a></li>
-                <li><a href="discover.html">DISCOVER</a></li>
-                <li><a href="#faqs">FAQs</a></li>
-            </ul>
-        </div>
-    </div>
 
     <section class="hero">
         <div class="container hero-container">
@@ -434,7 +424,7 @@
                         <div class="notification-popup">
                             <div class="notification-header">
                                 <img src="goldinn-logo.svg" alt="GoldInn" class="notification-logo" width="32">
-                                <span class="notification-logo-text">GOLDINN</span>
+                                <span class="notification-logo-text">GoldInn</span>
                                 <span class="notification-time">now</span>
                             </div>
                             <div class="notification-body">
@@ -1610,7 +1600,7 @@
                         <div class="app-screen">
                             <div class="app-header">
                                 <img src="goldinn-logo.svg" alt="GoldInn" class="app-logo-image">
-                                <span class="app-logo-text">GOLDINN</span>
+                                <span class="app-logo-text">GoldInn</span>
                                 <h2>Your Portfolio</h2>
                                 <div class="app-notifications">
                                     <i class="fas fa-bell"></i>
@@ -2315,7 +2305,7 @@
                 <div class="footer-brand">
                     <div class="footer-logo">
                         <img src="goldinn-logo.svg" alt="GoldInn Logo" class="logo-image" width="100">
-                        <span class="footer-logo-text">GOLDINN</span>
+                        <span class="footer-logo-text">GoldInn</span>
                     </div>
                     <p>Democratizing hotel investment through fractional ownership.</p>
                 </div>
@@ -2351,6 +2341,7 @@
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="script.js"></script>
     <script src="app-preview-scripts.js"></script>
+    <script src="mobile-preview-swipe.js"></script>
     <script>
         // Initialize AOS animations
         AOS.init({

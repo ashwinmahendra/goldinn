@@ -50,28 +50,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 // If mobile menu is open, close it
-                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-                const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
-                if (mobileMenuBtn && mobileMenuBtn.classList.contains('active')) {
-                    mobileMenuBtn.classList.remove('active');
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.classList.remove('mobile-menu-open');
-                }
+                document.body.classList.remove('mobile-menu-open');
             }
         });
     });
 
     // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
     
-    if (mobileMenuBtn && mobileMenuOverlay) {
-        mobileMenuBtn.addEventListener('click', function() {
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function() {
             this.classList.toggle('active');
-            mobileMenuOverlay.classList.toggle('active');
+            navMenu.classList.toggle('active');
             document.body.classList.toggle('mobile-menu-open');
         });
     }
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', function() {
+            if (mobileMenuToggle && mobileMenuToggle.classList.contains('active')) {
+                mobileMenuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.classList.remove('mobile-menu-open');
+            }
+        });
+    });
     
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -89,10 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 // Close mobile menu if open
-                if (mobileMenuBtn && mobileMenuBtn.classList.contains('active')) {
-                    mobileMenuBtn.classList.remove('active');
-                    mobileMenuOverlay.classList.remove('active');
-                    document.body.classList.remove('mobile-menu-open');
+                if (mobileMenuToggle && mobileMenuToggle.classList.contains('active')) {
+                    mobileMenuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
                 }
             }
         });
@@ -275,6 +279,77 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize the hotel owner benefits scenarios
     initHotelOwnerBenefitsScenarios();
+
+    // Add event listeners for filters
+    const priceRange = document.getElementById('priceRange');
+    const priceValue = document.getElementById('priceValue');
+    const returnsRange = document.getElementById('returnsRange');
+    const returnsValue = document.getElementById('returnsValue');
+    
+    priceRange.addEventListener('input', function() {
+        priceValue.textContent = formatCurrency(parseInt(this.value));
+    });
+    
+    returnsRange.addEventListener('input', function() {
+        returnsValue.textContent = `${this.value}%`;
+    });
+    
+    // Add event listeners for property cards
+    document.addEventListener('click', function(event) {
+        const propertyCard = event.target.closest('.property-card');
+        if (propertyCard || event.target.classList.contains('btn-details')) {
+            const propertyId = propertyCard ? propertyCard.dataset.propertyId : event.target.closest('.property-card').dataset.propertyId;
+            openPropertyModal(parseInt(propertyId));
+        }
+        
+        // Close modal when clicking on close button or overlay
+        if (event.target.classList.contains('close-modal') || event.target.classList.contains('modal-overlay')) {
+            closePropertyModal();
+        }
+    });
+    
+    // Add event listeners for tab switching
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tabId = this.dataset.tab;
+            switchTab(tabId);
+        });
+    });
+    
+    // Add event listeners for period toggle
+    const periodButtons = document.querySelectorAll('.period-btn');
+    periodButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            periodButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            updateCharts(this.dataset.period);
+        });
+    });
+    
+    // Add event listeners for quantity selector
+    const minusBtn = document.querySelector('.quantity-btn.minus');
+    const plusBtn = document.querySelector('.quantity-btn.plus');
+    const shareQuantityInput = document.getElementById('shareQuantity');
+    
+    minusBtn.addEventListener('click', function() {
+        const currentValue = parseInt(shareQuantityInput.value);
+        if (currentValue > 1) {
+            shareQuantityInput.value = currentValue - 1;
+            updateInvestmentCalculator();
+        }
+    });
+    
+    plusBtn.addEventListener('click', function() {
+        const currentValue = parseInt(shareQuantityInput.value);
+        shareQuantityInput.value = currentValue + 1;
+        updateInvestmentCalculator();
+    });
+    
+    shareQuantityInput.addEventListener('change', updateInvestmentCalculator);
+    
+    // Initialize mobile swipe functionality for properties
+    initMobilePropertiesSwipe();
 });
 
 // Navbar functions
@@ -316,46 +391,11 @@ function initNavbar() {
     
 // Mobile menu toggle
 function initMobileMenu() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-menu a');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-toggle');
     
-    if (mobileMenuBtn && mobileMenuOverlay) {
+    if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mobileMenuOverlay.classList.toggle('active');
             document.body.classList.toggle('mobile-menu-open');
-        });
-        
-        // Close menu when clicking on overlay
-        mobileMenuOverlay.addEventListener('click', function(e) {
-            if (e.target === mobileMenuOverlay) {
-                mobileMenuBtn.classList.remove('active');
-                mobileMenuOverlay.classList.remove('active');
-                document.body.classList.remove('mobile-menu-open');
-            }
-        });
-        
-        // Close menu when clicking on nav links
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuBtn.classList.remove('active');
-                mobileMenuOverlay.classList.remove('active');
-                document.body.classList.remove('mobile-menu-open');
-                
-                // Update active state
-                mobileNavLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-        
-        // Close menu on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
-                mobileMenuBtn.classList.remove('active');
-                mobileMenuOverlay.classList.remove('active');
-                document.body.classList.remove('mobile-menu-open');
-            }
         });
     }
 }
@@ -1107,79 +1147,6 @@ function renderProperties() {
     propertiesGrid.innerHTML = properties.map(property => createPropertyCard(property)).join('');
 }
 
-// Initialize page
-document.addEventListener('DOMContentLoaded', function() {
-    renderProperties();
-    
-    // Add event listeners for filters
-    const priceRange = document.getElementById('priceRange');
-    const priceValue = document.getElementById('priceValue');
-    const returnsRange = document.getElementById('returnsRange');
-    const returnsValue = document.getElementById('returnsValue');
-    
-    priceRange.addEventListener('input', function() {
-        priceValue.textContent = formatCurrency(parseInt(this.value));
-    });
-    
-    returnsRange.addEventListener('input', function() {
-        returnsValue.textContent = `${this.value}%`;
-    });
-    
-    // Add event listeners for property cards
-    document.addEventListener('click', function(event) {
-        const propertyCard = event.target.closest('.property-card');
-        if (propertyCard || event.target.classList.contains('btn-details')) {
-            const propertyId = propertyCard ? propertyCard.dataset.propertyId : event.target.closest('.property-card').dataset.propertyId;
-            openPropertyModal(parseInt(propertyId));
-        }
-        
-        // Close modal when clicking on close button or overlay
-        if (event.target.classList.contains('close-modal') || event.target.classList.contains('modal-overlay')) {
-            closePropertyModal();
-        }
-    });
-    
-    // Add event listeners for tab switching
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const tabId = this.dataset.tab;
-            switchTab(tabId);
-        });
-    });
-    
-    // Add event listeners for period toggle
-    const periodButtons = document.querySelectorAll('.period-btn');
-    periodButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            periodButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            updateCharts(this.dataset.period);
-        });
-    });
-    
-    // Add event listeners for quantity selector
-    const minusBtn = document.querySelector('.quantity-btn.minus');
-    const plusBtn = document.querySelector('.quantity-btn.plus');
-    const shareQuantityInput = document.getElementById('shareQuantity');
-    
-    minusBtn.addEventListener('click', function() {
-        const currentValue = parseInt(shareQuantityInput.value);
-        if (currentValue > 1) {
-            shareQuantityInput.value = currentValue - 1;
-            updateInvestmentCalculator();
-        }
-    });
-    
-    plusBtn.addEventListener('click', function() {
-        const currentValue = parseInt(shareQuantityInput.value);
-        shareQuantityInput.value = currentValue + 1;
-        updateInvestmentCalculator();
-    });
-    
-    shareQuantityInput.addEventListener('change', updateInvestmentCalculator);
-});
-
 // Function to open property modal
 function openPropertyModal(propertyId) {
     const property = properties.find(p => p.id === propertyId);
@@ -1713,5 +1680,152 @@ function initHotelOwnerBenefitsScenarios() {
                 targetPane.classList.add('active');
             }
         });
+    });
+}
+
+// Function to initialize mobile properties swipe functionality
+function initMobilePropertiesSwipe() {
+    const propertiesGrid = document.querySelector('.properties-grid');
+    if (!propertiesGrid) return;
+    
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let startTime;
+    
+    // Check if device is mobile
+    const isMobile = window.innerWidth <= 768;
+    if (!isMobile) return;
+    
+    // Touch events for mobile
+    propertiesGrid.addEventListener('touchstart', (e) => {
+        isDown = true;
+        startX = e.touches[0].pageX - propertiesGrid.offsetLeft;
+        scrollLeft = propertiesGrid.scrollLeft;
+        startTime = Date.now();
+        propertiesGrid.style.scrollBehavior = 'auto';
+    });
+    
+    propertiesGrid.addEventListener('touchend', (e) => {
+        if (!isDown) return;
+        isDown = false;
+        
+        const endTime = Date.now();
+        const timeDiff = endTime - startTime;
+        const distance = Math.abs(e.changedTouches[0].pageX - propertiesGrid.offsetLeft - startX);
+        
+        // If it's a quick swipe, add momentum
+        if (timeDiff < 300 && distance > 30) {
+            const velocity = distance / timeDiff;
+            const momentum = velocity * 100;
+            const direction = e.changedTouches[0].pageX < startX ? 1 : -1;
+            
+            propertiesGrid.style.scrollBehavior = 'smooth';
+            propertiesGrid.scrollLeft += momentum * direction;
+        } else {
+            propertiesGrid.style.scrollBehavior = 'smooth';
+        }
+        
+        // Snap to nearest card
+        setTimeout(() => {
+            snapToNearestCard();
+        }, 100);
+    });
+    
+    propertiesGrid.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - propertiesGrid.offsetLeft;
+        const walk = (x - startX) * 2;
+        propertiesGrid.scrollLeft = scrollLeft - walk;
+    });
+    
+    // Mouse events for desktop testing
+    propertiesGrid.addEventListener('mousedown', (e) => {
+        if (window.innerWidth > 768) return; // Only on mobile
+        isDown = true;
+        startX = e.pageX - propertiesGrid.offsetLeft;
+        scrollLeft = propertiesGrid.scrollLeft;
+        propertiesGrid.style.cursor = 'grabbing';
+        propertiesGrid.style.scrollBehavior = 'auto';
+    });
+    
+    propertiesGrid.addEventListener('mouseleave', () => {
+        isDown = false;
+        propertiesGrid.style.cursor = 'grab';
+    });
+    
+    propertiesGrid.addEventListener('mouseup', () => {
+        if (window.innerWidth > 768) return;
+        isDown = false;
+        propertiesGrid.style.cursor = 'grab';
+        propertiesGrid.style.scrollBehavior = 'smooth';
+        snapToNearestCard();
+    });
+    
+    propertiesGrid.addEventListener('mousemove', (e) => {
+        if (!isDown || window.innerWidth > 768) return;
+        e.preventDefault();
+        const x = e.pageX - propertiesGrid.offsetLeft;
+        const walk = (x - startX) * 2;
+        propertiesGrid.scrollLeft = scrollLeft - walk;
+    });
+    
+    // Function to snap to nearest card
+    function snapToNearestCard() {
+        const cardWidth = 280 + 16; // card width + gap
+        const scrollPosition = propertiesGrid.scrollLeft;
+        const nearestCard = Math.round(scrollPosition / cardWidth);
+        const targetPosition = nearestCard * cardWidth;
+        
+        propertiesGrid.scrollTo({
+            left: targetPosition,
+            behavior: 'smooth'
+        });
+    }
+    
+    // Add scroll indicators based on scroll position
+    let scrollIndicatorTimeout;
+    propertiesGrid.addEventListener('scroll', () => {
+        clearTimeout(scrollIndicatorTimeout);
+        
+        // Hide scroll hint after user starts scrolling
+        const scrollHint = document.querySelector('.properties::after');
+        if (scrollHint) {
+            scrollHint.style.display = 'none';
+        }
+        
+        // Update scroll indicators
+        scrollIndicatorTimeout = setTimeout(() => {
+            updateScrollIndicators();
+        }, 150);
+    });
+    
+    function updateScrollIndicators() {
+        const scrollLeft = propertiesGrid.scrollLeft;
+        const scrollWidth = propertiesGrid.scrollWidth;
+        const clientWidth = propertiesGrid.clientWidth;
+        const scrollPercentage = (scrollLeft / (scrollWidth - clientWidth)) * 100;
+        
+        // You can add visual indicators here if needed
+        // For now, we'll just update the scroll hint visibility
+        const propertiesSection = document.querySelector('.properties');
+        if (scrollPercentage > 10) {
+            propertiesSection.classList.add('scrolled');
+        } else {
+            propertiesSection.classList.remove('scrolled');
+        }
+    }
+    
+    // Initialize scroll position
+    propertiesGrid.scrollLeft = 0;
+    
+    // Re-initialize on window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            // Reset any mobile-specific styles when switching to desktop
+            propertiesGrid.style.scrollBehavior = '';
+            propertiesGrid.style.cursor = '';
+        }
     });
 } 

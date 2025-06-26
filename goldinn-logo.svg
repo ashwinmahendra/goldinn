@@ -31,8 +31,8 @@
     <!-- Base horizontal line -->
     <line x1="140" y1="330" x2="460" y2="330" stroke="url(#goldGradient)" stroke-width="10"/>
     
-    <!-- GOLDINN text -->
-    <text x="300" y="370" font-family="Garamond, serif" font-size="48" font-weight="bold" text-anchor="middle" fill="url(#goldGradient)">GOLDINN</text>
+    <!-- GoldInn text - properly centered -->
+    <text x="300" y="60" font-family="Cormorant Garamond, serif" font-size="28" font-weight="600" text-anchor="middle" fill="url(#goldGradient)">GoldInn</text>
     
     <!-- Registered trademark symbol -->
     <text x="430" y="355" font-family="Garamond, serif" font-size="20" text-anchor="middle" fill="url(#goldGradient)">®</text>
