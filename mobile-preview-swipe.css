@@ -34,6 +34,7 @@
     width: 100% !important;
     flex-direction: column !important;
     background: transparent !important; /* PRESERVE: Let hero background show through */
+    touch-action: pan-y !important; /* ENHANCED: Allow vertical scrolling outside swipe area */
   }
   
   /* ENSURE HERO SECTION BACKGROUND IS PRESERVED */
@@ -60,7 +61,7 @@
   .preview-devices,
   div.preview-devices {
     /* FORCE NO SCALING - Let JavaScript handle all transforms */
-    transform: none !important;
+    transform: translateX(0%) !important;
     scale: none !important;
     /* Ensure proper container setup for swipe */
     width: 200% !important;
@@ -75,6 +76,7 @@
     padding: 0 !important;
     position: relative !important;
     overflow: visible !important;
+    touch-action: pan-x !important; /* ENHANCED: Only allow horizontal panning */
   }
   
   /* FORCE INDIVIDUAL DEVICE MOCKUPS TO PROPER SIZE */
@@ -95,8 +97,8 @@
     /* FORCE NO INDIVIDUAL TRANSFORMS - JavaScript controls container */
     transform: none !important;
     scale: none !important;
-    /* Each device takes exactly half of the 200% container (100% of viewport) */
-    width: 50% !important;
+    /* Each device takes exactly 100% of viewport width (full screen) */
+    width: 100% !important;
     height: 100% !important;
     flex-shrink: 0 !important;
     flex-grow: 0 !important;
@@ -106,6 +108,15 @@
     margin: 0 !important;
     padding: 0 1rem !important;
     position: relative !important;
+    /* ENHANCED: Add subtle glow effect for active preview */
+    filter: brightness(1) !important;
+    transition: filter 0.3s ease !important;
+  }
+  
+  /* ENHANCED: Active preview gets subtle highlight */
+  .preview-devices[data-active="0"] .device-mockup.device-left,
+  .preview-devices[data-active="1"] .device-mockup.device-right {
+    filter: brightness(1.05) drop-shadow(0 0 20px rgba(212, 175, 55, 0.2)) !important;
   }
   
   /* NUCLEAR OVERRIDE: Force device frame to be large and phone-like */
@@ -139,6 +150,8 @@
     right: auto !important;
     top: auto !important;
     bottom: auto !important;
+    /* ENHANCED: Better touch target */
+    touch-action: manipulation !important;
   }
   
   /* Phone speaker and camera notch */
@@ -789,87 +802,141 @@
   }
 }
 
-/* Swipe indicators - Enhanced positioning */
+/* Enhanced Swipe indicators - Modern Design */
 @media screen and (max-width: 768px) {
   .preview-indicators {
     display: flex !important;
     justify-content: center !important;
-    gap: 0.75rem !important;
+    gap: 1rem !important;
     margin-top: 2rem !important;
     position: absolute !important;
-    bottom: 2rem !important; /* Moved up to avoid conflicts with swipe hint */
+    bottom: 2.5rem !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    z-index: 25 !important; /* Higher z-index to appear above swipe hint */
-    background: rgba(21, 27, 38, 0.9) !important;
-    padding: 0.75rem 1.5rem !important;
-    border-radius: 25px !important;
-    backdrop-filter: blur(15px) !important;
-    border: 1px solid rgba(212, 175, 55, 0.2) !important;
+    z-index: 25 !important;
+    background: linear-gradient(135deg, rgba(21, 27, 38, 0.95), rgba(21, 27, 38, 0.85)) !important;
+    padding: 1rem 2rem !important;
+    border-radius: 30px !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
   }
   
   .preview-dot {
-    width: 14px !important;
-    height: 14px !important;
+    width: 16px !important;
+    height: 16px !important;
     border-radius: 50% !important;
-    background-color: rgba(255, 255, 255, 0.4) !important;
-    transition: all 0.3s ease !important;
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
     cursor: pointer !important;
     position: relative !important;
     border: 2px solid transparent !important;
+    overflow: hidden !important;
+  }
+  
+  .preview-dot::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #D4AF37, #F4D03F) !important;
+    transform: scale(0) !important;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
   }
   
   .preview-dot.active {
-    background-color: #D4AF37 !important;
-    transform: scale(1.2) !important;
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3) !important;
-    border-color: rgba(212, 175, 55, 0.5) !important;
+    background-color: transparent !important;
+    transform: scale(1.3) !important;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2) !important;
+    border-color: rgba(212, 175, 55, 0.6) !important;
   }
   
-  .preview-dot:hover {
-    background-color: rgba(212, 175, 55, 0.7) !important;
-    transform: scale(1.1) !important;
+  .preview-dot.active::before {
+    transform: scale(1) !important;
+  }
+  
+  .preview-dot:hover:not(.active) {
+    background-color: rgba(212, 175, 55, 0.6) !important;
+    transform: scale(1.15) !important;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3) !important;
+  }
+  
+  /* Add preview labels */
+  .preview-dot::after {
+    content: attr(data-label) !important;
+    position: absolute !important;
+    top: -2.5rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: rgba(21, 27, 38, 0.9) !important;
+    color: #fff !important;
+    padding: 0.3rem 0.6rem !important;
+    border-radius: 12px !important;
+    font-size: 0.7rem !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.3s ease !important;
+    z-index: 30 !important;
+  }
+  
+  .preview-dot:hover::after {
+    opacity: 1 !important;
   }
 }
 
-/* Swipe hint animation - Improved positioning */
+/* Enhanced Swipe hint animation - Better positioning and styling */
 @media screen and (max-width: 768px) {
   .app-previews::after {
-    content: "← Swipe to explore →" !important;
+    content: "← Swipe to explore app features →" !important;
     position: absolute !important;
-    bottom: 6rem !important; /* Moved up to avoid conflict with indicators */
+    bottom: 7rem !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     color: rgba(255, 255, 255, 0.9) !important;
-    font-size: 0.85rem !important;
+    font-size: 0.9rem !important;
     font-weight: 500 !important;
     text-align: center !important;
-    animation: swipeHint 3s infinite !important;
+    animation: enhancedSwipeHint 4s infinite !important;
     pointer-events: none !important;
     z-index: 15 !important;
-    background: rgba(21, 27, 38, 0.85) !important; /* COMPATIBLE: Match hero background with transparency */
-    padding: 0.4rem 1rem !important;
-    border-radius: 15px !important;
-    backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(212, 175, 55, 0.25) !important; /* ACCENT: Add subtle gold border */
+    background: linear-gradient(135deg, rgba(21, 27, 38, 0.9), rgba(21, 27, 38, 0.8)) !important;
+    padding: 0.6rem 1.5rem !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
     letter-spacing: 0.3px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
   }
   
-  @keyframes swipeHint {
-    0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-    50% { opacity: 1; transform: translateX(-50%) scale(1.02); }
+  @keyframes enhancedSwipeHint {
+    0%, 100% { 
+      opacity: 0.7; 
+      transform: translateX(-50%) scale(1); 
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    50% { 
+      opacity: 1; 
+      transform: translateX(-50%) scale(1.05); 
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+    }
   }
 }
 
-/* Hide swipe hint after interaction */
+/* Hide swipe hint after interaction with smooth transition */
 @media screen and (max-width: 768px) {
   .app-previews.interacted::after {
     opacity: 0 !important;
-    transition: opacity 0.3s ease !important;
+    transform: translateX(-50%) scale(0.95) !important;
+    transition: all 0.5s ease-out !important;
   }
 }
 
-/* Touch-friendly adjustments */
+/* Enhanced Touch-friendly adjustments */
 @media screen and (max-width: 768px) {
   .preview-devices {
     cursor: grab !important;
@@ -877,6 +944,7 @@
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
     -ms-user-select: none !important;
+    will-change: transform !important;
   }
   
   .preview-devices.dragging {
@@ -886,6 +954,11 @@
   
   .preview-devices.dragging .device-mockup {
     pointer-events: none !important;
+  }
+  
+  /* Enhanced drag feedback */
+  .preview-devices.dragging {
+    filter: brightness(1.1) !important;
   }
 }
 
@@ -959,8 +1032,8 @@
     /* FORCE NO INDIVIDUAL TRANSFORMS - JavaScript controls container */
     transform: none !important;
     scale: none !important;
-    /* Each device takes exactly half of the 200% container (100% of viewport) */
-    width: 50% !important;
+    /* Each device takes exactly 100% of viewport width (full screen) */
+    width: 100% !important;
     height: 100% !important;
     flex-shrink: 0 !important;
     flex-grow: 0 !important;
@@ -970,6 +1043,9 @@
     margin: 0 !important;
     padding: 0 1rem !important;
     position: relative !important;
+    /* ENHANCED: Add subtle glow effect for active preview */
+    filter: brightness(1) !important;
+    transition: filter 0.3s ease !important;
   }
   
   html body main section .hero .hero-container .app-previews,
@@ -1430,4 +1506,206 @@
   font-size: 0.6rem !important;
   color: #94a3b8 !important;
   font-weight: 500 !important;
+}
+
+/* ULTRA NUCLEAR OVERRIDE - FINAL OVERRIDE TO DEFEAT mobile-responsive.css */
+/* This must be at the end of the file to override mobile-responsive.css loaded after */
+@media screen and (max-width: 768px) {
+  
+  /* NUCLEAR OVERRIDE: Completely disable mobile-responsive.css transforms */
+  html body main section div.hero div.hero-container div.app-previews div.preview-devices,
+  html body main div.hero div.hero-container div.app-previews div.preview-devices,
+  html body div.hero div.hero-container div.app-previews div.preview-devices,
+  html body div.app-previews div.preview-devices,
+  body main section div.hero div.hero-container div.app-previews div.preview-devices,
+  body main div.hero div.hero-container div.app-previews div.preview-devices,
+  body div.hero div.hero-container div.app-previews div.preview-devices,
+  body div.app-previews div.preview-devices,
+  main section div.hero div.hero-container div.app-previews div.preview-devices,
+  main div.hero div.hero-container div.app-previews div.preview-devices,
+  div.hero div.hero-container div.app-previews div.preview-devices,
+  div.app-previews div.preview-devices,
+  section div.hero div.hero-container div.app-previews div.preview-devices,
+  .hero .hero-container .app-previews .preview-devices,
+  .app-previews .preview-devices,
+  .preview-devices {
+    /* FORCE DISABLE mobile-responsive.css scale(0.7) transform */
+    transform: translateX(0%) !important;
+    scale: none !important;
+    /* Restore swipe container properties */
+    width: 200% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+    touch-action: pan-x !important;
+  }
+  
+  /* NUCLEAR OVERRIDE: Disable mobile-responsive.css device transforms */
+  html body main section div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  html body main div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  html body div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  html body div.app-previews div.preview-devices div.device-mockup.device-left,
+  body main section div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  body main div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  body div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  body div.app-previews div.preview-devices div.device-mockup.device-left,
+  main section div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  main div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  div.app-previews div.preview-devices div.device-mockup.device-left,
+  section div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-left,
+  .hero .hero-container .app-previews .preview-devices .device-mockup.device-left,
+  .app-previews .preview-devices .device-mockup.device-left,
+  .preview-devices .device-mockup.device-left,
+  .device-mockup.device-left {
+    /* FORCE DISABLE mobile-responsive.css individual transforms */
+    transform: none !important;
+    scale: none !important;
+    rotate: none !important;
+    /* Restore swipe device properties */
+    width: 100% !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
+    position: relative !important;
+  }
+  
+  /* NUCLEAR OVERRIDE: Disable mobile-responsive.css device transforms - RIGHT */
+  html body main section div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  html body main div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  html body div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  html body div.app-previews div.preview-devices div.device-mockup.device-right,
+  body main section div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  body main div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  body div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  body div.app-previews div.preview-devices div.device-mockup.device-right,
+  main section div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  main div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  div.app-previews div.preview-devices div.device-mockup.device-right,
+  section div.hero div.hero-container div.app-previews div.preview-devices div.device-mockup.device-right,
+  .hero .hero-container .app-previews .preview-devices .device-mockup.device-right,
+  .app-previews .preview-devices .device-mockup.device-right,
+  .preview-devices .device-mockup.device-right,
+  .device-mockup.device-right {
+    /* FORCE DISABLE mobile-responsive.css individual transforms */
+    transform: none !important;
+    scale: none !important;
+    rotate: none !important;
+    /* Restore swipe device properties */
+    width: 100% !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
+    position: relative !important;
+  }
+  
+  /* NUCLEAR OVERRIDE: Restore app-previews container for swipe */
+  html body main section div.hero div.hero-container div.app-previews,
+  html body main div.hero div.hero-container div.app-previews,
+  html body div.hero div.hero-container div.app-previews,
+  html body div.app-previews,
+  body main section div.hero div.hero-container div.app-previews,
+  body main div.hero div.hero-container div.app-previews,
+  body div.hero div.hero-container div.app-previews,
+  body div.app-previews,
+  main section div.hero div.hero-container div.app-previews,
+  main div.hero div.hero-container div.app-previews,
+  div.hero div.hero-container div.app-previews,
+  div.app-previews,
+  section div.hero div.hero-container div.app-previews,
+  .hero .hero-container .app-previews,
+  .app-previews {
+    /* FORCE DISABLE mobile-responsive.css height: 300px restriction */
+    height: 100vh !important;
+    max-height: 100vh !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: none !important;
+    scale: none !important;
+    width: 100% !important;
+    flex-direction: column !important;
+    background: transparent !important;
+    touch-action: pan-y !important;
+  }
+}
+
+/* EMERGENCY OVERRIDE - If all else fails, use this */
+@media screen and (max-width: 768px) {
+  .preview-devices[data-swipe-container="true"] {
+    transform: translateX(0%) !important;
+    scale: 1 !important;
+    width: 200% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+    touch-action: pan-x !important;
+  }
+  
+  .preview-devices[data-swipe-container="true"] .device-mockup {
+    transform: none !important;
+    scale: 1 !important;
+    rotate: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
+    position: relative !important;
+  }
+  
+  .app-previews[data-swipe-ready="true"] {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: none !important;
+    scale: 1 !important;
+    width: 100% !important;
+    flex-direction: column !important;
+    background: transparent !important;
+    touch-action: pan-y !important;
+  }
 } 
