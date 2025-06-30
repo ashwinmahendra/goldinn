@@ -70,82 +70,10 @@ class MobilePreviewSwipe {
     // NUCLEAR OPTION: Completely override all conflicting styles
     const forceStyles = () => {
       // Force app-previews container
-// Enhanced Mobile Preview Swipe Functionality
-class MobilePreviewSwipe {
-  constructor() {
-    this.currentIndex = 0;
-    this.totalPreviews = 2;
-    this.isAnimating = false;
-    this.startX = 0;
-    this.currentX = 0;
-    this.startY = 0;
-    this.currentY = 0;
-    this.isDragging = false;
-    this.isHorizontalSwipe = false;
-    this.threshold = 50; // Minimum distance for swipe
-    this.velocityThreshold = 0.3; // Minimum velocity for quick swipes
-    this.lastMoveTime = 0;
-    this.lastMoveX = 0;
-    this.velocity = 0;
-    
-    console.log('🚀 Enhanced MobilePreviewSwipe constructor called');
-    console.log('📱 Window dimensions:', window.innerWidth, 'x', window.innerHeight);
-    console.log('📱 Is mobile?', window.innerWidth <= 768);
-    this.init();
-  }
-  
-  init() {
-    console.log('🔧 Enhanced MobilePreviewSwipe init called, window width:', window.innerWidth);
-    
-    // Always initialize, not just on mobile
-    this.setupElements();
-    this.setupEventListeners();
-    this.createIndicators();
-    this.updateIndicators();
-    
-    // Set initial position
-    if (window.innerWidth <= 768) {
-      console.log('📱 Mobile detected, setting up enhanced swipe functionality');
-      this.forceCorrectLayout();
-      this.goToSlide(0);
-      
-      // Add visual feedback for testing
-      setTimeout(() => {
-        this.showWelcomeMessage();
-      }, 1000);
-    }
-    
-    // Add global test functions for debugging
-    this.addGlobalTestFunction();
-  }
-  
-  forceCorrectLayout() {
-    console.log('🔧 Forcing correct layout to override conflicting CSS');
-    
-    if (window.innerWidth > 768) {
-      console.log('💻 Desktop detected, skipping mobile layout');
-      return;
-    }
-    
-    console.log('📱 Mobile detected, applying ULTRA AGGRESSIVE layout fixes');
-    
-    // ULTRA AGGRESSIVE MOBILE FIX: Directly set styles via JavaScript
-    const appPreviews = document.querySelector('.app-previews');
-    const previewDevices = document.querySelector('.preview-devices');
-    const deviceMockups = document.querySelectorAll('.device-mockup');
-    
-    if (!appPreviews || !previewDevices) {
-      console.error('❌ Required elements not found for mobile swipe');
-      return;
-    }
-    
-    // NUCLEAR OPTION: Completely override all conflicting styles
-    const forceStyles = () => {
-      // Force app-previews container
       const appPreviewsStyles = {
-        'height': '100vh',
-        'max-height': '100vh',
-        'min-height': '100vh',
+        'height': '400px',
+        'max-height': '400px',
+        'min-height': '400px',
         'overflow': 'hidden',
         'display': 'flex',
         'align-items': 'center',
@@ -156,7 +84,8 @@ class MobilePreviewSwipe {
         'transform': 'none',
         'scale': 'none',
         'width': '100%',
-        'background': 'transparent'
+        'background': 'transparent',
+        'position': 'relative'
       };
       
       Object.entries(appPreviewsStyles).forEach(([prop, value]) => {
@@ -977,9 +906,9 @@ class MobilePreviewSwipe {
     style.textContent = `
       @media screen and (max-width: 768px) {
         .app-previews {
-          height: 100vh !important;
-          max-height: 100vh !important;
-          min-height: 100vh !important;
+          height: 400px !important;
+          max-height: 400px !important;
+          min-height: 400px !important;
           overflow: hidden !important;
           display: flex !important;
           align-items: center !important;
@@ -989,6 +918,7 @@ class MobilePreviewSwipe {
           margin: 0 !important;
           transform: none !important;
           scale: none !important;
+          position: relative !important;
         }
         
         .preview-devices {
@@ -1040,8 +970,9 @@ class MobilePreviewSwipe {
       console.log('📱 Elements found, applying immediate JavaScript fixes');
       
       // Force styles immediately
-      appPreviews.style.setProperty('height', '100vh', 'important');
+      appPreviews.style.setProperty('height', '400px', 'important');
       appPreviews.style.setProperty('overflow', 'hidden', 'important');
+      appPreviews.style.setProperty('position', 'relative', 'important');
       
       previewDevices.style.setProperty('width', '200%', 'important');
       previewDevices.style.setProperty('transform', 'translateX(0%)', 'important');

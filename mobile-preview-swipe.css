@@ -8,6 +8,8 @@
   /* NUCLEAR OVERRIDE: Completely disable mobile-responsive.css rules that interfere with swipe */
   /* OVERRIDE mobile-responsive.css height: 300px and height: 250px rules */
   html body main .hero .hero-container .app-previews,
+  html body main section .hero .hero-container .app-previews,
+  html body main div.hero div.hero-container div.app-previews,
   html body .hero .hero-container .app-previews,
   html body .app-previews,
   body main .hero .hero-container .app-previews,
@@ -19,22 +21,27 @@
   .app-previews,
   div.app-previews,
   section.app-previews {
-    height: 100vh !important;
-    max-height: 100vh !important;
-    min-height: 100vh !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden !important; /* CRITICAL: Hide overflow to show only one device */
-    position: relative !important;
+    /* CRITICAL: Fixed height instead of 100vh to allow page scrolling */
+    height: 400px !important;
+    max-height: 400px !important;
+    min-height: 400px !important;
+    overflow: hidden !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    /* DISABLE any transforms from mobile-responsive.css */
     transform: none !important;
     scale: none !important;
+    /* Ensure full width */
     width: 100% !important;
-    flex-direction: column !important;
-    background: transparent !important; /* PRESERVE: Let hero background show through */
-    touch-action: pan-y !important; /* ENHANCED: Allow vertical scrolling outside swipe area */
+    /* Enhanced visual appeal */
+    background: transparent !important;
+    position: relative !important;
+    /* CRITICAL: Allow page to scroll past this section */
+    position: relative !important;
   }
   
   /* ENSURE HERO SECTION BACKGROUND IS PRESERVED */
@@ -76,7 +83,7 @@
     padding: 0 !important;
     position: relative !important;
     overflow: visible !important;
-    touch-action: pan-x !important; /* ENHANCED: Only allow horizontal panning */
+    touch-action: manipulation !important;
   }
   
   /* FORCE INDIVIDUAL DEVICE MOCKUPS TO PROPER SIZE */
@@ -1545,7 +1552,7 @@
     padding: 0 !important;
     position: relative !important;
     overflow: visible !important;
-    touch-action: pan-x !important;
+    touch-action: manipulation !important;
   }
   
   /* NUCLEAR OVERRIDE: Disable mobile-responsive.css device transforms */
@@ -1671,7 +1678,7 @@
     padding: 0 !important;
     position: relative !important;
     overflow: visible !important;
-    touch-action: pan-x !important;
+    touch-action: manipulation !important;
   }
   
   .preview-devices[data-swipe-container="true"] .device-mockup {
@@ -1707,5 +1714,36 @@
     flex-direction: column !important;
     background: transparent !important;
     touch-action: pan-y !important;
+  }
+}
+
+/* FINAL OVERRIDE - FIX SCROLLING ISSUE */
+@media screen and (max-width: 768px) {
+  /* CRITICAL: Allow page scrolling by using reasonable height */
+  .app-previews,
+  .hero .app-previews,
+  .hero-container .app-previews,
+  body .app-previews,
+  html body .app-previews,
+  html body main .app-previews,
+  html body main .hero .app-previews,
+  html body main .hero .hero-container .app-previews,
+  html body main section .hero .hero-container .app-previews {
+    height: 400px !important;
+    max-height: 400px !important;
+    min-height: 400px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    /* CRITICAL: Allow both touch interactions */
+    touch-action: manipulation !important;
+  }
+  
+  /* Allow swipe within preview container */
+  .preview-devices,
+  .app-previews .preview-devices,
+  .hero .app-previews .preview-devices,
+  body .app-previews .preview-devices,
+  html body .app-previews .preview-devices {
+    touch-action: manipulation !important;
   }
 } 

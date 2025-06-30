@@ -65,8 +65,8 @@ function debugMobileSwipe() {
   
   // Force app-previews
   appPreviews.style.cssText = `
-    height: 100vh !important;
-    max-height: 100vh !important;
+    height: 400px !important;
+    max-height: 400px !important;
     overflow: hidden !important;
     display: flex !important;
     align-items: center !important;
@@ -74,6 +74,7 @@ function debugMobileSwipe() {
     flex-direction: column !important;
     padding: 0 !important;
     margin: 0 !important;
+    position: relative !important;
   `;
   
   // Force preview-devices
