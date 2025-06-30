@@ -12,12 +12,14 @@ class MobilePreviewSwipe {
     this.isHorizontalSwipe = false;
     this.threshold = 50; // Minimum distance for swipe
     
-    console.log('MobilePreviewSwipe constructor called');
+    console.log('🚀 MobilePreviewSwipe constructor called');
+    console.log('📱 Window dimensions:', window.innerWidth, 'x', window.innerHeight);
+    console.log('📱 Is mobile?', window.innerWidth <= 768);
     this.init();
   }
   
   init() {
-    console.log('MobilePreviewSwipe init called, window width:', window.innerWidth);
+    console.log('🔧 MobilePreviewSwipe init called, window width:', window.innerWidth);
     
     // Always initialize, not just on mobile
     this.setupElements();
@@ -27,29 +29,76 @@ class MobilePreviewSwipe {
     
     // Set initial position
     if (window.innerWidth <= 768) {
+      console.log('📱 Mobile detected, setting up swipe functionality');
       this.goToSlide(0);
+      
+      // Add visual feedback for testing
+      setTimeout(() => {
+        this.showTestMessage();
+      }, 1000);
     }
+  }
+  
+  showTestMessage() {
+    console.log('💡 Showing test message');
+    const message = document.createElement('div');
+    message.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(212, 175, 55, 0.9);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(212, 175, 55, 0.3);
+      ">
+        ✨ Swipe Ready! Try swiping left/right or tap dots below
+      </div>
+    `;
+    
+    document.body.appendChild(message);
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+      if (message.parentNode) {
+        document.body.removeChild(message);
+      }
+    }, 4000);
   }
   
   setupElements() {
     this.previewsContainer = document.querySelector('.app-previews');
     this.previewDevices = document.querySelector('.preview-devices');
     
-    console.log('Setup elements:', {
-      previewsContainer: this.previewsContainer,
-      previewDevices: this.previewDevices
+    console.log('🔍 Setup elements:', {
+      previewsContainer: this.previewsContainer ? '✅ Found' : '❌ Not found',
+      previewDevices: this.previewDevices ? '✅ Found' : '❌ Not found'
     });
     
     if (!this.previewsContainer || !this.previewDevices) {
-      console.warn('Preview elements not found');
+      console.warn('⚠️ Preview elements not found - retrying in 500ms');
+      setTimeout(() => this.setupElements(), 500);
       return;
     }
+    
+    // Add debug info to elements
+    this.previewsContainer.setAttribute('data-swipe-ready', 'true');
+    this.previewDevices.setAttribute('data-swipe-container', 'true');
   }
   
   setupEventListeners() {
-    if (!this.previewDevices) return;
+    if (!this.previewDevices) {
+      console.warn('⚠️ Cannot setup event listeners - previewDevices not found');
+      return;
+    }
     
-    console.log('Setting up event listeners');
+    console.log('🎯 Setting up event listeners');
     
     // Touch events
     this.previewDevices.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
@@ -70,12 +119,23 @@ class MobilePreviewSwipe {
     
     // Prevent context menu on long press
     this.previewDevices.addEventListener('contextmenu', (e) => e.preventDefault());
+    
+    console.log('✅ Event listeners setup complete');
   }
   
   createIndicators() {
-    if (!this.previewsContainer) return;
+    if (!this.previewsContainer) {
+      console.warn('⚠️ Cannot create indicators - previewsContainer not found');
+      return;
+    }
     
-    console.log('Creating indicators');
+    console.log('🔘 Creating indicators');
+    
+    // Remove existing indicators
+    const existingIndicators = this.previewsContainer.querySelector('.preview-indicators');
+    if (existingIndicators) {
+      existingIndicators.remove();
+    }
     
     const indicatorsContainer = document.createElement('div');
     indicatorsContainer.className = 'preview-indicators';
@@ -86,9 +146,15 @@ class MobilePreviewSwipe {
       dot.setAttribute('role', 'button');
       dot.setAttribute('aria-label', `View preview ${i + 1}`);
       dot.setAttribute('tabindex', '0');
-      dot.addEventListener('click', () => this.goToSlide(i));
+      dot.addEventListener('click', (e) => {
+        console.log(`🔘 Indicator ${i} clicked`);
+        this.goToSlide(i);
+        e.preventDefault();
+        e.stopPropagation();
+      });
       dot.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
+          console.log(`🔘 Indicator ${i} activated via keyboard`);
           e.preventDefault();
           this.goToSlide(i);
         }
@@ -99,11 +165,16 @@ class MobilePreviewSwipe {
     this.previewsContainer.appendChild(indicatorsContainer);
     this.indicators = indicatorsContainer.querySelectorAll('.preview-dot');
     
-    console.log('Indicators created:', this.indicators.length);
+    console.log('✅ Indicators created:', this.indicators.length);
   }
   
   updateIndicators() {
-    if (!this.indicators) return;
+    if (!this.indicators) {
+      console.warn('⚠️ Cannot update indicators - indicators not found');
+      return;
+    }
+    
+    console.log('🔄 Updating indicators, current index:', this.currentIndex);
     
     this.indicators.forEach((dot, index) => {
       dot.classList.toggle('active', index === this.currentIndex);
@@ -112,7 +183,7 @@ class MobilePreviewSwipe {
   
   // Touch Event Handlers
   handleTouchStart(e) {
-    console.log('Touch start');
+    console.log('👆 Touch start detected');
     this.startX = e.touches[0].clientX;
     this.startY = e.touches[0].clientY; // Track Y position too
     this.currentX = this.startX;
@@ -120,12 +191,17 @@ class MobilePreviewSwipe {
     this.isDragging = false; // Don't set to true immediately
     this.isHorizontalSwipe = false; // Track if this is a horizontal swipe
     
+    console.log('📍 Touch start position:', { x: this.startX, y: this.startY });
+    
     // Mark as interacted to hide swipe hint
     this.previewsContainer.classList.add('interacted');
   }
   
   handleTouchMove(e) {
-    if (!this.startX || !this.startY) return;
+    if (!this.startX || !this.startY) {
+      console.log('⚠️ Touch move without start position');
+      return;
+    }
     
     this.currentX = e.touches[0].clientX;
     this.currentY = e.touches[0].clientY;
@@ -140,13 +216,16 @@ class MobilePreviewSwipe {
         if (this.isHorizontalSwipe) {
           this.isDragging = true;
           this.previewDevices.classList.add('dragging');
+          console.log('🔄 Horizontal swipe detected, starting drag');
+        } else {
+          console.log('↕️ Vertical swipe detected, allowing normal scroll');
         }
       }
     }
     
     // Only prevent default and handle swipe if it's horizontal
     if (this.isDragging && this.isHorizontalSwipe) {
-      console.log('Touch move - horizontal swipe');
+      console.log('🔄 Touch move - horizontal swipe, deltaX:', this.currentX - this.startX);
       e.preventDefault(); // Only prevent scrolling for horizontal swipes
       
       const deltaX = this.currentX - this.startX;
@@ -156,6 +235,7 @@ class MobilePreviewSwipe {
       const dragTransform = (deltaX / window.innerWidth) * 100;
       const newTransform = currentTransform + dragTransform;
       
+      console.log('🎯 Applying drag transform:', newTransform + '%');
       this.previewDevices.style.transform = `translateX(${newTransform}%)`;
     }
     // If it's vertical, let the browser handle normal scrolling
@@ -164,13 +244,14 @@ class MobilePreviewSwipe {
   handleTouchEnd(e) {
     if (!this.isDragging || !this.isHorizontalSwipe) {
       // Reset state for non-horizontal swipes
+      console.log('👆 Touch end - not a horizontal swipe, resetting state');
       this.isDragging = false;
       this.isHorizontalSwipe = false;
       this.previewDevices.classList.remove('dragging');
       return;
     }
     
-    console.log('Touch end');
+    console.log('👆 Touch end - processing horizontal swipe');
     this.isDragging = false;
     this.isHorizontalSwipe = false;
     this.previewDevices.classList.remove('dragging');
@@ -178,17 +259,26 @@ class MobilePreviewSwipe {
     const deltaX = this.currentX - this.startX;
     const shouldSwipe = Math.abs(deltaX) > this.threshold;
     
-    console.log('Touch end - deltaX:', deltaX, 'shouldSwipe:', shouldSwipe);
+    console.log('📊 Touch end analysis:', { 
+      deltaX, 
+      threshold: this.threshold, 
+      shouldSwipe,
+      currentIndex: this.currentIndex
+    });
     
     if (shouldSwipe) {
       if (deltaX > 0 && this.currentIndex > 0) {
+        console.log('⬅️ Swiping to previous slide');
         this.goToSlide(this.currentIndex - 1);
       } else if (deltaX < 0 && this.currentIndex < this.totalPreviews - 1) {
+        console.log('➡️ Swiping to next slide');
         this.goToSlide(this.currentIndex + 1);
       } else {
+        console.log('🔄 Swipe at boundary, snapping back');
         this.goToSlide(this.currentIndex); // Snap back
       }
     } else {
+      console.log('🔄 Swipe too small, snapping back');
       this.goToSlide(this.currentIndex); // Snap back
     }
   }
@@ -274,14 +364,20 @@ class MobilePreviewSwipe {
   
   // Slide Navigation
   goToSlide(index) {
-    console.log('goToSlide called with index:', index, 'current:', this.currentIndex);
+    console.log('🎯 goToSlide called with index:', index, 'current:', this.currentIndex);
     
-    if (this.isAnimating || index === this.currentIndex) {
-      console.log('Skipping - isAnimating:', this.isAnimating, 'same index:', index === this.currentIndex);
+    if (this.isAnimating) {
+      console.log('⏳ Animation in progress, skipping');
       return;
     }
+    
+    if (index === this.currentIndex) {
+      console.log('🔄 Same index, applying transform for snap-back');
+      // Still apply transform for snap-back effect
+    }
+    
     if (index < 0 || index >= this.totalPreviews) {
-      console.log('Skipping - index out of bounds:', index);
+      console.log('❌ Index out of bounds:', index, 'valid range: 0 -', this.totalPreviews - 1);
       return;
     }
     
@@ -289,18 +385,76 @@ class MobilePreviewSwipe {
     this.currentIndex = index;
     
     const transformValue = -this.currentIndex * 100;
-    console.log('Setting transform to:', `translateX(${transformValue}%)`);
-    this.previewDevices.style.transform = `translateX(${transformValue}%)`;
+    console.log('🎯 Setting transform to:', `translateX(${transformValue}%)`);
+    
+    if (this.previewDevices) {
+      // Force the transform with enhanced debugging
+      const beforeTransform = this.previewDevices.style.transform;
+      this.previewDevices.style.transform = `translateX(${transformValue}%)`;
+      const afterTransform = this.previewDevices.style.transform;
+      
+      console.log('🔄 Transform change:', {
+        before: beforeTransform,
+        after: afterTransform,
+        expected: `translateX(${transformValue}%)`,
+        elementWidth: this.previewDevices.offsetWidth,
+        elementHeight: this.previewDevices.offsetHeight,
+        computedStyle: window.getComputedStyle(this.previewDevices).transform
+      });
+      
+      // Verify the transform was applied
+      setTimeout(() => {
+        const finalTransform = window.getComputedStyle(this.previewDevices).transform;
+        console.log('✅ Final computed transform:', finalTransform);
+        
+        // Show success message
+        this.showSlideChangeMessage(index);
+      }, 100);
+      
+    } else {
+      console.error('❌ previewDevices not found, cannot apply transform');
+    }
     
     this.updateIndicators();
     
     // Reset animation flag
     setTimeout(() => {
       this.isAnimating = false;
+      console.log('✅ Animation complete, ready for next interaction');
     }, 400);
     
     // Announce to screen readers
     this.announceSlideChange();
+  }
+  
+  showSlideChangeMessage(index) {
+    const message = document.createElement('div');
+    message.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(34, 197, 94, 0.9);
+        color: #fff;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        z-index: 999;
+        backdrop-filter: blur(10px);
+      ">
+        📱 Slide ${index + 1} of ${this.totalPreviews}
+      </div>
+    `;
+    
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+      if (message.parentNode) {
+        document.body.removeChild(message);
+      }
+    }, 1500);
   }
   
   announceSlideChange() {
@@ -366,6 +520,29 @@ class MobilePreviewSwipe {
   
   getCurrentIndex() {
     return this.currentIndex;
+  }
+  
+  // Enhanced debugging and test functionality
+  testSwipeManually() {
+    console.log('🧪 Manual swipe test initiated');
+    console.log('📱 Current setup:', {
+      currentIndex: this.currentIndex,
+      totalPreviews: this.totalPreviews,
+      containerWidth: this.previewDevices ? this.previewDevices.offsetWidth : 'N/A',
+      containerTransform: this.previewDevices ? this.previewDevices.style.transform : 'N/A'
+    });
+    
+    // Test swipe to next slide
+    setTimeout(() => {
+      console.log('🧪 Testing swipe to slide 1');
+      this.goToSlide(1);
+    }, 1000);
+    
+    // Test swipe back to first slide
+    setTimeout(() => {
+      console.log('🧪 Testing swipe back to slide 0');
+      this.goToSlide(0);
+    }, 3000);
   }
 }
 

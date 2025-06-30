@@ -107,19 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     returnBadge.textContent = '17.1%';
                 }
 
-                // Add risk disclaimer if it doesn't exist
-                if (!document.querySelector('.risk-disclaimer')) {
-                    const returnsContainer = document.querySelector('.returns-container');
-                    if (returnsContainer) {
-                        const disclaimer = document.createElement('div');
-                        disclaimer.className = 'risk-disclaimer';
-                        disclaimer.textContent = 'Past performance does not guarantee future results. Investment involves risk.';
-                        
-                        // Insert after returns container
-                        returnsContainer.parentNode.insertBefore(disclaimer, returnsContainer.nextSibling);
-                    }
-                }
-                
                 // Add portfolio info section with more details
                 if (!document.querySelector('.portfolio-info')) {
                     const portfolioSummary = document.querySelector('.portfolio-summary');

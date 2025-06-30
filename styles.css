@@ -666,24 +666,11 @@ body.dark-mode .glow-effect {
 .device-frame::before {
   content: "";
   position: absolute;
-  width: 40%;
+  width: 120px;
   height: 25px;
-  background-color: #121212;
-  border-radius: 0 0 16px 16px;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-}
-
-.device-frame::after {
-  content: "";
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid #323232;
-  bottom: 15px;
+  border-radius: 15px;
+  background-color: #323232;
+  top: 8px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;

@@ -1,12 +1,12 @@
 /* NUCLEAR OVERRIDE - MOBILE PREVIEW SWIPE FUNCTIONALITY */
 /* CRITICAL: Use maximum CSS specificity to override ALL conflicting styles */
-/* ULTRA HIGH SPECIFICITY TO OVERRIDE app-preview-styles.css */
+/* ULTRA HIGH SPECIFICITY TO OVERRIDE app-preview-styles.css AND mobile-responsive.css */
 
 /* FORCE SINGLE DEVICE VIEW ON MOBILE - NUCLEAR APPROACH */
 @media screen and (max-width: 768px) {
   
-  /* NUCLEAR OVERRIDE: Force app-previews container to full height with HIDDEN OVERFLOW */
-  /* PRESERVE ORIGINAL HERO BACKGROUND COLOR */
+  /* NUCLEAR OVERRIDE: Completely disable mobile-responsive.css rules that interfere with swipe */
+  /* OVERRIDE mobile-responsive.css height: 300px and height: 250px rules */
   html body main .hero .hero-container .app-previews,
   html body .hero .hero-container .app-previews,
   html body .app-previews,
@@ -46,7 +46,7 @@
     background: #151B26 !important; /* PRESERVE: Original hero background color */
   }
   
-  /* ULTRA HIGH SPECIFICITY: Force preview-devices to be HORIZONTAL ROW (not column) */
+  /* NUCLEAR OVERRIDE: Disable mobile-responsive.css scale transforms completely */
   html body main .hero .hero-container .app-previews .preview-devices,
   html body .hero .hero-container .app-previews .preview-devices,
   html body .app-previews .preview-devices,
@@ -59,67 +59,26 @@
   .app-previews .preview-devices,
   .preview-devices,
   div.preview-devices {
-    display: flex !important;
-    flex-direction: row !important; /* CRITICAL: ROW not column - this overrides app-preview-styles.css */
-    gap: 0 !important;
-    width: 200% !important; /* Container is 200% wide to hold both devices */
+    /* FORCE NO SCALING - Let JavaScript handle all transforms */
+    transform: none !important;
+    scale: none !important;
+    /* Ensure proper container setup for swipe */
+    width: 200% !important;
     height: 100% !important;
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    overflow: visible !important;
-    transform: translateX(0%) !important; /* Start at first device */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
     position: relative !important;
-    left: 0 !important;
-    top: 0 !important;
-    right: auto !important;
-    bottom: auto !important;
+    overflow: visible !important;
   }
   
-  /* CRITICAL: Override app-preview-styles.css mobile media query that interferes with swipe */
-  @media screen and (max-width: 768px) {
-    html body main .hero .hero-container .app-previews .preview-devices,
-    html body .hero .hero-container .app-previews .preview-devices,
-    html body .app-previews .preview-devices,
-    body main .hero .hero-container .app-previews .preview-devices,
-    body .hero .hero-container .app-previews .preview-devices,
-    body .app-previews .preview-devices,
-    main .hero .hero-container .app-previews .preview-devices,
-    .hero .hero-container .app-previews .preview-devices,
-    .hero .app-previews .preview-devices,
-    .app-previews .preview-devices,
-    .preview-devices,
-    div.preview-devices {
-      flex-direction: row !important; /* OVERRIDE: Force horizontal layout even on mobile */
-      gap: 0 !important; /* OVERRIDE: Remove gap that breaks swipe */
-      width: 200% !important;
-      display: flex !important;
-    }
-    
-    /* OVERRIDE: Prevent device scaling that interferes with swipe layout */
-    html body main .hero .hero-container .app-previews .preview-devices .device-mockup,
-    html body .hero .hero-container .app-previews .preview-devices .device-mockup,
-    html body .app-previews .preview-devices .device-mockup,
-    body main .hero .hero-container .app-previews .preview-devices .device-mockup,
-    body .hero .hero-container .app-previews .preview-devices .device-mockup,
-    body .app-previews .preview-devices .device-mockup,
-    main .hero .hero-container .app-previews .preview-devices .device-mockup,
-    .hero .hero-container .app-previews .preview-devices .device-mockup,
-    .hero .app-previews .preview-devices .device-mockup,
-    .app-previews .preview-devices .device-mockup,
-    .preview-devices .device-mockup,
-    .device-mockup,
-    div.device-mockup,
-    .device-mockup.device-left,
-    .device-mockup.device-right {
-      transform: none !important; /* OVERRIDE: Remove scaling that breaks layout */
-      scale: 1 !important; /* ENSURE: Full size devices */
-    }
-  }
-  
-  /* ULTRA HIGH SPECIFICITY: Force each device to exactly 50% of container width (which equals 100% of viewport) */
+  /* FORCE INDIVIDUAL DEVICE MOCKUPS TO PROPER SIZE */
+  html body main section .hero .hero-container .app-previews .preview-devices .device-mockup,
   html body main .hero .hero-container .app-previews .preview-devices .device-mockup,
   html body .hero .hero-container .app-previews .preview-devices .device-mockup,
   html body .app-previews .preview-devices .device-mockup,
@@ -131,35 +90,22 @@
   .hero .app-previews .preview-devices .device-mockup,
   .app-previews .preview-devices .device-mockup,
   .preview-devices .device-mockup,
-  .device-mockup,
-  div.device-mockup,
   .device-mockup.device-left,
   .device-mockup.device-right {
-    width: 50% !important; /* Each device takes exactly 50% of the 200% container (= 100% of viewport) */
-    max-width: none !important;
-    min-width: 50% !important;
-    height: calc(100vh - 2rem) !important;
+    /* FORCE NO INDIVIDUAL TRANSFORMS - JavaScript controls container */
+    transform: none !important;
+    scale: none !important;
+    /* Each device takes exactly half of the 200% container (100% of viewport) */
+    width: 50% !important;
+    height: 100% !important;
     flex-shrink: 0 !important;
     flex-grow: 0 !important;
-    transform: none !important; /* Override any scale transforms */
-    scale: 1 !important; /* Override any scale transforms */
-    opacity: 1 !important;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    margin: 0 !important;
     padding: 0 1rem !important;
     position: relative !important;
-    margin: 0 !important;
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-    z-index: auto !important;
-    filter: none !important;
-    rotate: none !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
   }
   
   /* NUCLEAR OVERRIDE: Force device frame to be large and phone-like */
@@ -174,12 +120,12 @@
   .device-mockup .device-frame,
   .device-frame,
   div.device-frame {
-    height: 90% !important;
+    height: 95% !important;
     width: 100% !important;
     max-width: 350px !important;
     background: #1a1a1a !important;
     border-radius: 35px !important;
-    padding: 20px 12px !important;
+    padding: 20px 12px 12px 12px !important;
     position: relative !important;
     box-shadow: 
       0 0 0 2px #333,
@@ -246,151 +192,213 @@
     scale: none !important;
   }
   
-  /* Enhanced app screen content */
+  /* PRODUCTION READY: App screen layout - Enhanced content distribution */
   .device-screen .app-screen,
   .app-screen {
-    font-size: 0.7rem !important;
-    padding: 0.75rem !important;
-    height: 100% !important;
-    overflow: hidden !important; /* STATIC: Remove scrolling, make content fit within screen */
-    position: relative !important;
-    background: linear-gradient(135deg, #1e293b 0%, #2d3748 100%) !important; /* COMPATIBLE: Dark background that works with hero blue */
-    color: #fff !important;
-    line-height: 1.3 !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important; /* DISTRIBUTE: Space content evenly */
+    height: 100% !important;
+    padding: 0 1rem 0 1rem !important;
+    gap: 0.6rem !important;
+    overflow: hidden !important;
+    background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%) !important;
   }
   
-  /* ENSURE: All content sections are properly sized to fit without scrolling */
-  .app-screen > * {
-    flex-shrink: 0 !important; /* PREVENT: Content from shrinking too much */
+  /* Enhanced property detail layout */
+  .app-screen.property-detail {
+    gap: 0.6rem !important;
   }
   
-  .app-screen .portfolio-value-card,
-  .app-screen .portfolio-info,
-  .app-screen .action-buttons,
-  .app-screen .returns-container,
-  .app-screen .stat-cards,
-  .app-screen .property-hero,
-  .app-screen .funding-status {
-    margin-bottom: 0.5rem !important; /* COMPACT: Reduce spacing between sections */
+  /* Ensure nav bar stays at bottom with proper spacing */
+  .app-nav-bar {
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
   }
   
-  /* COMPACT: Reduce padding and margins for better space utilization */
-  .app-screen .portfolio-value-card {
-    padding: 0.75rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-  
-  .app-screen .property-cover-img {
-    height: 100px !important; /* COMPACT: Reduce image height */
-    margin-bottom: 0.5rem !important;
-  }
-  
-  .app-screen .stat-cards {
-    gap: 0.4rem !important; /* COMPACT: Reduce gap between stat cards */
-    margin-bottom: 0.5rem !important;
-  }
-  
-  .app-screen .stat-card {
-    padding: 0.5rem 0.25rem !important; /* COMPACT: Reduce padding */
-  }
-  
-  /* App screen header */
-  .app-screen .app-header,
-  .app-header {
-    margin-bottom: 1rem !important;
-    position: relative !important;
-    padding: 0.5rem 0 !important;
-  }
-  
-  .app-header h2 {
-    font-size: 1rem !important;
-    color: #fff !important;
-    margin-bottom: 0.25rem !important;
-    font-weight: 600 !important;
-    text-align: center !important;
-  }
-  
-  .app-header .subtitle {
-    color: #94a3b8 !important;
-    font-size: 0.7rem !important;
-  }
-  
-  .app-header .time {
-    font-size: 0.75rem !important;
-    color: #fff !important;
-  }
-  
-  /* Back button */
-  .back-button {
-    position: absolute !important;
-    left: 0 !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    color: #94a3b8 !important;
-    font-size: 1rem !important;
-    cursor: pointer !important;
-    padding: 0.25rem !important;
-  }
-  
-  /* Portfolio value card */
+  /* COMPACT: Portfolio value card */
   .portfolio-value-card {
-    background: rgba(212, 175, 55, 0.1) !important;
-    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%) !important;
+    border: 1px solid rgba(212, 175, 55, 0.2) !important;
     border-radius: 12px !important;
-    padding: 1rem !important;
-    margin-bottom: 1rem !important;
+    padding: 0.8rem !important;
+    text-align: center !important;
     backdrop-filter: blur(10px) !important;
+    margin-bottom: 0 !important;
   }
   
   .value-label {
     color: #94a3b8 !important;
-    font-size: 0.7rem !important;
-    margin-bottom: 0.25rem !important;
-    text-align: center !important;
+    font-size: 0.75rem !important;
+    margin-bottom: 0.3rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
   }
   
   .value-amount {
     font-size: 1.8rem !important;
     font-weight: 700 !important;
     color: #D4AF37 !important;
-    margin: 0.25rem 0 !important;
+    margin: 0.3rem 0 !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
-    text-align: center !important;
+    line-height: 1 !important;
   }
   
-  .value-amount .currency,
-  .value-amount .amount {
+  /* COMPACT: Portfolio info */
+  .portfolio-info {
+    margin: 0 !important;
+    padding: 0.8rem !important;
+  }
+  
+  /* COMPACT: Action buttons */
+  .action-buttons {
+    margin: 0 !important;
+    gap: 0.8rem !important;
+  }
+  
+  /* COMPACT: Dividends section */
+  .dividends-container {
+    background: rgba(212, 175, 55, 0.08) !important;
+    border: 1px solid rgba(212, 175, 55, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 0.8rem !important;
+    margin: 0 !important;
+    backdrop-filter: blur(10px) !important;
+  }
+  
+  .dividends-value {
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
     color: #D4AF37 !important;
+    margin: 0 !important;
   }
   
+  /* COMPACT: Returns section */
+  .returns-container {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    padding: 0.8rem !important;
+    margin: 0 !important;
+    backdrop-filter: blur(10px) !important;
+  }
+  
+  .returns-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 0.4rem !important;
+  }
+  
+  .returns-header span:first-child {
+    font-size: 0.9rem !important;
+    color: #94a3b8 !important;
+    font-weight: 500 !important;
+  }
+  
+  .return-badge {
+    font-size: 0.8rem !important;
+    color: #22c55e !important;
+    background: rgba(34, 197, 94, 0.15) !important;
+    padding: 0.2rem 0.5rem !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+  }
+  
+  .returns-value {
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
+    color: #22c55e !important;
+    margin: 0 0 0.4rem 0 !important;
+  }
+  
+  .returns-progress-bar {
+    height: 4px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 2px !important;
+    overflow: hidden !important;
+  }
+  
+  .progress-fill {
+    height: 100% !important;
+    background: linear-gradient(90deg, #22c55e, #16a34a) !important;
+    width: 60% !important;
+    border-radius: 2px !important;
+  }
+  
+  /* REMOVE: Device notch styling */
+  .device-frame::before,
+  .device-notch {
+    display: none !important;
+  }
+  
+  /* PRODUCTION READY: App header - Enhanced visual hierarchy */
+  .app-screen .app-header,
+  .app-header {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0.6rem 0 !important;
+    margin-bottom: 0 !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.12) !important;
+    position: relative !important;
+    background: rgba(15, 20, 25, 0.5) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 8px 8px 0 0 !important;
+  }
+  
+  .app-header h2 {
+    font-size: 1.1rem !important;
+    color: #fff !important;
+    margin: 0 !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+  }
+  
+  /* Enhanced back button with better visual feedback */
+  .back-button {
+    position: absolute !important;
+    left: 0.5rem !important;
+    color: #94a3b8 !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    padding: 0.4rem !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  .back-button:hover {
+    background-color: rgba(212, 175, 55, 0.1) !important;
+    color: #D4AF37 !important;
+    transform: translateX(-1px) !important;
+  }
+  
+  /* GOLDINN: Portfolio growth */
   .portfolio-growth {
-    font-size: 0.75rem !important;
+    font-size: 0.85rem !important;
     color: #10b981 !important;
     font-weight: 600 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 0.25rem !important;
+    gap: 0.3rem !important;
   }
   
   .portfolio-growth .period {
     color: #94a3b8 !important;
-    font-size: 0.7rem !important;
+    font-size: 0.75rem !important;
   }
   
-  /* Portfolio info grid */
+  /* MINIMALISTIC: Portfolio info grid */
   .portfolio-info {
     display: flex !important;
     justify-content: space-between !important;
     gap: 0.5rem !important;
-    margin-bottom: 1rem !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 8px !important;
-    padding: 0.75rem !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 12px !important;
+    padding: 1rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    margin-bottom: 0 !important;
   }
   
   .portfolio-info-item {
@@ -399,72 +407,128 @@
   }
   
   .info-label {
-    font-size: 0.6rem !important;
+    font-size: 0.7rem !important;
     color: #94a3b8 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
-    margin-bottom: 0.25rem !important;
+    margin-bottom: 0.3rem !important;
   }
   
   .info-value {
-    font-size: 0.9rem !important;
+    font-size: 1rem !important;
     font-weight: 700 !important;
     color: #fff !important;
   }
   
-  /* Action buttons */
+  /* GOLDINN: Action buttons */
   .action-buttons {
     display: flex !important;
-    justify-content: space-around !important;
-    gap: 0.25rem !important;
-    margin: 1rem 0 !important;
+    justify-content: space-between !important;
+    gap: 0.5rem !important;
+    margin: 0 !important;
   }
   
   .action-button {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 0.25rem !important;
+    gap: 0.4rem !important;
     flex: 1 !important;
   }
   
   .action-circle {
-    width: 36px !important;
-    height: 36px !important;
+    width: 44px !important;
+    height: 44px !important;
     border-radius: 50% !important;
-    background: rgba(212, 175, 55, 0.2) !important;
-    border: 2px solid rgba(212, 175, 55, 0.4) !important;
+    background: rgba(212, 175, 55, 0.15) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 0.9rem !important;
+    font-size: 1rem !important;
     color: #D4AF37 !important;
     transition: all 0.3s ease !important;
   }
   
-  .action-circle:hover {
-    background: rgba(212, 175, 55, 0.3) !important;
-    transform: scale(1.05) !important;
-  }
-  
   .action-button span {
-    font-size: 0.6rem !important;
+    font-size: 0.7rem !important;
     color: #94a3b8 !important;
     text-align: center !important;
     font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
   }
   
-  /* Property detail screen */
+  /* GOLDINN: Dividends container */
+  .dividends-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .dividends-header span:first-child {
+    font-size: 0.9rem !important;
+    color: #94a3b8 !important;
+    font-weight: 500 !important;
+  }
+  
+  .dividend-period {
+    font-size: 0.8rem !important;
+    color: #D4AF37 !important;
+    background: rgba(212, 175, 55, 0.15) !important;
+    padding: 0.2rem 0.5rem !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+  }
+  
+  .dividend-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0.5rem 0 !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1) !important;
+  }
+  
+  .dividend-item:last-child {
+    border-bottom: none !important;
+  }
+  
+  .dividend-property {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+  
+  .property-icon {
+    font-size: 1rem !important;
+  }
+  
+  .dividend-property span {
+    color: #e2e8f0 !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .dividend-amount {
+    color: #D4AF37 !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+  }
+  
+  /* PROPERTY DETAIL SCREEN STYLES - PRODUCTION READY FORMATTING */
+  
+  /* Property hero section - Enhanced spacing and structure */
   .property-hero {
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.8rem !important;
   }
   
   .property-cover-img {
     position: relative !important;
-    border-radius: 8px !important;
+    border-radius: 12px !important;
     overflow: hidden !important;
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 0.8rem !important;
     height: 120px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   }
   
   .property-cover-img img {
@@ -475,167 +539,257 @@
   
   .property-badges {
     position: absolute !important;
-    top: 0.5rem !important;
-    right: 0.5rem !important;
+    top: 0.6rem !important;
+    right: 0.6rem !important;
   }
   
   .featured-badge {
     background: #D4AF37 !important;
     color: #000 !important;
-    padding: 0.2rem 0.5rem !important;
-    border-radius: 15px !important;
-    font-size: 0.6rem !important;
+    padding: 0.3rem 0.6rem !important;
+    border-radius: 12px !important;
+    font-size: 0.65rem !important;
     font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
   }
   
   .property-header h3 {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
     font-weight: 700 !important;
     color: #fff !important;
-    margin-bottom: 0.25rem !important;
+    margin-bottom: 0.4rem !important;
+    line-height: 1.3 !important;
   }
   
   .property-location {
     color: #94a3b8 !important;
-    font-size: 0.7rem !important;
-    margin-bottom: 0.75rem !important;
+    font-size: 0.75rem !important;
+    margin-bottom: 0.6rem !important;
     display: flex !important;
     align-items: center !important;
-    gap: 0.25rem !important;
+    gap: 0.3rem !important;
   }
   
-  /* Stat cards */
+  .property-tags {
+    display: flex !important;
+    gap: 0.4rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+  
+  .property-tag {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #e2e8f0 !important;
+    padding: 0.2rem 0.5rem !important;
+    border-radius: 12px !important;
+    font-size: 0.65rem !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  .property-tag.luxury {
+    background: rgba(212, 175, 55, 0.2) !important;
+    color: #D4AF37 !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+  }
+  
+  /* PRODUCTION READY: Stat cards with perfect spacing and alignment */
   .stat-cards {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
+    display: flex !important;
     gap: 0.5rem !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.8rem !important;
   }
   
   .stat-card {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 8px !important;
-    padding: 0.75rem 0.25rem !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    padding: 0.8rem 0.5rem !important;
     text-align: center !important;
+    flex: 1 !important;
+    backdrop-filter: blur(10px) !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .stat-card:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(212, 175, 55, 0.2) !important;
+    transform: translateY(-1px) !important;
   }
   
   .stat-value {
-    font-size: 0.8rem !important;
+    font-size: 0.9rem !important;
     font-weight: 700 !important;
     color: #fff !important;
-    margin-bottom: 0.25rem !important;
+    margin-bottom: 0.3rem !important;
+    line-height: 1 !important;
   }
   
   .stat-label {
-    font-size: 0.55rem !important;
-    color: #94a3b8 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-  }
-  
-  /* Funding section */
-  .funding-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    margin-bottom: 0.75rem !important;
-    padding: 0 0.75rem !important;
-  }
-  
-  .funding-stats {
-    display: flex !important;
-    justify-content: space-between !important;
-    margin-bottom: 1rem !important;
-    padding: 0 0.75rem !important;
-  }
-  
-  .raised-amount .amount {
-    font-size: 1.5rem !important;
-    font-weight: 700 !important;
-    color: #D4AF37 !important;
-    display: block !important;
-  }
-  
-  .raised-amount .label {
     font-size: 0.6rem !important;
     color: #94a3b8 !important;
     text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.3rem !important;
   }
   
-  /* Investment CTA */
-  .investment-cta {
-    margin: 1rem 0 !important;
-    padding: 0 0.75rem !important;
+  .stat-progress-bar {
+    height: 3px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 2px !important;
+    margin: 0.3rem 0 !important;
+    overflow: hidden !important;
   }
   
-  .btn-invest {
-    width: 100% !important;
-    background: #D4AF37 !important;
-    color: #000 !important;
-    border: none !important;
-    padding: 0.75rem !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    font-size: 0.8rem !important;
+  .stat-progress-bar .progress-fill {
+    height: 100% !important;
+    background: linear-gradient(90deg, #D4AF37, #B8941F) !important;
+    border-radius: 2px !important;
+    transition: width 0.3s ease !important;
+  }
+  
+  .stat-note {
+    font-size: 0.55rem !important;
+    color: #64748b !important;
+    margin-top: 0.2rem !important;
+    font-weight: 500 !important;
+  }
+  
+  /* PRODUCTION READY: Property metrics with perfect grid alignment */
+  .property-metrics {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    padding: 0.9rem !important;
+    margin: 0 !important;
+    backdrop-filter: blur(10px) !important;
+  }
+  
+  .metric-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 0.8rem !important;
+    margin-bottom: 0.7rem !important;
+  }
+  
+  .metric-row:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .metric-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    flex: 1 !important;
+    gap: 0.3rem !important;
+    padding: 0.2rem !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .metric-item:hover {
+    background: rgba(212, 175, 55, 0.05) !important;
+  }
+  
+  .metric-icon {
+    color: #D4AF37 !important;
+    font-size: 1rem !important;
+    margin-bottom: 0.1rem !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 0.25rem !important;
+    width: 20px !important;
+    height: 20px !important;
   }
   
-  /* Risk disclaimer */
-  .risk-disclaimer {
-    font-size: 0.55rem !important;
+  .metric-item .metric-value {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+  }
+  
+  .metric-item .metric-label {
+    font-size: 0.6rem !important;
     color: #94a3b8 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
+    line-height: 1.2 !important;
     text-align: center !important;
-    line-height: 1.3 !important;
-    margin-bottom: 0.75rem !important;
-    padding: 0 0.75rem !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
   }
   
-  /* Bottom navigation */
+  /* PRODUCTION READY: Bottom navigation - Enhanced styling and interactions */
   .app-nav-bar {
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    background: rgba(0, 0, 0, 0.8) !important;
-    backdrop-filter: blur(10px) !important;
-    padding: 0.5rem 0 !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+    background: rgba(15, 20, 25, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    padding: 0.4rem 0 0.3rem 0 !important;
+    border-top: 1px solid rgba(212, 175, 55, 0.15) !important;
     display: flex !important;
     justify-content: space-around !important;
     align-items: center !important;
     border-bottom-left-radius: 25px !important;
     border-bottom-right-radius: 25px !important;
+    position: relative !important;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
+    min-height: 44px !important;
   }
   
   .nav-item {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 0.15rem !important;
-    color: #666 !important;
-    font-size: 0.6rem !important;
-    transition: color 0.3s ease !important;
-    padding: 0.2rem !important;
+    gap: 0.2rem !important;
+    color: #64748b !important;
+    transition: all 0.3s ease !important;
+    padding: 0.2rem 0.4rem !important;
+    cursor: pointer !important;
+    border-radius: 8px !important;
+    min-width: 45px !important;
+  }
+  
+  .nav-item:hover {
+    color: #94a3b8 !important;
+    background: rgba(255, 255, 255, 0.05) !important;
   }
   
   .nav-item.active {
     color: #D4AF37 !important;
+    background: rgba(212, 175, 55, 0.1) !important;
+  }
+  
+  .nav-item.active:hover {
+    background: rgba(212, 175, 55, 0.15) !important;
   }
   
   .nav-item i {
-    font-size: 1rem !important;
+    font-size: 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 18px !important;
+    height: 18px !important;
   }
   
   .nav-item span {
     font-size: 0.6rem !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.2px !important;
+    line-height: 1 !important;
   }
 }
 
-/* Swipe indicators */
+/* Swipe indicators - Enhanced positioning */
 @media screen and (max-width: 768px) {
   .preview-indicators {
     display: flex !important;
@@ -643,54 +797,67 @@
     gap: 0.75rem !important;
     margin-top: 2rem !important;
     position: absolute !important;
-    bottom: 1rem !important;
+    bottom: 2rem !important; /* Moved up to avoid conflicts with swipe hint */
     left: 50% !important;
     transform: translateX(-50%) !important;
-    z-index: 20 !important;
+    z-index: 25 !important; /* Higher z-index to appear above swipe hint */
+    background: rgba(21, 27, 38, 0.9) !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 25px !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(212, 175, 55, 0.2) !important;
   }
   
   .preview-dot {
-    width: 12px !important;
-    height: 12px !important;
+    width: 14px !important;
+    height: 14px !important;
     border-radius: 50% !important;
-    background-color: rgba(255, 255, 255, 0.3) !important;
+    background-color: rgba(255, 255, 255, 0.4) !important;
     transition: all 0.3s ease !important;
     cursor: pointer !important;
     position: relative !important;
+    border: 2px solid transparent !important;
   }
   
   .preview-dot.active {
     background-color: #D4AF37 !important;
-    transform: scale(1.3) !important;
+    transform: scale(1.2) !important;
     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3) !important;
+    border-color: rgba(212, 175, 55, 0.5) !important;
+  }
+  
+  .preview-dot:hover {
+    background-color: rgba(212, 175, 55, 0.7) !important;
+    transform: scale(1.1) !important;
   }
 }
 
-/* Swipe hint animation */
+/* Swipe hint animation - Improved positioning */
 @media screen and (max-width: 768px) {
   .app-previews::after {
     content: "← Swipe to explore →" !important;
     position: absolute !important;
-    bottom: 4rem !important;
+    bottom: 6rem !important; /* Moved up to avoid conflict with indicators */
     left: 50% !important;
     transform: translateX(-50%) !important;
-    color: rgba(255, 255, 255, 0.8) !important;
-    font-size: 0.9rem !important;
-    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
     text-align: center !important;
     animation: swipeHint 3s infinite !important;
     pointer-events: none !important;
     z-index: 15 !important;
-    background: rgba(21, 27, 38, 0.8) !important; /* COMPATIBLE: Match hero background with transparency */
-    padding: 0.5rem 1rem !important;
-    border-radius: 20px !important;
+    background: rgba(21, 27, 38, 0.85) !important; /* COMPATIBLE: Match hero background with transparency */
+    padding: 0.4rem 1rem !important;
+    border-radius: 15px !important;
     backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(212, 175, 55, 0.3) !important; /* ACCENT: Add subtle gold border */
+    border: 1px solid rgba(212, 175, 55, 0.25) !important; /* ACCENT: Add subtle gold border */
+    letter-spacing: 0.3px !important;
   }
   
   @keyframes swipeHint {
-    0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
-    50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.02); }
   }
 }
 
@@ -742,6 +909,104 @@
 
 /* Optimize for very small screens */
 @media screen and (max-width: 480px) {
+  /* ULTRA HIGH SPECIFICITY - Override ALL possible transform conflicts for smaller screens */
+  html body main section .hero .hero-container .app-previews .preview-devices,
+  html body main .hero .hero-container .app-previews .preview-devices,
+  html body .hero .hero-container .app-previews .preview-devices,
+  html body .app-previews .preview-devices,
+  body main .hero .hero-container .app-previews .preview-devices,
+  body .hero .hero-container .app-previews .preview-devices,
+  body .app-previews .preview-devices,
+  main .hero .hero-container .app-previews .preview-devices,
+  .hero .hero-container .app-previews .preview-devices,
+  .hero .app-previews .preview-devices,
+  .app-previews .preview-devices,
+  .preview-devices,
+  div.preview-devices {
+    /* FORCE NO SCALING - Let JavaScript handle all transforms */
+    transform: none !important;
+    scale: none !important;
+    /* Ensure proper container setup for swipe */
+    width: 200% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+  
+  /* FORCE INDIVIDUAL DEVICE MOCKUPS TO PROPER SIZE FOR SMALLER SCREENS */
+  html body main section .hero .hero-container .app-previews .preview-devices .device-mockup,
+  html body main .hero .hero-container .app-previews .preview-devices .device-mockup,
+  html body .hero .hero-container .app-previews .preview-devices .device-mockup,
+  html body .app-previews .preview-devices .device-mockup,
+  body main .hero .hero-container .app-previews .preview-devices .device-mockup,
+  body .hero .hero-container .app-previews .preview-devices .device-mockup,
+  body .app-previews .preview-devices .device-mockup,
+  main .hero .hero-container .app-previews .preview-devices .device-mockup,
+  .hero .hero-container .app-previews .preview-devices .device-mockup,
+  .hero .app-previews .preview-devices .device-mockup,
+  .app-previews .preview-devices .device-mockup,
+  .preview-devices .device-mockup,
+  .device-mockup.device-left,
+  .device-mockup.device-right {
+    /* FORCE NO INDIVIDUAL TRANSFORMS - JavaScript controls container */
+    transform: none !important;
+    scale: none !important;
+    /* Each device takes exactly half of the 200% container (100% of viewport) */
+    width: 50% !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
+    position: relative !important;
+  }
+  
+  html body main section .hero .hero-container .app-previews,
+  html body main .hero .hero-container .app-previews,
+  html body .hero .hero-container .app-previews,
+  html body .app-previews,
+  body main .hero .hero-container .app-previews,
+  body .hero .hero-container .app-previews,
+  body .app-previews,
+  main .hero .hero-container .app-previews,
+  .hero .hero-container .app-previews,
+  .hero .app-previews,
+  .app-previews,
+  div.app-previews,
+  section.app-previews {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    min-height: 100vh !important;
+  }
+  
+  html body main section .hero .hero-container .app-previews .preview-devices,
+  html body main .hero .hero-container .app-previews .preview-devices,
+  html body .hero .hero-container .app-previews .preview-devices,
+  html body .app-previews .preview-devices,
+  body main .hero .hero-container .app-previews .preview-devices,
+  body .hero .hero-container .app-previews .preview-devices,
+  body .app-previews .preview-devices,
+  main .hero .hero-container .app-previews .preview-devices,
+  .hero .hero-container .app-previews .preview-devices,
+  .hero .app-previews .preview-devices,
+  .app-previews .preview-devices,
+  .preview-devices,
+  div.preview-devices {
+    transform: translateX(0%) !important; /* OVERRIDE: Disable scale(0.6) from mobile-responsive.css */
+    scale: none !important;
+  }
+  
   .device-frame {
     max-width: 280px !important;
     padding: 16px 10px !important;
@@ -814,4 +1079,355 @@
   .action-circle:hover {
     transform: none !important;
   }
+}
+
+/* IMMEDIATE FIX - FORCE SINGLE DEVICE VIEW */
+@media screen and (max-width: 768px) {
+  /* FORCE CONTAINER TO SHOW ONLY ONE DEVICE */
+  body .app-previews,
+  body .hero .app-previews,
+  body .hero-container .app-previews {
+    height: 80vh !important;
+    min-height: 500px !important;
+    max-height: 80vh !important;
+    overflow: hidden !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 2rem 0 !important;
+  }
+  
+  /* FORCE DEVICES CONTAINER TO PROPER SIZE */
+  body .app-previews .preview-devices,
+  body .hero .app-previews .preview-devices {
+    width: 200% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    transition: transform 0.4s ease !important;
+    transform: translateX(0%) !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* FORCE EACH DEVICE TO TAKE EXACTLY 100% OF VIEWPORT */
+  body .app-previews .preview-devices .device-mockup,
+  body .hero .app-previews .preview-devices .device-mockup {
+    width: 100% !important;
+    height: 100% !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: none !important;
+    scale: none !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
+  }
+  
+  /* FORCE DEVICE FRAME TO PROPER SIZE */
+  body .app-previews .device-mockup .device-frame {
+    width: 100% !important;
+    max-width: 300px !important;
+    height: 85% !important;
+    background: #1a1a1a !important;
+    border-radius: 30px !important;
+    padding: 15px 10px !important;
+    box-shadow: 0 0 0 2px #333, 0 0 0 4px #000, 0 15px 30px rgba(0, 0, 0, 0.4) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transform: none !important;
+    scale: none !important;
+  }
+}
+
+/* FONT SIZE CONSISTENCY OVERRIDES - Force consistent font sizes across all investment details */
+.app-screen.property-showcase .investment-opportunities .metric-value {
+  font-size: 0.8rem !important; /* Matching KPI value size */
+}
+
+.app-screen.property-showcase .investment-opportunities .additional-metric-value {
+  font-size: 0.8rem !important; /* Matching KPI value size */
+}
+
+.app-screen.property-showcase .investment-opportunities .metric-label {
+  font-size: 0.5rem !important; /* Matching KPI label size */
+}
+
+.app-screen.property-showcase .investment-opportunities .additional-metric-label {
+  font-size: 0.5rem !important; /* Matching KPI label size */
+}
+
+/* Section headers consistency */
+.app-screen.property-showcase .opportunities-header h3 {
+  font-size: 0.8rem !important; /* Matching Performance Overview header size */
+}
+
+.app-screen.property-showcase .dashboard-header h3 {
+  font-size: 0.8rem !important; /* Consistent section header size */
+}
+
+/* DASHBOARD LEFT PREVIEW - FONT SIZE CONSISTENCY TO MATCH RIGHT PREVIEW */
+/* Make left dashboard more compact to fit more investment information */
+
+/* Portfolio value - Reduce from 1.9rem to match right preview scale */
+.app-screen.dashboard-view .value-amount {
+  font-size: 1.4rem !important; /* Reduced from 1.9rem to match right preview scale */
+}
+
+.app-screen.dashboard-view .value-label {
+  font-size: 0.65rem !important; /* Reduced from 0.8rem to match right preview */
+}
+
+.app-screen.dashboard-view .portfolio-growth {
+  font-size: 0.75rem !important; /* Reduced from 1rem to match right preview */
+}
+
+.app-screen.dashboard-view .portfolio-growth .period {
+  font-size: 0.65rem !important; /* Reduced from 0.9rem to match right preview */
+}
+
+/* Portfolio info grid - Reduce font sizes to match right preview */
+.app-screen.dashboard-view .info-label {
+  font-size: 0.6rem !important; /* Reduced from 0.85rem to match right preview */
+}
+
+.app-screen.dashboard-view .info-value {
+  font-size: 1rem !important; /* Reduced from 1.4rem to match right preview */
+}
+
+/* Action buttons - Reduce to match right preview */
+.app-screen.dashboard-view .action-button span {
+  font-size: 0.65rem !important; /* Reduced from 0.85rem to match right preview */
+}
+
+/* Dividends section - Reduce to match right preview */
+.app-screen.dashboard-view .dividends-header span:first-child {
+  font-size: 0.75rem !important; /* Reduced from 0.9rem to match right preview */
+}
+
+.app-screen.dashboard-view .dividend-period {
+  font-size: 0.65rem !important; /* Reduced from 0.8rem to match right preview */
+}
+
+.app-screen.dashboard-view .dividends-value {
+  font-size: 1.2rem !important; /* Reduced from 1.5rem to match right preview */
+}
+
+/* Returns section - Reduce to match right preview */
+.app-screen.dashboard-view .returns-header span:first-child {
+  font-size: 0.75rem !important; /* Reduced from 0.9rem to match right preview */
+}
+
+.app-screen.dashboard-view .return-badge {
+  font-size: 0.65rem !important; /* Reduced from 0.8rem to match right preview */
+}
+
+.app-screen.dashboard-view .returns-value {
+  font-size: 1.2rem !important; /* Reduced from 1.5rem to match right preview */
+}
+
+/* App header - Reduce to match right preview */
+.app-screen.dashboard-view .app-header h2 {
+  font-size: 1rem !important; /* Reduced from 1.2rem to match right preview */
+}
+
+/* Navigation - Reduce to match right preview */
+.app-screen.dashboard-view .nav-item span {
+  font-size: 0.6rem !important; /* Reduced from 0.7rem to match right preview */
+}
+
+/* DASHBOARD LEFT PREVIEW - COMPACT SPACING TO FIT MORE CONTENT */
+/* Reduce padding and margins to create space for additional investment info */
+
+/* Portfolio value card - More compact */
+.app-screen.dashboard-view .portfolio-value-card {
+  padding: 0.6rem !important; /* Reduced from 1rem */
+  margin-bottom: 0.6rem !important; /* Reduced spacing */
+}
+
+/* Portfolio info grid - More compact */
+.app-screen.dashboard-view .portfolio-info {
+  padding: 0.6rem !important; /* Reduced from 0.8rem */
+  gap: 0.4rem !important; /* Reduced gap */
+  margin-bottom: 0.6rem !important; /* Reduced spacing */
+}
+
+/* Action buttons - More compact */
+.app-screen.dashboard-view .action-buttons {
+  gap: 0.6rem !important; /* Reduced from 0.8rem */
+  margin-bottom: 0.6rem !important; /* Reduced spacing */
+}
+
+.app-screen.dashboard-view .action-circle {
+  width: 36px !important; /* Reduced from 45px */
+  height: 36px !important; /* Reduced from 45px */
+}
+
+/* Dividends container - More compact */
+.app-screen.dashboard-view .dividends-container {
+  padding: 0.6rem !important; /* Reduced from 0.9rem */
+  margin-bottom: 0.6rem !important; /* Reduced spacing */
+}
+
+/* Returns container - More compact */
+.app-screen.dashboard-view .returns-container {
+  padding: 0.6rem !important; /* Reduced from 0.9rem */
+  margin-bottom: 0.6rem !important; /* Reduced spacing */
+}
+
+/* App screen overall - Reduce gap between sections */
+.app-screen.dashboard-view {
+  gap: 0.5rem !important; /* Reduced from default gap */
+  padding: 1rem 1rem 0 1rem !important; /* Reduced padding */
+}
+
+/* NEW INVESTMENT SECTIONS FOR LEFT DASHBOARD */
+/* Investment Metrics Dashboard */
+.app-screen.dashboard-view .investment-metrics-dashboard {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  padding: 0.6rem !important;
+  margin-bottom: 0.6rem !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.app-screen.dashboard-view .metrics-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.app-screen.dashboard-view .metrics-header span:first-child {
+  font-size: 0.75rem !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+}
+
+.app-screen.dashboard-view .metrics-period {
+  font-size: 0.65rem !important;
+  color: #D4AF37 !important;
+  background: rgba(212, 175, 55, 0.15) !important;
+  padding: 0.2rem 0.5rem !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+}
+
+.app-screen.dashboard-view .metrics-grid-dashboard {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0.4rem !important;
+}
+
+.app-screen.dashboard-view .metric-item-dashboard {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.1rem !important;
+  text-align: center !important;
+}
+
+.app-screen.dashboard-view .metric-label-dashboard {
+  font-size: 0.6rem !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3px !important;
+}
+
+.app-screen.dashboard-view .metric-value-dashboard {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  line-height: 1.2 !important;
+}
+
+.app-screen.dashboard-view .metric-value-dashboard.highlight {
+  color: #D4AF37 !important;
+}
+
+.app-screen.dashboard-view .metric-value-dashboard.low-risk {
+  color: #22c55e !important;
+}
+
+/* Quick Opportunities Section */
+.app-screen.dashboard-view .quick-opportunities {
+  background: rgba(212, 175, 55, 0.08) !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 0.6rem !important;
+  margin-bottom: 0.6rem !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.app-screen.dashboard-view .opportunities-header-dashboard {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.app-screen.dashboard-view .opportunities-header-dashboard span:first-child {
+  font-size: 0.75rem !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+}
+
+.app-screen.dashboard-view .view-all {
+  font-size: 0.6rem !important;
+  color: #D4AF37 !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3px !important;
+  cursor: pointer !important;
+}
+
+.app-screen.dashboard-view .opportunity-item {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 0.4rem 0 !important;
+}
+
+.app-screen.dashboard-view .opportunity-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.1rem !important;
+}
+
+.app-screen.dashboard-view .opportunity-name {
+  font-size: 0.7rem !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
+.app-screen.dashboard-view .opportunity-location {
+  font-size: 0.6rem !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+}
+
+.app-screen.dashboard-view .opportunity-metrics {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.1rem !important;
+  text-align: right !important;
+}
+
+.app-screen.dashboard-view .opportunity-irr {
+  font-size: 0.7rem !important;
+  color: #22c55e !important;
+  font-weight: 700 !important;
+}
+
+.app-screen.dashboard-view .opportunity-min {
+  font-size: 0.6rem !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
 } 
