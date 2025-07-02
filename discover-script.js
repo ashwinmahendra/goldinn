@@ -43,10 +43,10 @@ const hotelNames = [
 
 // Hotel exterior/building images
 const hotelImages = [
-    "images/malibu-hotel.jpg", // Luxury beachfront hotel - Malibu
-    "images/aspen-hotel.jpg", // Mountain resort hotel - Aspen
-    "images/miami-hotel.jpg", // Modern city hotel - Miami
-    "images/hawaii-hotel.jpg", // Tropical resort hotel - Hawaii
+    "malibu-hotel.jpg", // Luxury beachfront hotel - Malibu
+    "aspen-hotel.jpg", // Mountain resort hotel - Aspen
+    "miami-hotel.jpg", // Modern city hotel - Miami
+    "hawaii-hotel.jpg", // Tropical resort hotel - Hawaii
     "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80", // Modern high-rise hotel
     "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80", // Resort pool area
     "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80", // Boutique hotel exterior
