@@ -43,22 +43,18 @@ const hotelNames = [
 
 // Hotel exterior/building images
 const hotelImages = [
-    "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80", // Luxury hotel with pool
-    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80", // Beach resort
-    "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80", // Luxury hotel exterior
-    "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=800&q=80", // Rainforest resort
+    "images/malibu-hotel.jpg", // Luxury beachfront hotel - Malibu
+    "images/aspen-hotel.jpg", // Mountain resort hotel - Aspen
+    "images/miami-hotel.jpg", // Modern city hotel - Miami
+    "images/hawaii-hotel.jpg", // Tropical resort hotel - Hawaii
     "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80", // Modern high-rise hotel
-    "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80", // Beachfront hotel
-    "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80", // Luxury resort with pool
-    "https://images.unsplash.com/photo-1519449556851-5720b33024e7?auto=format&fit=crop&w=800&q=80", // Modern business hotel exterior
-    "https://images.unsplash.com/photo-1561501878-aabd62634533?auto=format&fit=crop&w=800&q=80", // Island resort view
-    "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=800&q=80", // Boutique hotel
-    "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80", // Desert resort
-    "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?auto=format&fit=crop&w=800&q=80", // Mountain hotel
-    "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=800&q=80", // Tropical resort
-    "https://images.unsplash.com/photo-1559508551-44bff1de756b?auto=format&fit=crop&w=800&q=80", // City center hotel
-    "https://images.unsplash.com/photo-1518733057094-95b53143d2a7?auto=format&fit=crop&w=800&q=80", // Waterfront resort
-    "https://images.unsplash.com/photo-1568084680786-a84f91d1153c?auto=format&fit=crop&w=800&q=80"  // Luxury spa hotel
+    "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80", // Resort pool area
+    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80", // Boutique hotel exterior
+    "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=800&q=80", // Historic hotel building
+    "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80", // Contemporary hotel design
+    "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80", // Urban hotel exterior
+    "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80", // Waterfront hotel
+    "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80"  // Mountain lodge exterior
 ];
 
 // Gallery images (interiors, amenities, rooms)
