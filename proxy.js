@@ -19,7 +19,7 @@ const fs      = require('fs');
 const path    = require('path');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 //  ↓  Get your FREE key at https://aistudio.google.com/apikey  ↓
@@ -28,7 +28,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY';
 const GEMINI_MODEL    = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
-const ALLOWED_ORIGIN  = 'http://localhost:3000';   // ← your production domain
+const ALLOWED_ORIGIN  = 'https://ashwinmahendra.github.io';   // ← your production domain
 
 // ── Storage files ─────────────────────────────────────────────────────────────
 const LEADS_FILE     = path.join(__dirname, 'leads.json');
