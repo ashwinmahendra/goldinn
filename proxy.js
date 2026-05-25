@@ -40,6 +40,21 @@ function readJSON(file) {
 function writeJSON(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
+
+function getKnowledgeBase() {
+  const kbDir = path.join(__dirname, 'knowledge');
+  if (!fs.existsSync(kbDir)) return '';
+  
+  let combinedKnowledge = '';
+  const files = fs.readdirSync(kbDir);
+  for (const file of files) {
+    if (file.endsWith('.md') || file.endsWith('.txt')) {
+      const content = fs.readFileSync(path.join(kbDir, file), 'utf8');
+      combinedKnowledge += `\n\n--- Start of Document: ${file} ---\n${content}\n--- End of Document: ${file} ---\n`;
+    }
+  }
+  return combinedKnowledge;
+}
 // ─────────────────────────────────────────────────────────────────────────────
 
 app.use(express.json());
@@ -78,7 +93,21 @@ app.post('/chat', async (req, res) => {
     });
   }
 
-  const { systemPrompt, messages } = req.body;
+  let { systemPrompt, messages, userName, userEmail } = req.body;
+
+  // Prepend knowledge base and user info to system prompt
+  const kb = getKnowledgeBase();
+  let fullSystemPrompt = '';
+  
+  if (userName || userEmail) {
+    fullSystemPrompt += `Current User Details:\nName: ${userName || 'Unknown'}\nEmail: ${userEmail || 'Unknown'}\n\n`;
+  }
+  
+  if (systemPrompt) {
+    fullSystemPrompt += `${systemPrompt}\n\n`;
+  }
+  
+  fullSystemPrompt += `\n\nKNOWLEDGE BASE DOCUMENTS:\n${kb}`;
 
   if (!messages || !Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: 'Bad request', detail: 'messages array is required' });
@@ -92,8 +121,8 @@ app.post('/chat', async (req, res) => {
   }));
 
   const geminiBody = {
-    system_instruction: systemPrompt
-      ? { parts: [{ text: systemPrompt }] }
+    system_instruction: fullSystemPrompt
+      ? { parts: [{ text: fullSystemPrompt }] }
       : undefined,
     contents,
     generationConfig: {
