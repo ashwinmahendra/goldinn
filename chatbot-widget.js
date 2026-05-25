@@ -12,9 +12,9 @@
 
   // ─── CONFIG ──────────────────────────────────────────────────────────────────
   const CONFIG = {
-    PROXY_URL: 'http://localhost:3001/chat',
-    LEADS_URL: 'http://localhost:3001/leads',
-    QUESTIONS_URL: 'http://localhost:3001/questions',
+    PROXY_URL: 'https://goldinn.onrender.com/chat',
+    LEADS_URL: 'https://goldinn.onrender.com/leads',
+    QUESTIONS_URL: 'https://goldinn.onrender.com/questions',
     WIDGET_TITLE: 'Wonny',
     WIDGET_SUBTITLE: 'Your GoldInn Concierge',
     ESCALATION_EMAIL: 'invest@yourplatform.com',
