@@ -15,7 +15,7 @@
     PROXY_URL: 'https://goldinn.onrender.com/chat',
     LEADS_URL: 'https://goldinn.onrender.com/leads',
     QUESTIONS_URL: 'https://goldinn.onrender.com/questions',
-    WIDGET_TITLE: 'Wonny',
+    WIDGET_TITLE: 'Vonny',
     WIDGET_SUBTITLE: 'Your GoldInn Concierge',
     ESCALATION_EMAIL: 'invest@yourplatform.com',
     QUICK_CHIPS: [
@@ -608,8 +608,8 @@
 
     <!-- Gate form: shown before chat -->
     <div id="gi-gate" class="gi-hidden" role="dialog" aria-label="Chat access form" aria-modal="true">
-      <div class="gi-gate-avatar">W</div>
-      <div class="gi-gate-title">Meet Wonny 👋</div>
+      <div class="gi-gate-avatar">V</div>
+      <div class="gi-gate-title">Meet Vonny 👋</div>
       <div class="gi-gate-sub">Your personal GoldInn concierge.<br>Quick intro before we chat.</div>
 
       <label class="gi-gate-label" for="gi-gate-name">Your Name</label>
@@ -627,7 +627,7 @@
     <!-- Chat panel: shown after gate -->
     <div id="gi-panel" class="gi-hidden" role="dialog" aria-label="GoldInn investment advisor chat" aria-modal="true">
       <div id="gi-header">
-        <div class="gi-h-avatar">W</div>
+        <div class="gi-h-avatar">V</div>
         <div class="gi-h-info">
           <div class="gi-h-title">${CONFIG.WIDGET_TITLE}</div>
           <div class="gi-h-sub">
@@ -697,7 +697,7 @@
   const gateEmailErr = document.getElementById('gi-gate-email-err');
 
   function welcomeMessage(name) {
-    return `Hey ${name}! 👋 So glad you're here — I'm **Wonny** and I know Minnesota vacation real estate inside and out.\n\nWhat would you like to know about investing with GoldInn?`;
+    return `Hey ${name}! 👋 So glad you're here — I'm **Vonny** and I know Minnesota vacation real estate inside and out.\n\nWhat would you like to know about investing with GoldInn?`;
   }
 
   // ── Gate helpers ───────────────────────────────────────────────────────────
@@ -799,7 +799,7 @@
 
     const av = document.createElement('div');
     av.className = 'gi-avatar';
-    av.textContent = role === 'bot' ? 'G' : 'You';
+    av.textContent = role === 'bot' ? 'V' : 'You';
     av.setAttribute('aria-hidden', 'true');
 
     const bubble = document.createElement('div');
@@ -822,7 +822,7 @@
     wrap.className = 'gi-msg gi-bot';
     wrap.id = 'gi-typing-indicator';
     wrap.innerHTML = `
-      <div class="gi-avatar" aria-hidden="true">G</div>
+      <div class="gi-avatar" aria-hidden="true">V</div>
       <div class="gi-bubble">
         <div class="gi-typing-dots" aria-label="GoldInn advisor is typing">
           <span></span><span></span><span></span>
@@ -897,6 +897,7 @@
     history.push({ role: 'user', content: text });
     showTyping();
 
+    // Inject name/email into system prompt so Vonny knows who she's talking to
     try {
       const res = await fetch(CONFIG.PROXY_URL, {
         method: 'POST',
