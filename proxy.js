@@ -17,6 +17,7 @@ const express = require('express');
 const cors    = require('cors');
 const fs      = require('fs');
 const path    = require('path');
+const mammoth = require('mammoth');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -41,16 +42,24 @@ function writeJSON(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
 
-function getKnowledgeBase() {
+async function getKnowledgeBase() {
   const kbDir = path.join(__dirname, 'knowledge');
   if (!fs.existsSync(kbDir)) return '';
   
   let combinedKnowledge = '';
   const files = fs.readdirSync(kbDir);
   for (const file of files) {
+    const filePath = path.join(kbDir, file);
     if (file.endsWith('.md') || file.endsWith('.txt')) {
-      const content = fs.readFileSync(path.join(kbDir, file), 'utf8');
+      const content = fs.readFileSync(filePath, 'utf8');
       combinedKnowledge += `\n\n--- Start of Document: ${file} ---\n${content}\n--- End of Document: ${file} ---\n`;
+    } else if (file.endsWith('.docx')) {
+      try {
+        const result = await mammoth.extractRawText({ path: filePath });
+        combinedKnowledge += `\n\n--- Start of Document: ${file} ---\n${result.value}\n--- End of Document: ${file} ---\n`;
+      } catch (err) {
+        console.error(`Failed to read ${file}:`, err);
+      }
     }
   }
   return combinedKnowledge;
@@ -96,7 +105,7 @@ app.post('/chat', async (req, res) => {
   let { systemPrompt, messages, userName, userEmail } = req.body;
 
   // Prepend knowledge base and user info to system prompt
-  const kb = getKnowledgeBase();
+  const kb = await getKnowledgeBase();
   let fullSystemPrompt = '';
   
   if (userName || userEmail) {
