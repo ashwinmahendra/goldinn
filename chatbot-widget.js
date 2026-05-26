@@ -76,15 +76,16 @@
       position: fixed;
       bottom: 28px;
       right: 28px;
-      width: 60px;
       height: 60px;
-      border-radius: 50%;
+      padding: 0 20px 0 16px;
+      border-radius: 30px;
       background: linear-gradient(135deg, #D4AF37, #B8860B);
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 10px;
       box-shadow: 0 0 20px rgba(212,175,55,0.4), 0 4px 20px rgba(0,0,0,0.4);
       z-index: 999999;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -94,10 +95,16 @@
       box-shadow: 0 0 32px rgba(212,175,55,0.6), 0 8px 28px rgba(0,0,0,0.5);
     }
     #gi-launcher svg {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       fill: #fff;
       filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+    }
+    #gi-launcher-text {
+      color: #0A0E1A;
+      font-weight: 700;
+      font-size: 15px;
+      font-family: inherit;
     }
 
     /* ── Unread Badge ── */
@@ -140,8 +147,16 @@
       flex-direction: column;
       z-index: 999998;
       overflow: hidden;
-      transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+      transition: opacity 0.2s ease-out, transform 0.2s ease-out, width 0.3s ease, height 0.3s ease, bottom 0.3s ease, right 0.3s ease, border-radius 0.3s ease;
       transform-origin: bottom right;
+    }
+    #gi-panel.gi-fullscreen {
+      width: 100%;
+      height: 100%;
+      bottom: 0;
+      right: 0;
+      border-radius: 0;
+      border: none;
     }
     #gi-panel.gi-hidden {
       opacity: 0;
@@ -206,25 +221,27 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
-    #gi-close {
+    .gi-header-actions {
+      display: flex;
+      margin-left: auto;
+      gap: 6px;
+    }
+    .gi-header-actions button {
       background: none;
       border: none;
       cursor: pointer;
       color: rgba(255,255,255,0.5);
-      font-size: 18px;
-      line-height: 1;
-      padding: 4px;
-      margin-left: auto;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      width: 28px;
-      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: color 0.15s, background 0.15s;
     }
-    #gi-close:hover { color: #fff; background: rgba(255,255,255,0.1); }
-
+    .gi-header-actions button:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .gi-header-actions svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+    
     /* ── Quick Chips ── */
     #gi-chips {
       padding: 10px 14px;
@@ -603,6 +620,7 @@
         <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/>
         <circle cx="9" cy="10" r="1"/><circle cx="12" cy="10" r="1"/><circle cx="15" cy="10" r="1"/>
       </svg>
+      <span id="gi-launcher-text">Chat with Vonny</span>
       <div id="gi-unread" aria-label="1 unread message">1</div>
     </button>
 
@@ -635,7 +653,22 @@
             ${CONFIG.WIDGET_SUBTITLE}
           </div>
         </div>
-        <button id="gi-close" aria-label="Close chat">&#x2715;</button>
+        <div class="gi-header-actions">
+          <button id="gi-expand" aria-label="Toggle Fullscreen" title="Toggle Fullscreen">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <polyline points="9 21 3 21 3 15"></polyline>
+              <line x1="21" y1="3" x2="14" y2="10"></line>
+              <line x1="3" y1="21" x2="10" y2="14"></line>
+            </svg>
+          </button>
+          <button id="gi-close" aria-label="Close Chat" title="Close Chat">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div id="gi-chips" role="list" aria-label="Quick questions">
@@ -779,6 +812,10 @@
   });
 
   document.getElementById('gi-close').addEventListener('click', closeChat);
+  document.getElementById('gi-expand').addEventListener('click', () => {
+    panel.classList.toggle('gi-fullscreen');
+    scrollToBottom();
+  });
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {

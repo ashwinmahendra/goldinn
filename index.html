@@ -2375,10 +2375,6 @@
         </div>
     </footer>
 
-    <button id="standalone-dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
-        <i class="fas fa-moon"></i>
-    </button>
-
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="script.js"></script>
     <script src="app-preview-scripts.js?v=1.4"></script>
@@ -2391,49 +2387,8 @@
             easing: 'ease-out',
             once: true
         });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded - initializing standalone dark mode toggle');
-            
-            const darkModeToggle = document.getElementById('standalone-dark-mode-toggle');
-            
-            if (!darkModeToggle) {
-                console.error('ERROR: Standalone dark mode toggle button not found');
-                return;
-            }
-            
-            console.log('SUCCESS: Standalone dark mode toggle button found');
-            
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
-            if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
-                document.body.classList.add('dark-mode');
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                document.body.classList.remove('dark-mode');
-                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-            
-            darkModeToggle.addEventListener('click', function() {
-                console.log('Standalone dark mode toggle clicked');
-                
-                document.body.classList.toggle('dark-mode');
-                
-                if (document.body.classList.contains('dark-mode')) {
-                    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                    localStorage.setItem('theme', 'dark');
-                    console.log('Dark mode activated via standalone toggle');
-                } else {
-                    darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                    localStorage.setItem('theme', 'light');
-                    console.log('Light mode activated via standalone toggle');
-                }
-            });
-        });
     </script>
 
-    <!-- Add this script right before the closing body tag -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get elements
