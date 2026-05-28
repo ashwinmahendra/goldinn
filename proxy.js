@@ -18,6 +18,7 @@ const cors    = require('cors');
 const fs      = require('fs');
 const path    = require('path');
 const mammoth = require('mammoth');
+const crypto  = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -28,12 +29,15 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY';
 
 const GEMINI_MODEL    = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+const EMBEDDING_MODEL = 'text-embedding-004';
+const EMBEDDING_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent?key=${GEMINI_API_KEY}`;
 
 const ALLOWED_ORIGIN  = 'https://ashwinmahendra.github.io';   // ← your production domain
 
 // ── Storage files ─────────────────────────────────────────────────────────────
 const LEADS_FILE     = path.join(__dirname, 'leads.json');
 const QUESTIONS_FILE = path.join(__dirname, 'questions.json');
+const VECTOR_STORE_FILE = path.join(__dirname, 'vector_store.json');
 
 function readJSON(file) {
   try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch { return []; }
@@ -42,39 +46,165 @@ function writeJSON(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
 
-async function getKnowledgeBase() {
+// ── RAG System Utilities ──────────────────────────────────────────────────────
+
+// Chunk text into smaller segments for better retrieval precision
+function chunkText(text, maxChars = 800, overlap = 100) {
+  const paragraphs = text.split(/\n\s*\n/);
+  const chunks = [];
+  let currentChunk = '';
+
+  for (const p of paragraphs) {
+    if (currentChunk.length + p.length > maxChars && currentChunk.length > 0) {
+      chunks.push(currentChunk.trim());
+      // Create overlap by taking the end of the previous chunk
+      currentChunk = currentChunk.slice(-overlap) + '\n\n' + p;
+    } else {
+      currentChunk += (currentChunk ? '\n\n' : '') + p;
+    }
+  }
+  if (currentChunk.trim()) {
+    chunks.push(currentChunk.trim());
+  }
+  return chunks;
+}
+
+// Generate an embedding array from the Gemini API
+async function getEmbedding(text) {
+  const response = await fetch(EMBEDDING_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: `models/${EMBEDDING_MODEL}`,
+      content: { parts: [{ text }] }
+    })
+  });
+  if (!response.ok) {
+    const err = await response.text();
+    console.error("[RAG] Embedding error:", err);
+    throw new Error(`Embedding API failed: ${response.status}`);
+  }
+  const data = await response.json();
+  return data.embedding.values;
+}
+
+// Calculate similarity between two vectors
+function cosineSimilarity(vecA, vecB) {
+  let dotProduct = 0;
+  let normA = 0;
+  let normB = 0;
+  for (let i = 0; i < vecA.length; i++) {
+    dotProduct += vecA[i] * vecB[i];
+    normA += vecA[i] * vecA[i];
+    normB += vecB[i] * vecB[i];
+  }
+  if (normA === 0 || normB === 0) return 0;
+  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+// Build or update the vector store on startup
+async function buildOrUpdateVectorStore() {
   const kbDir = path.join(__dirname, 'knowledge');
-  if (!fs.existsSync(kbDir)) return '';
-  
-  let combinedKnowledge = '';
+  if (!fs.existsSync(kbDir)) {
+    console.log(`[RAG] Knowledge directory not found at ${kbDir}.`);
+    return;
+  }
+
+  if (GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY') {
+    console.warn('[RAG] API Key is missing. Skipping vector generation.');
+    return;
+  }
+
+  let store = { files: {}, chunks: [] };
+  if (fs.existsSync(VECTOR_STORE_FILE)) {
+    try {
+      store = JSON.parse(fs.readFileSync(VECTOR_STORE_FILE, 'utf8'));
+    } catch (e) {
+      console.warn("[RAG] Could not parse existing vector_store.json. Creating new one.");
+    }
+  }
+  if (!store.files) store.files = {};
+  if (!store.chunks) store.chunks = [];
+
   const files = fs.readdirSync(kbDir);
+  let changed = false;
+
   for (const file of files) {
     const filePath = path.join(kbDir, file);
+    const stat = fs.statSync(filePath);
+    
+    if (!file.endsWith('.md') && !file.endsWith('.txt') && !file.endsWith('.docx')) continue;
+
+    const mtime = stat.mtimeMs;
+    // Skip if file hasn't been modified
+    if (store.files[file] && store.files[file].mtime === mtime) {
+      continue;
+    }
+
+    console.log(`[RAG] Processing document: ${file}`);
+    let content = '';
     if (file.endsWith('.md') || file.endsWith('.txt')) {
-      const content = fs.readFileSync(filePath, 'utf8');
-      combinedKnowledge += `\n\n--- Start of Document: ${file} ---\n${content}\n--- End of Document: ${file} ---\n`;
+      content = fs.readFileSync(filePath, 'utf8');
     } else if (file.endsWith('.docx')) {
       try {
         const result = await mammoth.extractRawText({ path: filePath });
-        combinedKnowledge += `\n\n--- Start of Document: ${file} ---\n${result.value}\n--- End of Document: ${file} ---\n`;
+        content = result.value;
       } catch (err) {
-        console.error(`Failed to read ${file}:`, err);
+        console.error(`[RAG] Failed to read docx ${file}:`, err);
+        continue;
       }
     }
+
+    // Remove old chunks for this file
+    store.chunks = store.chunks.filter(c => c.file !== file);
+
+    // Chunk and embed
+    const chunks = chunkText(content, 1000, 200);
+    
+    for (let i = 0; i < chunks.length; i++) {
+      try {
+        const embedding = await getEmbedding(chunks[i]);
+        store.chunks.push({
+          file,
+          text: chunks[i],
+          embedding
+        });
+      } catch (err) {
+        console.error(`[RAG] Failed to embed chunk ${i} in ${file}:`, err);
+      }
+    }
+
+    store.files[file] = { mtime };
+    changed = true;
   }
-  return combinedKnowledge;
+
+  // Handle deleted files
+  for (const storedFile of Object.keys(store.files)) {
+    if (!files.includes(storedFile)) {
+      console.log(`[RAG] Removing deleted document: ${storedFile}`);
+      store.chunks = store.chunks.filter(c => c.file !== storedFile);
+      delete store.files[storedFile];
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    fs.writeFileSync(VECTOR_STORE_FILE, JSON.stringify(store));
+    console.log(`[RAG] Vector store updated. Total chunks: ${store.chunks.length}`);
+  } else {
+    console.log(`[RAG] Vector store is up to date. Total chunks: ${store.chunks.length}`);
+  }
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
 app.use(express.json());
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
-// Allow file://, all localhost variants, and the configured ALLOWED_ORIGIN
 app.use(cors({
   origin: function (origin, callback) {
     if (
-      !origin ||                   // curl / Postman / server-side (no Origin header)
-      origin === 'null' ||         // file:// pages (browsers send the string "null")
+      !origin ||
+      origin === 'null' ||
       origin === ALLOWED_ORIGIN ||
       /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)
     ) {
@@ -93,19 +223,49 @@ app.post('/chat', async (req, res) => {
   const ts = new Date().toISOString();
   console.log(`[${ts}] POST /chat — origin: ${req.headers.origin || 'none'}`);
 
-  // ── Guard: placeholder key ──────────────────────────────────────────────────
   if (GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY') {
-    console.error('[proxy] Gemini API key is still the placeholder!');
     return res.status(500).json({
       error: 'API key not configured',
-      detail: 'Replace YOUR_GEMINI_API_KEY in proxy.js with your real Gemini key. Get one free at https://aistudio.google.com/apikey'
+      detail: 'Replace YOUR_GEMINI_API_KEY in proxy.js'
     });
   }
 
   let { systemPrompt, messages, userName, userEmail } = req.body;
 
-  // Prepend knowledge base and user info to system prompt
-  const kb = await getKnowledgeBase();
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    return res.status(400).json({ error: 'Bad request', detail: 'messages array is required' });
+  }
+
+  // 1. RAG Retrieval
+  const userMessage = messages[messages.length - 1].content;
+  let contextSnippet = "";
+  
+  try {
+    if (fs.existsSync(VECTOR_STORE_FILE)) {
+      const storeRaw = fs.readFileSync(VECTOR_STORE_FILE, 'utf8');
+      const store = JSON.parse(storeRaw);
+      
+      if (store.chunks && store.chunks.length > 0) {
+        const queryEmbedding = await getEmbedding(userMessage);
+        const scoredChunks = store.chunks.map(chunk => ({
+          text: chunk.text,
+          file: chunk.file,
+          score: cosineSimilarity(queryEmbedding, chunk.embedding)
+        }));
+        
+        // Sort highest similarity first
+        scoredChunks.sort((a, b) => b.score - a.score);
+        
+        // Take top 5 relevant chunks
+        const topChunks = scoredChunks.slice(0, 5);
+        contextSnippet = topChunks.map(c => `[Snippet from ${c.file}]:\n${c.text}`).join("\n\n---\n\n");
+      }
+    }
+  } catch (e) {
+    console.error("[RAG] Search error during /chat:", e);
+  }
+
+  // 2. Build precision system prompt
   let fullSystemPrompt = '';
   
   if (userName || userEmail) {
@@ -116,32 +276,23 @@ app.post('/chat', async (req, res) => {
     fullSystemPrompt += `${systemPrompt}\n\n`;
   }
   
-  fullSystemPrompt += `\n\nKNOWLEDGE BASE DOCUMENTS:\n${kb}`;
+  fullSystemPrompt += `=== RELEVANT KNOWLEDGE BASE SNIPPETS ===\n${contextSnippet || '(No specific documents matched)'}\n========================================\n\n`;
+  fullSystemPrompt += `CRITICAL INSTRUCTIONS:\nYou are a highly accurate, professional assistant. You MUST use the provided knowledge base snippets to answer the user's question directly. Provide precise, accurate answers. If the answer is not contained within the provided snippets, politely state that you do not have that exact information rather than making up an answer. Keep your tone helpful and reassuring.`;
 
-  if (!messages || !Array.isArray(messages) || messages.length === 0) {
-    return res.status(400).json({ error: 'Bad request', detail: 'messages array is required' });
-  }
-
-  // ── Map to Gemini format ────────────────────────────────────────────────────
-  // Gemini uses role "model" instead of "assistant"
+  // 3. Map to Gemini format
   const contents = messages.map(m => ({
     role: m.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: m.content }]
   }));
 
   const geminiBody = {
-    system_instruction: fullSystemPrompt
-      ? { parts: [{ text: fullSystemPrompt }] }
-      : undefined,
+    system_instruction: { parts: [{ text: fullSystemPrompt }] },
     contents,
     generationConfig: {
       maxOutputTokens: 1024,
-      temperature: 0.7,
+      temperature: 0.2, // Lower temperature for more factual, less creative responses
     }
   };
-
-  // Remove undefined keys
-  if (!geminiBody.system_instruction) delete geminiBody.system_instruction;
 
   try {
     const response = await fetch(GEMINI_ENDPOINT, {
@@ -160,24 +311,20 @@ app.post('/chat', async (req, res) => {
     }
 
     const data = await response.json();
-
-    // ── Extract reply text ────────────────────────────────────────────────────
     const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!replyText) {
-      console.error('[Gemini API] Unexpected response shape:', JSON.stringify(data));
       return res.status(502).json({
         error: 'Empty response from Gemini',
         detail: JSON.stringify(data)
       });
     }
 
-    // ── Log token usage ───────────────────────────────────────────────────────
+    // Log token usage
     const usage = data.usageMetadata || {};
     console.log(
-      `[${new Date().toISOString()}] Success — ` +
+      `[${ts}] Success — ` +
       `promptTokens: ${usage.promptTokenCount ?? '?'}, ` +
-      `candidateTokens: ${usage.candidatesTokenCount ?? '?'}, ` +
       `totalTokens: ${usage.totalTokenCount ?? '?'}`
     );
 
@@ -198,7 +345,6 @@ app.post('/leads', (req, res) => {
   if (!name && !email) return res.status(400).json({ error: 'name or email required' });
 
   const leads = readJSON(LEADS_FILE);
-  // Update existing lead if same email, otherwise append
   const idx = email ? leads.findIndex(l => l.email === email) : -1;
   if (idx >= 0) {
     leads[idx] = { ...leads[idx], name: name || leads[idx].name, email, timestamp, page };
@@ -233,10 +379,14 @@ app.get('/questions', (_req, res) => {
   res.json(readJSON(QUESTIONS_FILE));
 });
 
-app.listen(PORT, () => {
+// Start Server and Initialize Vector DB
+app.listen(PORT, async () => {
   console.log(`\n🏨  GoldInn Gemini Proxy running → http://localhost:${PORT}`);
   if (GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY') {
     console.warn('⚠️   WARNING: API key is still the placeholder!');
     console.warn('    Get your free key at https://aistudio.google.com/apikey\n');
+  } else {
+    console.log(`[RAG] Initializing Vector Store...`);
+    await buildOrUpdateVectorStore();
   }
 });
