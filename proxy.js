@@ -29,7 +29,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY';
 
 const GEMINI_MODEL    = 'gemini-2.5-flash';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
-const EMBEDDING_MODEL = 'embedding-001';
+const EMBEDDING_MODEL = 'gemini-embedding-001';
 const EMBEDDING_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent?key=${GEMINI_API_KEY}`;
 
 const ALLOWED_ORIGIN  = 'https://ashwinmahendra.github.io';   // ← your production domain
@@ -250,9 +250,10 @@ app.post('/chat', async (req, res) => {
     return res.status(400).json({ error: 'Bad request', detail: 'messages array is required' });
   }
 
-  // 1. RAG Retrieval
+  // 1. RAG Retrieval — with full knowledge base fallback
   const userMessage = messages[messages.length - 1].content;
   let contextSnippet = "";
+  let usedFallback = false;
   
   try {
     if (fs.existsSync(VECTOR_STORE_FILE)) {
@@ -272,8 +273,8 @@ app.post('/chat', async (req, res) => {
           // Sort highest similarity first
           scoredChunks.sort((a, b) => b.score - a.score);
           
-          // Take top 4 relevant chunks
-          const topChunks = scoredChunks.slice(0, 4);
+          // Take top 5 relevant chunks
+          const topChunks = scoredChunks.slice(0, 5);
           contextSnippet = topChunks.map(c => `[Snippet from ${c.file}]:\n${c.text}`).join("\n\n---\n\n");
         }
       }
@@ -282,7 +283,37 @@ app.post('/chat', async (req, res) => {
     console.error("[RAG] Search error during /chat:", e);
   }
 
-  // 2. Build precision system prompt
+  // FALLBACK: If RAG returned nothing (vector store empty/not built yet),
+  // load the full knowledge base so the chatbot is never left without context
+  if (!contextSnippet) {
+    console.log("[RAG] Vector store empty or retrieval failed. Using full knowledge base fallback.");
+    usedFallback = true;
+    try {
+      const kbDir = path.join(__dirname, 'knowledge');
+      if (fs.existsSync(kbDir)) {
+        const kbFiles = fs.readdirSync(kbDir);
+        let fullKB = '';
+        for (const file of kbFiles) {
+          const filePath = path.join(kbDir, file);
+          if (file.endsWith('.md') || file.endsWith('.txt')) {
+            fullKB += `\n\n--- ${file} ---\n` + fs.readFileSync(filePath, 'utf8');
+          } else if (file.endsWith('.docx')) {
+            try {
+              const result = await mammoth.extractRawText({ path: filePath });
+              fullKB += `\n\n--- ${file} ---\n` + result.value;
+            } catch (err) {
+              console.error(`[Fallback] Failed to read ${file}:`, err);
+            }
+          }
+        }
+        contextSnippet = fullKB;
+      }
+    } catch (e) {
+      console.error("[Fallback] Error loading full knowledge base:", e);
+    }
+  }
+
+  // 2. Build system prompt
   let fullSystemPrompt = '';
   
   if (userName || userEmail) {
@@ -293,8 +324,8 @@ app.post('/chat', async (req, res) => {
     fullSystemPrompt += `${systemPrompt}\n\n`;
   }
   
-  fullSystemPrompt += `=== RELEVANT KNOWLEDGE BASE SNIPPETS ===\n${contextSnippet || '(No specific documents matched)'}\n========================================\n\n`;
-  fullSystemPrompt += `CRITICAL INSTRUCTIONS:\nYou are a highly accurate, professional assistant. You MUST use the provided knowledge base snippets to answer the user's question directly. Provide precise, accurate answers. If the answer is not contained within the provided snippets, politely state that you do not have that exact information rather than making up an answer. Keep your tone helpful and reassuring.`;
+  fullSystemPrompt += `=== KNOWLEDGE BASE ===\n${contextSnippet || '(No documents available)'}\n========================================\n\n`;
+  fullSystemPrompt += `INSTRUCTIONS:\nYou are a knowledgeable, professional investment concierge. Answer the user's question using the knowledge base provided above. Be precise, helpful, and confident. If specific details like exact numbers or dates are not in the knowledge base, say so honestly, but still provide whatever relevant context you can from the documents.`;
 
   // 3. Map to Gemini format
   const contents = messages.map(m => ({
