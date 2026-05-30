@@ -48,8 +48,11 @@ function writeJSON(file, data) {
 
 // ── RAG System Utilities ──────────────────────────────────────────────────────
 
+let lastEmbeddingError = null;
+
 // Chunk text into smaller segments for better retrieval precision
-function chunkText(text, maxChars = 800, overlap = 100) {
+// Increased chunk size to reduce API calls
+function chunkText(text, maxChars = 2000, overlap = 300) {
   const paragraphs = text.split(/\n\s*\n/);
   const chunks = [];
   let currentChunk = '';
@@ -57,7 +60,6 @@ function chunkText(text, maxChars = 800, overlap = 100) {
   for (const p of paragraphs) {
     if (currentChunk.length + p.length > maxChars && currentChunk.length > 0) {
       chunks.push(currentChunk.trim());
-      // Create overlap by taking the end of the previous chunk
       currentChunk = currentChunk.slice(-overlap) + '\n\n' + p;
     } else {
       currentChunk += (currentChunk ? '\n\n' : '') + p;
@@ -82,14 +84,21 @@ async function getEmbedding(text) {
   if (!response.ok) {
     const err = await response.text();
     console.error("[RAG] Embedding error:", err);
+    lastEmbeddingError = err;
     throw new Error(`Embedding API failed: ${response.status}`);
   }
   const data = await response.json();
+  if (!data || !data.embedding || !data.embedding.values) {
+    console.error("[RAG] Unexpected embedding response format:", data);
+    lastEmbeddingError = "Unexpected embedding format: " + JSON.stringify(data);
+    throw new Error(`Embedding API failed: Missing embedding values`);
+  }
   return data.embedding.values;
 }
 
 // Calculate similarity between two vectors
 function cosineSimilarity(vecA, vecB) {
+  if (!vecA || !vecB || vecA.length !== vecB.length) return 0;
   let dotProduct = 0;
   let normA = 0;
   let normB = 0;
@@ -101,6 +110,9 @@ function cosineSimilarity(vecA, vecB) {
   if (normA === 0 || normB === 0) return 0;
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 }
+
+// Delay to prevent rate limiting
+const delay = ms => new Promise(r => setTimeout(r, ms));
 
 // Build or update the vector store on startup
 async function buildOrUpdateVectorStore() {
@@ -159,7 +171,7 @@ async function buildOrUpdateVectorStore() {
     store.chunks = store.chunks.filter(c => c.file !== file);
 
     // Chunk and embed
-    const chunks = chunkText(content, 1000, 200);
+    const chunks = chunkText(content, 2000, 300);
     
     for (let i = 0; i < chunks.length; i++) {
       try {
@@ -169,6 +181,8 @@ async function buildOrUpdateVectorStore() {
           text: chunks[i],
           embedding
         });
+        // Delay 1s to respect potential rate limits
+        await delay(1000);
       } catch (err) {
         console.error(`[RAG] Failed to embed chunk ${i} in ${file}:`, err);
       }
@@ -247,18 +261,21 @@ app.post('/chat', async (req, res) => {
       
       if (store.chunks && store.chunks.length > 0) {
         const queryEmbedding = await getEmbedding(userMessage);
-        const scoredChunks = store.chunks.map(chunk => ({
-          text: chunk.text,
-          file: chunk.file,
-          score: cosineSimilarity(queryEmbedding, chunk.embedding)
-        }));
         
-        // Sort highest similarity first
-        scoredChunks.sort((a, b) => b.score - a.score);
-        
-        // Take top 5 relevant chunks
-        const topChunks = scoredChunks.slice(0, 5);
-        contextSnippet = topChunks.map(c => `[Snippet from ${c.file}]:\n${c.text}`).join("\n\n---\n\n");
+        if (queryEmbedding && queryEmbedding.length > 0) {
+          const scoredChunks = store.chunks.map(chunk => ({
+            text: chunk.text,
+            file: chunk.file,
+            score: cosineSimilarity(queryEmbedding, chunk.embedding)
+          }));
+          
+          // Sort highest similarity first
+          scoredChunks.sort((a, b) => b.score - a.score);
+          
+          // Take top 4 relevant chunks
+          const topChunks = scoredChunks.slice(0, 4);
+          contextSnippet = topChunks.map(c => `[Snippet from ${c.file}]:\n${c.text}`).join("\n\n---\n\n");
+        }
       }
     }
   } catch (e) {
@@ -336,6 +353,22 @@ app.post('/chat', async (req, res) => {
   }
 });
 
+// ── Debug endpoint ────────────────────────────────────────────────────────
+app.get('/debug-rag', (req, res) => {
+  let count = 0;
+  if (fs.existsSync(VECTOR_STORE_FILE)) {
+    try {
+      const storeRaw = fs.readFileSync(VECTOR_STORE_FILE, 'utf8');
+      const store = JSON.parse(storeRaw);
+      count = store.chunks ? store.chunks.length : 0;
+    } catch (e) {}
+  }
+  res.json({
+    chunksCount: count,
+    lastEmbeddingError
+  });
+});
+
 // ── Health check ──────────────────────────────────────────────────────────
 app.get('/health', (_req, res) => res.json({ status: 'ok', model: GEMINI_MODEL }));
 
@@ -387,6 +420,7 @@ app.listen(PORT, async () => {
     console.warn('    Get your free key at https://aistudio.google.com/apikey\n');
   } else {
     console.log(`[RAG] Initializing Vector Store...`);
-    await buildOrUpdateVectorStore();
+    // Run asynchronously without blocking startup
+    buildOrUpdateVectorStore().catch(console.error);
   }
 });
