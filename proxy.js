@@ -77,7 +77,6 @@ async function getEmbedding(text) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: `models/${EMBEDDING_MODEL}`,
       content: { parts: [{ text }] }
     })
   });
